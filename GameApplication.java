@@ -1,3 +1,4 @@
+import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -9,28 +10,43 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class GameApplication extends Application {
-    public int[] canvasSize;
 
-    public GameApplication() {
-        this.canvasSize = new int[2];
-        this.canvasSize[0] = 500;
-        this.canvasSize[1] = 500;
-    }
+	public static void main(String[] args) {
+		launch(args);
+	}
 
-    @Override
-    public void start(Stage stage) {
-        Group root = new Group();
-        Scene scene = new Scene(root, Color.BLACK);
-        Canvas canvas = new Canvas(canvasSize[0], canvasSize[1]);
-        System.out.println("Application starting");
+	@Override
+	public void start(Stage primaryStage) {
+		Group root = new Group();
+		Scene scene = new Scene(root, Color.BLACK);
 
-        stage.setTitle("Game");
-        stage.setScene(scene);
-        stage.show();
-    }
+		Canvas canvas = new Canvas(500, 500);
+		root.getChildren().add(canvas);
 
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-        launch(args);
-    }
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+
+		final long startNanoTime = System.nanoTime();
+
+		new AnimationTimer() {
+			double x = 0;
+			boolean back = true;
+
+			@Override
+			public void handle(long now) {
+				gc.clearRect(0, 0, 500, 500);
+				gc.setFill(Color.RED);
+				gc.fillRect(x, x, 20, 20);
+				if (x > 200) {
+					back = true;
+				} else if (x < 0) {
+					back = false;
+				}
+				x += (back ? -0.1 : 0.1);
+			}
+		}.start();
+
+		primaryStage.setTitle("Game");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
 }
