@@ -30,18 +30,29 @@ public class GameApplication extends Application {
 		new AnimationTimer() {
 			double x = 0;
 			boolean back = true;
+            boolean paused = true;
 
-			@Override
-			public void handle(long now) {
-				gc.clearRect(0, 0, 500, 500);
-				gc.setFill(Color.RED);
-				gc.fillRect(x, x, 20, 20);
+            public void update() {
 				if (x > 200) {
 					back = true;
 				} else if (x < 0) {
 					back = false;
 				}
 				x += (back ? -0.1 : 0.1);
+            }
+
+            public void draw() {
+				gc.clearRect(0, 0, 500, 500);
+				gc.setFill(Color.RED);
+				gc.fillRect(x, x, 20, 20);
+            }
+
+			@Override
+			public void handle(long now) {
+                if (!paused) {
+                    update();
+                }
+                draw();
 			}
 		}.start();
 
