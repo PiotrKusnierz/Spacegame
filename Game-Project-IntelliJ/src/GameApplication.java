@@ -15,12 +15,15 @@ public class GameApplication extends Application {
 		launch(args);
 	}
 
+	private final int sizeX = 1200;
+	private final int sizeY = 800;
+
 	@Override
 	public void start(Stage primaryStage) {
 		Group root = new Group();
 		Scene scene = new Scene(root, Color.MAGENTA);
 
-		Canvas canvas = new Canvas(1200, 800);
+		Canvas canvas = new Canvas(sizeX, sizeY);
 		root.getChildren().add(canvas);
 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -44,7 +47,7 @@ public class GameApplication extends Application {
 			
 
 			public void draw() {
-				// gc.clearRect(0, 0, 500, 500);
+				// gc.clearRect(0, 0, sizeX, sizeY);
 				gc.setFill(Color.RED);
 				gc.fillRect(x, x, 20, 20);
 			}

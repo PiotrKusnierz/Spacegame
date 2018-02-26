@@ -1,4 +1,4 @@
-import com.sun.glass.ui.Size;
+import com.sun.javafx.css.Size;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
@@ -16,17 +16,33 @@ public abstract class Sprite {
     abstract void update();
 
     public int getLives(){
-       return 0;
+       return 3;
     }
 
     public boolean isAlive(){
+        for (Enemy enemy : enemies) {
+            if (player.position == enemy.position) {
+                return false;
+            }
+        }
         return true;
     }
 
     public Size getSize(){
-        return ;
+        return HUGE;
     }
 
+    public void die(){
+        if(lives<1){
+            initiateDeathAnimation();
+        }
+    }
+
+    public void hit(){
+        if (!isAlive()){
+            lives--;
+        }
+    }
 
 
 
