@@ -11,6 +11,11 @@ public abstract class Sprite {
     private double[] size;
     private int lives;
 
+    public Sprite(Image img, double[] size, int lives){
+        this.image = img;
+        this.size = size;
+        this.lives = lives;
+    }
 
     abstract void draw();
     abstract void update();
