@@ -31,6 +31,6 @@ public class Game {
     public void saveGame() {
     }
 
-    public void eventHandler(keylogger.args) {
+    public void eventHandler() {
     }
 }
