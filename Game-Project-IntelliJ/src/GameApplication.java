@@ -18,9 +18,9 @@ public class GameApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		Group root = new Group();
-		Scene scene = new Scene(root, Color.BLACK);
+		Scene scene = new Scene(root, Color.MAGENTA);
 
-		Canvas canvas = new Canvas(500, 500);
+		Canvas canvas = new Canvas(1200, 800);
 		root.getChildren().add(canvas);
 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
