@@ -6,10 +6,6 @@ public class Player extends Sprite {
         super(image, size, lives);
     }
 
-    public Player() {
-
-    }
-
     public void draw() {
 
     }
