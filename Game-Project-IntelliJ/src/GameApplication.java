@@ -41,7 +41,7 @@ public class GameApplication extends Application {
 				x += (back ? -0.1 : 0.1);
 			}
 
-			
+
 
 			public void draw() {
 				// gc.clearRect(0, 0, 500, 500);
