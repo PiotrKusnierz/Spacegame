@@ -1,4 +1,4 @@
-import java.awt.*;
+import javafx.scene.image.Image;
 
 public class Enemy extends Sprite {
 
