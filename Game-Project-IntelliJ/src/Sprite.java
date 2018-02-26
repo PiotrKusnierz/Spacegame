@@ -1,4 +1,4 @@
-import com.sun.javafx.css.Size;
+import javafx.css.Size;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
@@ -29,6 +29,7 @@ public abstract class Sprite {
     }
 
     public Size getSize(){
+
         return HUGE;
     }
 
