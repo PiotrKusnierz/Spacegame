@@ -1,4 +1,4 @@
-package forDevelop.asteroids;
+//package forDevelop.asteroids;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -157,4 +157,3 @@ public class AsteroidsApp extends Application {
 // many of them hanging around!!!!!!!!!!!!
 // - Should also add colision between the player and the enemy
 // - should keep the player on the screen
-

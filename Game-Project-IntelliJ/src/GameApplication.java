@@ -1,68 +1,122 @@
-import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.Screen;
+
+import java.util.concurrent.ThreadLocalRandom;
+// import javafx.animation.FadeTransition;
+// import javafx.scene.layout.HBox;
+// import javafx.scene.text.Font;
+// import javafx.scene.text.Text;
+// import javafx.util.Duration;
+
+import java.util.ArrayList;
 
 public class GameApplication extends Application {
 
-	public static void main(String[] args) {
-		launch(args);
-	}
+	private AnimationTimer timer;
+	private Pane root;
+	private ArrayList<Node> enemies = new ArrayList<Node>();
 
-	private final int sizeX = 1200;
-	private final int sizeY = 800;
+	private Node player;
 
-	@Override
-	public void start(Stage primaryStage) {
-		Group root = new Group();
-		Scene scene = new Scene(root, Color.MAGENTA);
+	private final int sizeY = (int)(Screen.getPrimary().getVisualBounds().getHeight()*0.95);
+	private final int sizeX = (int)(sizeY*0.75);
+	public int frameCounter = 0;
 
-		Canvas canvas = new Canvas(sizeX, sizeY);
-		root.getChildren().add(canvas);
+	private Parent createContent() {
+		root = new Pane();
+		root.setPrefSize(sizeX, sizeY);
 
-		GraphicsContext gc = canvas.getGraphicsContext2D();
-
-		final long startNanoTime = System.nanoTime();
-
-		new AnimationTimer() {
-			double x = 0;
-			boolean back = true;
-			boolean paused = false;
-
-			public void update() {
-				if (x > 200) {
-					back = true;
-				} else if (x < 0) {
-					back = false;
-				}
-				x += (back ? -0.1 : 0.1);
-			}
+		player = initPlayer();
+		root.getChildren().add(player);
 
 
-
-			public void draw() {
-				// gc.clearRect(0, 0, sizeX, sizeY);
-				gc.setFill(Color.RED);
-				gc.fillRect(x, x, 20, 20);
-			}
-
+		timer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-				if (!paused) {
-					update();
-				}
-				draw();
-			}
-		}.start();
+				update();
+				frameCounter++;
 
-		primaryStage.setTitle("Game");
-		primaryStage.setScene(scene);
-		primaryStage.show();
+				if (frameCounter % 1000 == 0) {
+					frameCounter = 0;
+				}
+			}
+		};
+		timer.start();
+
+		return root;
+	}
+
+	private Node initPlayer() {
+		Rectangle rect = new Rectangle(sizeX/40, sizeY/40, Color.MAGENTA);
+		rect.setTranslateX(sizeX/2);
+		rect.setTranslateY(sizeY - (sizeY/4));
+		return rect;
+	}
+
+
+	private Node initEnemy() {
+		int enemySize = ThreadLocalRandom.current().nextInt(10, 120);
+        Circle cir = new Circle(enemySize, Color.ORANGE);
+
+        cir.setTranslateX((int)(Math.random() * 30) * 40);
+        root.getChildren().add(cir);
+        return cir;
+	}
+
+	private void update() {
+		for (Node enemy : enemies) {
+			enemy.setTranslateY(enemy.getTranslateY() + Math.random() * 6);
+		}
+
+		if (frameCounter % 100 == 0) {
+			enemies.add(initEnemy());
+		}
+		// if (Math.random() < 0.05) {
+		// 	enemies.add(initEnemy());
+		// }
+	}
+	/*
+	private void ifColiding() {
+        for (Node enemy : enemies) {
+            if (enemy.getBoundsInParent().intersects(player.getBoundsInParent())) {
+                rect.setTranslateX(0);
+                rect.setTranslateY(650 - 39);
+                rect.setTranslateX(650 - 39);
+                return;
+            }
+        }*/
+
+	@Override
+	public void start(Stage stage) throws Exception {
+		stage.setScene(new Scene(createContent(), Color.BLACK));
+
+		stage.getScene().setOnKeyPressed(event -> {     //input
+			switch (event.getCode()) {
+				case LEFT:
+					player.setTranslateX(player.getTranslateX() - 40);
+					break;
+				case RIGHT:
+					player.setTranslateX(player.getTranslateX() + 40);
+					break;
+				default:
+					break;
+			}
+		});
+
+			stage.show();
+			stage.setTitle("Awesome, Awesome, Awesome!");
+	}
+
+	public static void main(String[] args) {
+		launch(args);
 	}
 }

@@ -1,4 +1,4 @@
-package forDevelop.frogger;
+//package forDevelop.frogger;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;

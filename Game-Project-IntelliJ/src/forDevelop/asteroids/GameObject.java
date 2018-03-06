@@ -1,4 +1,4 @@
-package forDevelop.asteroids;
+//package forDevelop.asteroids;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -69,4 +69,3 @@ public class GameObject {                      //  a concept of a game object (i
                 // !!!!by using this method, they might be problems if my view arent the size of my model!!!!!!!
 
 }
-
