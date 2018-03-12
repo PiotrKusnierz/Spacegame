@@ -11,11 +11,11 @@ import javafx.stage.Stage;
 import javafx.stage.Screen;
 
 import java.util.concurrent.ThreadLocalRandom;
-// import javafx.animation.FadeTransition;
-// import javafx.scene.layout.HBox;
-// import javafx.scene.text.Font;
-// import javafx.scene.text.Text;
-// import javafx.util.Duration;
+import javafx.animation.FadeTransition;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -27,6 +27,7 @@ public class GameApplication extends Application {
 
 	private Node player;
 	private int playerLives = 3;
+	private boolean paused = false;
 
 	private final int sizeY = (int)(Screen.getPrimary().getVisualBounds().getHeight()*0.95);
 	private final int sizeX = (int)(sizeY*0.75);
@@ -78,12 +79,48 @@ public class GameApplication extends Application {
 	}
 
 	private void update() {
-		// Example, stopping the game to show that you lost the game
-		if (playerLives == 0) {
+		if (paused) {
 			return;
 		}
+
+		ArrayList<Node> removedEnemies = new ArrayList<Node>();
+
+		if (playerLives == 0) {
+            timer.stop();
+            String win = "GAME OVER";
+
+            HBox hBox = new HBox();
+			root.getChildren().add(hBox);
+
+            for (int i = 0; i < win.toCharArray().length; i++) {
+                char letter = win.charAt(i);
+
+                Text text = new Text(String.valueOf(letter));
+                text.setFont(Font.font(48));
+                text.setOpacity(0);
+				text.setFill(Color.WHITE);
+
+                hBox.getChildren().add(text);
+
+                FadeTransition ft = new FadeTransition(Duration.seconds(0.66), text);
+                ft.setToValue(1);
+                ft.setDelay(Duration.seconds(i * 0.15));
+                ft.play();
+            }
+			hBox.autosize();
+			hBox.setTranslateX(sizeX/2-hBox.getWidth()/2);
+			hBox.setTranslateY(sizeY/2-hBox.getHeight()/2);
+        }
+
 		for (Node enemy : enemies) {
 			enemy.setTranslateY(enemy.getTranslateY() + Math.random() * 6);
+			if (enemy.getTranslateY() > sizeY*2) {
+				removedEnemies.add(enemy);
+			}
+		}
+
+		for (Node enemy : removedEnemies) {
+			enemies.remove(enemy);
 		}
 
 		ifColiding();
@@ -94,6 +131,8 @@ public class GameApplication extends Application {
 		// if (Math.random() < 0.05) {
 		// 	enemies.add(initEnemy());
 		// }
+
+
 	}
 
 	private void ifColiding() {
@@ -119,10 +158,19 @@ public class GameApplication extends Application {
 		stage.getScene().setOnKeyPressed(event -> {     //input
 			switch (event.getCode()) {
 				case LEFT:
+					if (paused) {
+						break;
+					}
 					player.setTranslateX(player.getTranslateX() - 40);
 					break;
 				case RIGHT:
+					if (paused) {
+						break;
+					}
 					player.setTranslateX(player.getTranslateX() + 40);
+					break;
+				case P:
+					paused = paused ? false : true;
 					break;
 				default:
 					break;
