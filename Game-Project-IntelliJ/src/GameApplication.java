@@ -97,13 +97,19 @@ public class GameApplication extends Application {
 	}
 
 	private void ifColiding() {
+		ArrayList<Node> removedEnemies = new ArrayList<Node>();
         for (Node enemy : enemies) {
             if (enemy.getBoundsInParent().intersects(player.getBoundsInParent())) {
 				resetPlayerPosition(player);
+				removedEnemies.add(enemy);
 				playerLives--;
-                return;
+                break;
             }
         }
+		for (Node enemy : removedEnemies) {
+			enemies.remove(enemy);
+			root.getChildren().remove(enemy);
+		}
 	}
 
 	@Override
