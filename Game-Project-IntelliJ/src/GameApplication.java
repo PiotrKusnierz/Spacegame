@@ -26,6 +26,7 @@ public class GameApplication extends Application {
 	private ArrayList<Node> enemies = new ArrayList<Node>();
 
 	private Node player;
+	private int playerLives = 3;
 
 	private final int sizeY = (int)(Screen.getPrimary().getVisualBounds().getHeight()*0.95);
 	private final int sizeX = (int)(sizeY*0.75);
@@ -57,9 +58,13 @@ public class GameApplication extends Application {
 
 	private Node initPlayer() {
 		Rectangle rect = new Rectangle(sizeX/40, sizeY/40, Color.MAGENTA);
-		rect.setTranslateX(sizeX/2);
-		rect.setTranslateY(sizeY - (sizeY/4));
+		resetPlayerPosition(rect);
 		return rect;
+	}
+
+	private void resetPlayerPosition(Node player) {
+		player.setTranslateX(sizeX/2-sizeX/40);
+		player.setTranslateY(sizeY - (sizeY/4));
 	}
 
 
@@ -73,9 +78,15 @@ public class GameApplication extends Application {
 	}
 
 	private void update() {
+		// Example, stopping the game to show that you lost the game
+		if (playerLives == 0) {
+			return;
+		}
 		for (Node enemy : enemies) {
 			enemy.setTranslateY(enemy.getTranslateY() + Math.random() * 6);
 		}
+
+		ifColiding();
 
 		if (frameCounter % 100 == 0) {
 			enemies.add(initEnemy());
@@ -84,16 +95,16 @@ public class GameApplication extends Application {
 		// 	enemies.add(initEnemy());
 		// }
 	}
-	/*
+
 	private void ifColiding() {
         for (Node enemy : enemies) {
             if (enemy.getBoundsInParent().intersects(player.getBoundsInParent())) {
-                rect.setTranslateX(0);
-                rect.setTranslateY(650 - 39);
-                rect.setTranslateX(650 - 39);
+				resetPlayerPosition(player);
+				playerLives--;
                 return;
             }
-        }*/
+        }
+	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
