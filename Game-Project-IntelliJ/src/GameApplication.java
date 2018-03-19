@@ -1,3 +1,7 @@
+/**
+* GameApplication opens a game window of a Space Shooter kind if game.
+*/
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -10,7 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 
-import java.util.concurrent.ThreadLocalRandom;
 import javafx.animation.FadeTransition;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -18,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameApplication extends Application {
 
@@ -33,6 +37,9 @@ public class GameApplication extends Application {
 	private final int sizeX = (int)(sizeY*0.75);
 	public int frameCounter = 0;
 
+	/**
+	* This method creates the root window, player object and the game loop.
+	*/
 	private Parent createContent() {
 		root = new Pane();
 		root.setPrefSize(sizeX, sizeY);
@@ -57,18 +64,30 @@ public class GameApplication extends Application {
 		return root;
 	}
 
+	/**
+	* Initializes the player object.
+	* @return Node
+	*/
 	private Node initPlayer() {
 		Rectangle rect = new Rectangle(sizeX/40, sizeY/40, Color.MAGENTA);
 		resetPlayerPosition(rect);
 		return rect;
 	}
 
+	/**
+	* Setting the player position to its initial location.
+	* @param player: Player instance of type Object
+	*/
 	private void resetPlayerPosition(Node player) {
 		player.setTranslateX(sizeX/2-sizeX/40);
 		player.setTranslateY(sizeY - (sizeY/4));
 	}
 
 
+	/**
+	* Creates an enemy object with a random size and location
+	* @return Node
+	*/
 	private Node initEnemy() {
 		int enemySize = ThreadLocalRandom.current().nextInt(10, 120);
         Circle cir = new Circle(enemySize, Color.ORANGE);
@@ -78,6 +97,9 @@ public class GameApplication extends Application {
         return cir;
 	}
 
+	/**
+	* This methods runs every frame to update game state.
+	*/
 	private void update() {
 		if (paused) {
 			return;
@@ -135,6 +157,10 @@ public class GameApplication extends Application {
 
 	}
 
+	/**
+	* If the player collides with an enemey, the enemy should be removed and
+	* you will lose one of your lives.
+	*/
 	private void ifColiding() {
 		ArrayList<Node> removedEnemies = new ArrayList<Node>();
         for (Node enemy : enemies) {
@@ -151,6 +177,12 @@ public class GameApplication extends Application {
 		}
 	}
 
+	/**
+	* An overriden method of the Application.
+	* This method runs once at application startup, and sets the stage and
+	* scene of the game, as well as adding a keyboard handler for input.
+	* @param stage: A Stage object which acts as the main container.
+	*/
 	@Override
 	public void start(Stage stage) throws Exception {
 		stage.setScene(new Scene(createContent(), Color.BLACK));
@@ -181,6 +213,9 @@ public class GameApplication extends Application {
 			stage.setTitle("Awesome, Awesome, Awesome!");
 	}
 
+	/**
+	* The main method to run the Application.
+	*/
 	public static void main(String[] args) {
 		launch(args);
 	}
