@@ -1,7 +1,3 @@
-/**
-* GameApplication opens a game window of a Space Shooter kind if game.
-*/
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -23,6 +19,20 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+// For å lage javadoc: javadoc -private -d docs/ GameApplication.java
+
+/**
+* <h1>THE GAYM - Pure Awesome</h1>
+* GameApplication opens a game window of a Space Shooter kind of game.
+* <p>
+* All methods have been manually tested by running through Google Translate and finding errors /s
+*
+* BY: Piotr Kusnierz, Sebastian Jarsve, Inge Brochmann
+* @author Piotr Kusnierz, Sebastian Jarsve, Inge Brochmann
+* @version 0.1a
+* @since 2018
+*
+*/
 public class GameApplication extends Application {
 
 	private AnimationTimer timer;
@@ -38,7 +48,7 @@ public class GameApplication extends Application {
 	public int frameCounter = 0;
 
 	/**
-	* This method creates the root window, player object and the game loop.
+	* This method creates the root window, initializes the player object and creates the game loop.
 	*/
 	private Parent createContent() {
 		root = new Pane();
@@ -65,7 +75,7 @@ public class GameApplication extends Application {
 	}
 
 	/**
-	* Initializes the player object.
+	* Method for initializing the player object.
 	* @return Node
 	*/
 	private Node initPlayer() {
@@ -158,7 +168,7 @@ public class GameApplication extends Application {
 	}
 
 	/**
-	* If the player collides with an enemey, the enemy should be removed and
+	* If the player collides with an enemy, the enemy should be removed and
 	* you will lose one of your lives.
 	*/
 	private void ifColiding() {
@@ -210,7 +220,7 @@ public class GameApplication extends Application {
 		});
 
 			stage.show();
-			stage.setTitle("Awesome, Awesome, Awesome!");
+			stage.setTitle("THE GAYM - Pure Awesome");
 	}
 
 	/**
