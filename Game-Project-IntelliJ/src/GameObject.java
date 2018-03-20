@@ -38,6 +38,21 @@ public class GameObject {
         return lives > 0 ? true : false;
     }
 
+    public void setX(double x) {
+        view.setTranslateX(x);
+    }
+
+    public void setY(double y) {
+        view.setTranslateY(y);
+    }
+
+    public double getX() {
+        return view.getTranslateX();
+    }
+
+    public double getY() {
+        return view.getTranslateY();
+    }
 
     // private Node initPlayer() {
 	// 	Rectangle rect = new Rectangle(sizeX/40, sizeY/40, Color.MAGENTA);

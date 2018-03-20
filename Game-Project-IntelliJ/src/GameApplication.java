@@ -39,7 +39,7 @@ public class GameApplication extends Application {
 
 	private AnimationTimer timer;
 	private Pane root;
-	private ArrayList<Node> enemies = new ArrayList<Node>();
+	private ArrayList<GameObject> enemies = new ArrayList<GameObject>();
 
 	private GameObject player;
 	private boolean paused = false;
@@ -102,8 +102,7 @@ public class GameApplication extends Application {
 	private Node initEnemy() {
 		int enemySize = ThreadLocalRandom.current().nextInt(10, 120);
 		Circle cir = new Circle(enemySize, Color.ORANGE);
-
-		cir.setTranslateX((int)(Math.random() * 30) * 40);
+		cir.setTranslateX(ThreadLocalRandom.current().nextInt(0, sizeX));
 		root.getChildren().add(cir);
 		return cir;
 	}
@@ -144,30 +143,38 @@ public class GameApplication extends Application {
 			return;
 		}
 
+
+		player.setX(Math.min(sizeX, Math.max(0, player.getX())));
+
+		// if (player.getView().getTranslateX() <= 0) {
+		// 	player.setVelocity(new Point2D(0 , 0));
+		// }
+
 		player.update();
 
-		ArrayList<Node> removedEnemies = new ArrayList<Node>();
+		ArrayList<GameObject> removedEnemies = new ArrayList<GameObject>();
 
 		if (!player.isAlive()) {
 			timer.stop();
 			showMessage("GAME OVER");
 		}
 
-		for (Node enemy : enemies) {
-			enemy.setTranslateY(enemy.getTranslateY() + Math.random() * 6);
-			if (enemy.getTranslateY() > sizeY*2) {
+		for (GameObject enemy : enemies) {
+			enemy.getView().setTranslateY(enemy.getView().getTranslateY() + Math.random() * 6);
+			if (enemy.getView().getTranslateY() > sizeY*2) {
 				removedEnemies.add(enemy);
 			}
 		}
 
-		for (Node enemy : removedEnemies) {
+		for (GameObject enemy : removedEnemies) {
 			enemies.remove(enemy);
+			root.getChildren().remove(enemy.getView());
 		}
 
 		ifColiding();
 
 		if (frameCounter % 100 == 0) {
-			enemies.add(initEnemy());
+			enemies.add(new GameObject(initEnemy(), 1));
 		}
 	}
 
@@ -176,18 +183,18 @@ public class GameApplication extends Application {
 	* you will lose one of your lives.
 	*/
 	private void ifColiding() {
-		ArrayList<Node> removedEnemies = new ArrayList<Node>();
-		for (Node enemy : enemies) {
-			if (enemy.getBoundsInParent().intersects(player.getView().getBoundsInParent())) {
+		ArrayList<GameObject> removedEnemies = new ArrayList<GameObject>();
+		for (GameObject enemy : enemies) {
+			if (enemy.getView().getBoundsInParent().intersects(player.getView().getBoundsInParent())) {
 				resetPlayerPosition(player.getView());
 				removedEnemies.add(enemy);
 				player.lives--;
 				break;
 			}
 		}
-		for (Node enemy : removedEnemies) {
+		for (GameObject enemy : removedEnemies) {
 			enemies.remove(enemy);
-			root.getChildren().remove(enemy);
+			root.getChildren().remove(enemy.getView());
 		}
 	}
 
@@ -223,8 +230,10 @@ public class GameApplication extends Application {
 			switch (event.getCode()) {
 				case LEFT:
 					player.setVelocity(new Point2D(0, 0));
+					break;
 				case RIGHT:
 					player.setVelocity(new Point2D(0, 0));
+					break;
 			}
 		});
 
