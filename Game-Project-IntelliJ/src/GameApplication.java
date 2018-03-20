@@ -100,11 +100,39 @@ public class GameApplication extends Application {
 	*/
 	private Node initEnemy() {
 		int enemySize = ThreadLocalRandom.current().nextInt(10, 120);
-        Circle cir = new Circle(enemySize, Color.ORANGE);
+		Circle cir = new Circle(enemySize, Color.ORANGE);
 
-        cir.setTranslateX((int)(Math.random() * 30) * 40);
-        root.getChildren().add(cir);
-        return cir;
+		cir.setTranslateX((int)(Math.random() * 30) * 40);
+		root.getChildren().add(cir);
+		return cir;
+	}
+
+	/**
+	*Creates an animated message to the user.
+	* @param msg: Type of String, text to be shown.
+	*/
+	private void showMessage(String msg) {
+		HBox hBox = new HBox();
+		root.getChildren().add(hBox);
+
+		for (int i = 0; i < msg.toCharArray().length; i++) {
+			char letter = msg.charAt(i);
+
+			Text text = new Text(String.valueOf(letter));
+			text.setFont(Font.font(48));
+			text.setOpacity(0);
+			text.setFill(Color.WHITE);
+
+			hBox.getChildren().add(text);
+
+			FadeTransition ft = new FadeTransition(Duration.seconds(0.66), text);
+			ft.setToValue(1);
+			ft.setDelay(Duration.seconds(i * 0.15));
+			ft.play();
+		}
+		hBox.autosize();
+		hBox.setTranslateX(sizeX/2-hBox.getWidth()/2);
+		hBox.setTranslateY(sizeY/2-hBox.getHeight()/2);
 	}
 
 	/**
@@ -118,31 +146,9 @@ public class GameApplication extends Application {
 		ArrayList<Node> removedEnemies = new ArrayList<Node>();
 
 		if (playerLives == 0) {
-            timer.stop();
-            String loose = "GAME OVER";
-
-            HBox hBox = new HBox();
-			root.getChildren().add(hBox);
-
-            for (int i = 0; i < loose.toCharArray().length; i++) {
-                char letter = loose.charAt(i);
-
-                Text text = new Text(String.valueOf(letter));
-                text.setFont(Font.font(48));
-                text.setOpacity(0);
-				text.setFill(Color.WHITE);
-
-                hBox.getChildren().add(text);
-
-                FadeTransition ft = new FadeTransition(Duration.seconds(0.66), text);
-                ft.setToValue(1);
-                ft.setDelay(Duration.seconds(i * 0.15));
-                ft.play();
-            }
-			hBox.autosize();
-			hBox.setTranslateX(sizeX/2-hBox.getWidth()/2);
-			hBox.setTranslateY(sizeY/2-hBox.getHeight()/2);
-        }
+			timer.stop();
+			showMessage("GAME OVER");
+		}
 
 		for (Node enemy : enemies) {
 			enemy.setTranslateY(enemy.getTranslateY() + Math.random() * 6);
@@ -160,11 +166,6 @@ public class GameApplication extends Application {
 		if (frameCounter % 100 == 0) {
 			enemies.add(initEnemy());
 		}
-		// if (Math.random() < 0.05) {
-		// 	enemies.add(initEnemy());
-		// }
-
-
 	}
 
 	/**
@@ -173,14 +174,14 @@ public class GameApplication extends Application {
 	*/
 	private void ifColiding() {
 		ArrayList<Node> removedEnemies = new ArrayList<Node>();
-        for (Node enemy : enemies) {
-            if (enemy.getBoundsInParent().intersects(player.getBoundsInParent())) {
+		for (Node enemy : enemies) {
+			if (enemy.getBoundsInParent().intersects(player.getBoundsInParent())) {
 				resetPlayerPosition(player);
 				removedEnemies.add(enemy);
 				playerLives--;
-                break;
-            }
-        }
+				break;
+			}
+		}
 		for (Node enemy : removedEnemies) {
 			enemies.remove(enemy);
 			root.getChildren().remove(enemy);
