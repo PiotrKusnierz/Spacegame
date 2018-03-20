@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 
+import javafx.geometry.Point2D;
+
 import javafx.animation.FadeTransition;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -25,6 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
 * <h1>THE SPACESHIT - Pure Awesome</h1>
 * GameApplication opens a game window of a Space Shooter kind of game.
 * <p>
+* All methods have been tested and adjusted through trial and error (gametesting)
 *
 * BY: Piotr Kusnierz, Sebastian Jarsve, Inge Brochmann
 * @author Piotr Kusnierz, Sebastian Jarsve, Inge Brochmann
@@ -38,8 +41,7 @@ public class GameApplication extends Application {
 	private Pane root;
 	private ArrayList<Node> enemies = new ArrayList<Node>();
 
-	private Node player;
-	private int playerLives = 3;
+	private GameObject player;
 	private boolean paused = false;
 
 	private final int sizeY = (int)(Screen.getPrimary().getVisualBounds().getHeight()*0.95);
@@ -53,8 +55,8 @@ public class GameApplication extends Application {
 		root = new Pane();
 		root.setPrefSize(sizeX, sizeY);
 
-		player = initPlayer();
-		root.getChildren().add(player);
+		player = new GameObject(initPlayer(), 3);
+		root.getChildren().add(player.getView());
 
 
 		timer = new AnimationTimer() {
@@ -142,9 +144,11 @@ public class GameApplication extends Application {
 			return;
 		}
 
+		player.update();
+
 		ArrayList<Node> removedEnemies = new ArrayList<Node>();
 
-		if (playerLives == 0) {
+		if (!player.isAlive()) {
 			timer.stop();
 			showMessage("GAME OVER");
 		}
@@ -174,10 +178,10 @@ public class GameApplication extends Application {
 	private void ifColiding() {
 		ArrayList<Node> removedEnemies = new ArrayList<Node>();
 		for (Node enemy : enemies) {
-			if (enemy.getBoundsInParent().intersects(player.getBoundsInParent())) {
-				resetPlayerPosition(player);
+			if (enemy.getBoundsInParent().intersects(player.getView().getBoundsInParent())) {
+				resetPlayerPosition(player.getView());
 				removedEnemies.add(enemy);
-				playerLives--;
+				player.lives--;
 				break;
 			}
 		}
@@ -200,16 +204,12 @@ public class GameApplication extends Application {
 		stage.getScene().setOnKeyPressed(event -> {     //input
 			switch (event.getCode()) {
 				case LEFT:
-					if (paused) {
-						break;
-					}
-					player.setTranslateX(player.getTranslateX() - 40);
+					// player.getView().setTranslateX(player.getView().getTranslateX() - 40);
+					player.setVelocity(new Point2D(-1, 0));
 					break;
 				case RIGHT:
-					if (paused) {
-						break;
-					}
-					player.setTranslateX(player.getTranslateX() + 40);
+					// player.getView().setTranslateX(player.getView().getTranslateX() + 40);
+					player.setVelocity(new Point2D(1, 0));
 					break;
 				case P:
 					paused = paused ? false : true;
@@ -219,8 +219,17 @@ public class GameApplication extends Application {
 			}
 		});
 
-			stage.show();
-			stage.setTitle("THE SPACESHIT - Pure Awesome");
+		stage.getScene().setOnKeyReleased(event -> {
+			switch (event.getCode()) {
+				case LEFT:
+					player.setVelocity(new Point2D(0, 0));
+				case RIGHT:
+					player.setVelocity(new Point2D(0, 0));
+			}
+		});
+
+		stage.show();
+		stage.setTitle("THE SPACESHIT - Pure Awesome");
 	}
 
 	/**
