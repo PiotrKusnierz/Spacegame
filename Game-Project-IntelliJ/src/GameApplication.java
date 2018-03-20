@@ -25,7 +25,6 @@ import java.util.concurrent.ThreadLocalRandom;
 * <h1>THE SPACESHIT - Pure Awesome</h1>
 * GameApplication opens a game window of a Space Shooter kind of game.
 * <p>
-* All methods have been manually tested by running through Google Translate and finding errors /s
 *
 * BY: Piotr Kusnierz, Sebastian Jarsve, Inge Brochmann
 * @author Piotr Kusnierz, Sebastian Jarsve, Inge Brochmann
