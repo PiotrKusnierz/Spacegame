@@ -144,7 +144,7 @@ public class GameApplication extends Application {
 		}
 
 
-		player.setX(Math.min(sizeX, Math.max(0, player.getX())));
+		player.setX(Math.min(sizeX - sizeX/40, Math.max(0, player.getX())));
 
 		// if (player.getView().getTranslateX() <= 0) {
 		// 	player.setVelocity(new Point2D(0 , 0));
@@ -212,11 +212,11 @@ public class GameApplication extends Application {
 			switch (event.getCode()) {
 				case LEFT:
 					// player.getView().setTranslateX(player.getView().getTranslateX() - 40);
-					player.setVelocity(new Point2D(-1, 0));
+					player.setVelocity(new Point2D(-3, 0));
 					break;
 				case RIGHT:
 					// player.getView().setTranslateX(player.getView().getTranslateX() + 40);
-					player.setVelocity(new Point2D(1, 0));
+					player.setVelocity(new Point2D(3, 0));
 					break;
 				case P:
 					paused = paused ? false : true;
