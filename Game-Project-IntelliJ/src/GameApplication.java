@@ -108,10 +108,10 @@ public class GameApplication extends Application {
 	}
 
 	/**
-	*Creates an animated message to the user.
+	* Creates an animated message to the user.
 	* @param msg: Type of String, text to be shown.
 	*/
-	private void showMessage(String msg) {
+	private void showAnimatedMessage(String msg) {
 		HBox hBox = new HBox();
 		root.getChildren().add(hBox);
 
@@ -156,7 +156,7 @@ public class GameApplication extends Application {
 
 		if (!player.isAlive()) {
 			timer.stop();
-			showMessage("GAME OVER");
+			showAnimatedMessage("GAME OVER");
 		}
 
 		for (GameObject enemy : enemies) {
@@ -171,7 +171,7 @@ public class GameApplication extends Application {
 			root.getChildren().remove(enemy.getView());
 		}
 
-		ifColiding();
+		ifColliding();
 
 		if (frameCounter % 100 == 0) {
 			enemies.add(new GameObject(initEnemy(), 1));
@@ -182,7 +182,7 @@ public class GameApplication extends Application {
 	* If the player collides with an enemy, the enemy should be removed and
 	* you will lose one of your lives.
 	*/
-	private void ifColiding() {
+	private void ifColliding() {
 		ArrayList<GameObject> removedEnemies = new ArrayList<GameObject>();
 		for (GameObject enemy : enemies) {
 			if (enemy.getView().getBoundsInParent().intersects(player.getView().getBoundsInParent())) {
