@@ -1,5 +1,10 @@
 package game;
 
+//import java.io.IOExeption;
+import java.io.FileNotFoundException;
+import java.io.File;
+//import java.io.Scanner;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -42,6 +47,14 @@ public class GameController extends Application {
             enemy.lives--;
             player.lives--;
         }
+    }
+
+    public void saveGame() {
+
+    }
+
+    public void loadGame() {
+
     }
 
     public void update() {
