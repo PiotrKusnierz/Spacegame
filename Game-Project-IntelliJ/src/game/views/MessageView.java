@@ -41,7 +41,7 @@ public class MessageView {
 	}
 
     public void removeMessage() {
-        view = new HBox();
         root.getChildren().remove(view);
+        view.getChildren().clear();
     }
 }

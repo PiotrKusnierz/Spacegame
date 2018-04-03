@@ -94,7 +94,7 @@ public class GameController extends Application {
                     if (paused) {
                         messageView.showAnimatedMessage("PAUSED");
                     } else {
-                        root.getChildren().remove(messageView.view);
+                        messageView.removeMessage();
                     }
             }
         });
