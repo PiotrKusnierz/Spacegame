@@ -25,7 +25,10 @@ public class GameController extends Application {
     private Player player;
     private List<Enemy> enemies;
     private List<Enemy> removedEnemies;
-    private boolean paused;
+    private int gameState;
+    private final int PAUSED = 1;
+    private final int PLAYING = 2;
+    private final int GAMEOVER = 3;
 
     public Size screenSize = new Size(
         Screen.getPrimary().getVisualBounds().getWidth(),
@@ -42,13 +45,13 @@ public class GameController extends Application {
     }
 
     public void update() {
-        if (paused) {
+        if (gameState != PLAYING) {
             return;
         }
         player.update();
         player.clampPosition(0, windowSize.w);
         if (player.lives <= 0) {
-            gameLoop.stop();
+            gameState = GAMEOVER;
             messageView.showAnimatedMessage("GAME OVER");
             return;
         }
@@ -80,6 +83,15 @@ public class GameController extends Application {
         enemies.add(enemy);
     }
 
+    public void newGame() {
+        player.rect.x = windowSize.w/2-player.rect.w/2;
+        player.lives = 3;
+        enemies.clear();
+        removedEnemies.clear();
+        messageView.removeMessage();
+        gameState = PLAYING;
+    }
+
     public void addEventHandler(Scene scene) {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
@@ -89,9 +101,17 @@ public class GameController extends Application {
                 case RIGHT:
                     player.velocity.x = 6;
                     break;
+                case R:
+                    if (gameState == GAMEOVER) {
+                        newGame();
+                    }
+                    break;
                 case P:
-                    paused = paused ? false : true;
-                    if (paused) {
+                    if (gameState == GAMEOVER) {
+                        break;
+                    }
+                    gameState = gameState == PLAYING ? PAUSED : PLAYING;
+                    if (gameState == PAUSED) {
                         messageView.showAnimatedMessage("PAUSED");
                     } else {
                         messageView.removeMessage();
@@ -116,7 +136,7 @@ public class GameController extends Application {
         root = new Pane();
         root.setPrefSize(windowSize.w, windowSize.h);
         stage.setScene(new Scene(root, Color.BLACK));
-        paused = false;
+        gameState = PLAYING;
 
         gameView = new GameView(windowSize);
         messageView = new MessageView(root);
@@ -138,6 +158,5 @@ public class GameController extends Application {
 
         stage.show();
         stage.setTitle("SPACESHIT");
-
     }
 }
