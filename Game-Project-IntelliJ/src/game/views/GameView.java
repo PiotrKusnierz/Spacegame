@@ -8,14 +8,15 @@ public class GameView {
     private Canvas canvas;
     private GraphicsContext gc;
     private Size canvasSize;
+    public PlayerView playerView;
+    public EnemyView enemyView;
 
-    public GameView(Size size) {
-    }
-
-    public void GameView(Size canvasSize) {
+    public GameView(Size canvasSize) {
         this.canvasSize = canvasSize;
         this.canvas = new Canvas(canvasSize.w, canvasSize.h);
         this.gc = canvas.getGraphicsContext2D();
+        this.playerView = new PlayerView(this.gc);
+        this.enemyView = new EnemyView(this.gc);
     }
 
     public void draw() {

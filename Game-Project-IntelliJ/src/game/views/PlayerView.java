@@ -8,5 +8,16 @@ public class PlayerView {
     public Color color;
     private GraphicsContext gc;
 
+    public PlayerView(GraphicsContext gc) {
+        this.gc = gc;
+        this.color = Color.MAGENTA;
+    }
 
+    public void draw(Player player) {
+        gc.setFill(this.color);
+        gc.fillRect(
+            player.rect.x, player.rect.y,
+            player.rect.w, player.rect.w
+        );
+    }
 }
