@@ -1,7 +1,9 @@
 package game.models;
 
 import game.tools.*;
-
+/**
+* Class for creating a Player object
+*/
 public class Player {
     public Rect rect;
     public Point velocity;
@@ -13,10 +15,12 @@ public class Player {
         this.lives = 3;
     }
 
+    // Method to prevent the player object from going out-of-bounds (out of the game-window)
     public void clampPosition(double min, double max) {
         this.rect.x = Math.min(max-rect.w, Math.max(min, this.rect.x));
     }
 
+    // Everytime update() is called on, the player object is moved as specified by current velocity
     public void update() {
         this.rect.x += this.velocity.x;
         this.rect.y += this.velocity.y;

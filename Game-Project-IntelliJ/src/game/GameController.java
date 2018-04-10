@@ -21,7 +21,10 @@ import game.models.*;
 import game.views.*;
 import game.tools.*;
 
-
+/**                                                               _
+* Masterclass. This is where the magic happens \_( *   )( *   )_/
+*
+*/
 public class GameController extends Application {
     private Pane root;
     private AnimationTimer gameLoop;
@@ -30,18 +33,22 @@ public class GameController extends Application {
     private Player player;
     private List<Enemy> enemies;
     private List<Enemy> removedEnemies;
+
     private int gameState;
     private final int PAUSED = 1;
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
 
+    // Defines the screenSize variable based on the user's screen size
     public Size screenSize = new Size(
         Screen.getPrimary().getVisualBounds().getWidth(),
-        Screen.getPrimary().getVisualBounds().getHeight()-10
+        Screen.getPrimary().getVisualBounds().getHeight()
     );
 
+    // Defines the window size we will use for the game
     public Size windowSize = new Size(screenSize.h*0.75, screenSize.h*0.9);
 
+    // Method that runs the intersects-method from tools.Rect, making colliding objects lose a life.
     public void collisionHandler(Enemy enemy) {
         if (player.rect.intersects(enemy.rect)) {
             enemy.lives--;
@@ -49,14 +56,18 @@ public class GameController extends Application {
         }
     }
 
+    // WIP
     public void saveGame() {
 
     }
 
+    // WIP
     public void loadGame() {
 
     }
 
+    // Runs every frame as it is called on in the gameloop/AnimationTimer
+    // Does nothing if the game is not running, i.e it's paused or game over.
     public void update() {
         if (gameState != PLAYING) {
             return;
@@ -75,27 +86,33 @@ public class GameController extends Application {
                 removedEnemies.add(enemy);
             }
         }
-
+        // Generates enemies
         if (Math.random() < 0.05) {
             addEnemy();
         }
+        // Uses the removeAll method from ArrayList to remove dead/inactive enemies from the enemies list
         enemies.removeAll(removedEnemies);
         removedEnemies.clear();
     }
 
+    // Runs every frame as it is called on in the gameloop/AnimationTimer
+    // Updates the visuals of the game
     public void draw() {
-        gameView.draw();
+        gameView.clearCanvas();
         gameView.playerView.draw(player);
         gameView.enemyView.draw(enemies);
     }
 
+    // Creates a new Enemy object with a random size and position
     public void addEnemy() {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.01, windowSize.w*0.1);
         double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
-        Enemy enemy = new Enemy(x, -r, r);
+        double y = -r;
+        Enemy enemy = new Enemy(x, y, r);
         enemies.add(enemy);
     }
 
+    // Resets all the game conditions
     public void newGame() {
         player.rect.x = windowSize.w/2-player.rect.w/2;
         player.lives = 3;
@@ -105,6 +122,7 @@ public class GameController extends Application {
         gameState = PLAYING;
     }
 
+    // Recognizes user input and acts accordingly
     public void addEventHandler(Scene scene) {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
@@ -124,6 +142,7 @@ public class GameController extends Application {
                         break;
                     }
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
+
                     if (gameState == PAUSED) {
                         messageView.showAnimatedMessage("PAUSED");
                     } else {
@@ -132,6 +151,7 @@ public class GameController extends Application {
             }
         });
 
+        // To make sure the player does not continue moving after the key is released
         scene.setOnKeyReleased(event -> {
             switch (event.getCode()) {
                 case LEFT:
@@ -153,7 +173,7 @@ public class GameController extends Application {
 
         gameView = new GameView(windowSize);
         messageView = new MessageView(root);
-        player = new Player(windowSize.w/2, windowSize.h*0.8, windowSize.w*0.1, windowSize.w*0.1);
+        player = new Player(windowSize.w/2, windowSize.h*0.8, windowSize.w*0.05, windowSize.w*0.08);
         enemies = new ArrayList<Enemy>();
         removedEnemies = new ArrayList<Enemy>();
         root.getChildren().add(gameView.getCanvas());
