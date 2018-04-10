@@ -148,6 +148,13 @@ public class GameController extends Application {
                     } else {
                         messageView.removeMessage();
                     }
+                // Trying to give a "boost" functionality by doubling the speed of enemies when key is pressed
+                case W:
+                    for (Enemy enemy : enemies) {
+                        enemy.velocity.x = enemy.velocity.x * 3;
+                        enemy.update();
+                    }
+                    break;
             }
         });
 
@@ -159,6 +166,12 @@ public class GameController extends Application {
                     break;
                 case RIGHT:
                     player.velocity.x = 0;
+                    break;
+                case W:
+                    for (Enemy enemy : enemies) {
+                        enemy.velocity.x = enemy.velocity.x / 3;
+                        enemy.update();
+                    }
                     break;
             }
         });

@@ -8,6 +8,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+/**
+* Class for creating the animated message for user inside a HBox which is placed in the middle.
+* Here FadeTransition is used for text animation.
+*/
+
 public class MessageView {
 
     public Pane root;
