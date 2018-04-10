@@ -149,9 +149,11 @@ public class GameController extends Application {
                         messageView.removeMessage();
                     }
                 // Trying to give a "boost" functionality by doubling the speed of enemies when key is pressed
-                case W:
+                // PROBLEM: Fungerer, MEN speed ser ut til å maxe ut på under 2x. Gjør ingen forskjell å gange med mer.
+                // Er også ikke smooth: burde funke samtidig som man kan svinge f.eks
+                case UP:
                     for (Enemy enemy : enemies) {
-                        enemy.velocity.x = enemy.velocity.x * 3;
+                        enemy.velocity.x = enemy.velocity.x * 20;
                         enemy.update();
                     }
                     break;
@@ -167,9 +169,9 @@ public class GameController extends Application {
                 case RIGHT:
                     player.velocity.x = 0;
                     break;
-                case W:
+                case UP:
                     for (Enemy enemy : enemies) {
-                        enemy.velocity.x = enemy.velocity.x / 3;
+                        enemy.velocity.x = enemy.velocity.x / 20;
                         enemy.update();
                     }
                     break;
