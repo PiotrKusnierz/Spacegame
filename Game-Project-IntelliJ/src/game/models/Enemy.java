@@ -1,6 +1,6 @@
 package game.models;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.ThreadLocalRandom;  // A random number generator isolated to the current thread
 import game.tools.*;
 
 /**

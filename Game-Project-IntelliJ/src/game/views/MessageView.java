@@ -25,8 +25,8 @@ public class MessageView {
     public void showAnimatedMessage(String msg) {
 		root.getChildren().add(view);
 
-		for (int i = 0; i < msg.toCharArray().length; i++) {
-			char letter = msg.charAt(i);
+		for (int i = 0; i < msg.toCharArray().length; i++) {   //toCharArray() converts string into character array
+			char letter = msg.charAt(i);	   // charAt(int index) returns the character at the specified index
 
 			Text text = new Text(String.valueOf(letter));
 			text.setFont(Font.font(48));
@@ -35,9 +35,10 @@ public class MessageView {
 
 			view.getChildren().add(text);
 
+			//FadeTransition creates a fade effect animation
 			FadeTransition ft = new FadeTransition(Duration.seconds(0.66), text);
 			ft.setToValue(1);
-			ft.setDelay(Duration.seconds(i * 0.15));
+			ft.setDelay(Duration.seconds(i * 0.05));
 			ft.play();
 		}
 		view.autosize();
