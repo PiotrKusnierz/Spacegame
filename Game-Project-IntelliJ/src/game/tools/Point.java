@@ -1,7 +1,9 @@
 package game.tools;
+
 /**
 * Class used for storing for example position or velocity of an object
 */
+
 public class Point {
     public double x, y;
 
