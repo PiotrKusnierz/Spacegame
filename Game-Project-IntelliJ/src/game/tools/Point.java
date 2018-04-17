@@ -1,10 +1,12 @@
 package game.tools;
 
+import java.io.Serializable;
+
 /**
 * Class used for storing for example position or velocity of an object
 */
 
-public class Point {
+public class Point implements Serializable {
     public double x, y;
 
     public Point(double x, double y) {

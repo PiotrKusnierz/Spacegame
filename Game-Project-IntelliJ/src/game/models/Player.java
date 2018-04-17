@@ -1,10 +1,11 @@
 package game.models;
 
+import java.io.Serializable;
 import game.tools.*;
 /**
 * Class for creating a Player object
 */
-public class Player {
+public class Player implements Serializable {
     public Rect rect;
     public Point velocity;
     public int lives;

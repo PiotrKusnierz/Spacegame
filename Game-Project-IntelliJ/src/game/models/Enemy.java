@@ -1,16 +1,18 @@
 package game.models;
 
+import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;  // A random number generator isolated to the current thread
 import game.tools.*;
 
 /**
 * Class for creating an Enemy object
 */
-public class Enemy {
+public class Enemy implements Serializable {
     public Point position;
     public Point velocity;
     public Rect rect;
     public int lives;
+	public int boost = 1;
 
     public Enemy(double x, double y, double w, double h, int lives) {
         this.rect = new Rect(x, y, w, h);
@@ -24,6 +26,6 @@ public class Enemy {
 
     public void update() {
         this.rect.x += this.velocity.x;
-        this.rect.y += this.velocity.y;
+        this.rect.y += this.velocity.y * this.boost;
     }
 }
