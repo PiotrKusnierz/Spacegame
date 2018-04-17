@@ -183,7 +183,9 @@ public class GameController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
+        Pane root = (Pane) FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
+        stage.setScene(new Scene(root, Color.BLACK));
+        stage.show();
 
         /*
         root = new Pane();
