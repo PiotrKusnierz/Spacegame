@@ -11,6 +11,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
@@ -180,7 +182,10 @@ public class GameController extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws Exception{
+        Parent root = (Parent) FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
+
+        /*
         root = new Pane();
         root.setPrefSize(windowSize.w, windowSize.h);
         stage.setScene(new Scene(root, Color.BLACK));
@@ -206,5 +211,7 @@ public class GameController extends Application {
 
         stage.show();
         stage.setTitle("SPACESHIT");
+        */
+
     }
 }
