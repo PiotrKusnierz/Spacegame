@@ -183,12 +183,8 @@ public class GameController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        Pane root = (Pane) FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
-        stage.setScene(new Scene(root, Color.BLACK));
-        stage.show();
 
-        /*
-        root = new Pane();
+        Pane root = (Pane) FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
         root.setPrefSize(windowSize.w, windowSize.h);
         stage.setScene(new Scene(root, Color.BLACK));
         gameState = PLAYING;
@@ -213,7 +209,7 @@ public class GameController extends Application {
 
         stage.show();
         stage.setTitle("SPACESHIT");
-        */
+
 
     }
 }
