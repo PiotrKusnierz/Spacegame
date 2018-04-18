@@ -1,9 +1,12 @@
 package game;
 
-//import java.io.IOExeption;
+import java.io.ObjectInputStream;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.io.File;
-//import java.io.Scanner;
+// import java.io.Scanner;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -16,131 +19,223 @@ import javafx.stage.Screen;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.input.KeyCode;
 
 import game.models.*;
 import game.views.*;
 import game.tools.*;
 
 
+/**                                                               _
+* Masterclass. This is where the magic happens \_( *   )( *   )_/
+*
+*/
 public class GameController extends Application {
     private Pane root;
     private AnimationTimer gameLoop;
     private GameView gameView;
     private MessageView messageView;
-    private Player player;
-    private List<Enemy> enemies;
+	private Game game;
     private List<Enemy> removedEnemies;
+    private List<Point> removedBullets;
+
     private int gameState;
     private final int PAUSED = 1;
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
 
+	public double boost = 1;
+    // Defines the screenSize variable based on the user's screen size
     public Size screenSize = new Size(
         Screen.getPrimary().getVisualBounds().getWidth(),
-        Screen.getPrimary().getVisualBounds().getHeight()-10
+        Screen.getPrimary().getVisualBounds().getHeight()
     );
 
-    public Size windowSize = new Size(screenSize.h*0.75, screenSize.h*0.9);
+    // Defines the window size we will use for the game
+    // public Size windowSize = new Size(screenSize.h*0.75, screenSize.h*0.9);
+    public Size windowSize = new Size(320, 480);
 
+    // Method that runs the intersects-method from tools.Rect, making colliding objects lose a life.
     public void collisionHandler(Enemy enemy) {
-        if (player.rect.intersects(enemy.rect)) {
+        if (game.player.rect.intersects(enemy.rect)) {
             enemy.lives--;
-            player.lives--;
+            game.player.lives--;
         }
     }
 
+    // WIP
     public void saveGame() {
-
+		FileOutputStream fout = null;
+		ObjectOutputStream oos = null;
+		try {
+			fout = new FileOutputStream("./game.sav");
+			oos = new ObjectOutputStream(fout);
+			oos.writeObject(game);
+			if (fout != null) {
+				fout.close();
+			}
+			if (oos != null) {
+				oos.close();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println(e);
+		} catch (IOException e) {
+			System.out.println(e);
+		}
     }
 
+    // WIP
     public void loadGame() {
-
+		try {
+			FileInputStream fis = new FileInputStream("./game.sav");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			game = (Game)ois.readObject();
+			fis.close();
+			ois.close();
+		} catch (FileNotFoundException e) {
+			System.out.println(e);
+		} catch (IOException e) {
+			System.out.println(e);
+		} catch (ClassNotFoundException e) {
+			System.out.println(e);
+		}
     }
 
+    // Runs every frame as it is called on in the gameloop/AnimationTimer
+    // Does nothing if the game is not running, i.e it's paused or game over.
     public void update() {
         if (gameState != PLAYING) {
             return;
         }
-        player.update();
-        player.clampPosition(0, windowSize.w);
-        if (player.lives <= 0) {
+        game.player.update();
+        game.player.clampPosition(0, windowSize.w);
+        if (game.player.lives <= 0) {
             gameState = GAMEOVER;
             messageView.showAnimatedMessage("GAME OVER");
             return;
         }
-        for (Enemy enemy : enemies) {
+        for (Enemy enemy : game.enemies) {
             enemy.update();
             collisionHandler(enemy);
-            if (enemy.lives == 0 || enemy.rect.y > windowSize.h) {
+			for (Point bullet : game.player.bullets) {
+				if (bullet.y > windowSize.h) {
+					removedBullets.add(bullet);
+				}
+				if (enemy.rect.contains(bullet)) {
+					enemy.lives--;
+					removedBullets.add(bullet);
+				}
+			}
+            if (enemy.lives == 0 || enemy.rect.y < 0) {
                 removedEnemies.add(enemy);
             }
         }
-
-        if (Math.random() < 0.05) {
+        // Generates enemies
+        if (Math.random() < 0.05 * boost) {
             addEnemy();
         }
-        enemies.removeAll(removedEnemies);
+        // Uses the removeAll method from ArrayList to remove dead/inactive enemies from the enemies list
+        game.enemies.removeAll(removedEnemies);
+        game.player.bullets.removeAll(removedBullets);
         removedEnemies.clear();
+        removedBullets.clear();
     }
 
+    // Runs every frame as it is called on in the gameloop/AnimationTimer
+    // Updates the visuals of the game
     public void draw() {
-        gameView.draw();
-        gameView.playerView.draw(player);
-        gameView.enemyView.draw(enemies);
+        gameView.clearCanvas();
+        gameView.playerView.draw(game.player);
+        gameView.enemyView.draw(game.enemies);
     }
 
+    // Creates a new Enemy object with a random size and position
     public void addEnemy() {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.01, windowSize.w*0.1);
         double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
-        Enemy enemy = new Enemy(x, -r, r);
-        enemies.add(enemy);
+        double y = windowSize.h+r;
+        Enemy enemy = new Enemy(x, y, r, boost);
+        game.enemies.add(enemy);
     }
 
+    // Resets all the game conditions
     public void newGame() {
-        player.rect.x = windowSize.w/2-player.rect.w/2;
-        player.lives = 3;
-        enemies.clear();
+        game.player.rect.x = windowSize.w/2-game.player.rect.w/2;
+        game.player.lives = 3;
+        game.enemies.clear();
+        game.player.bullets.clear();
         removedEnemies.clear();
+        removedBullets.clear();
         messageView.removeMessage();
         gameState = PLAYING;
     }
 
+    // Recognizes user input and acts accordingly
     public void addEventHandler(Scene scene) {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case LEFT:
-                    player.velocity.x = -6;
+                    game.player.velocity.x = -6;
                     break;
                 case RIGHT:
-                    player.velocity.x = 6;
+                    game.player.velocity.x = 6;
                     break;
                 case R:
-                    if (gameState == GAMEOVER) {
-                        newGame();
-                    }
+					newGame();
+                    // if (gameState == GAMEOVER) {
+                    // }
                     break;
+				case S:
+					saveGame();
+					break;
+				case L:
+					if (gameState == PAUSED || gameState == GAMEOVER) {
+						break;
+					}
+					gameState = PAUSED;
+					loadGame();
+                    messageView.showAnimatedMessage(String.format("Lives: %d", game.player.lives));
+					break;
                 case P:
                     if (gameState == GAMEOVER) {
                         break;
                     }
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
+
                     if (gameState == PAUSED) {
                         messageView.showAnimatedMessage("PAUSED");
                     } else {
                         messageView.removeMessage();
                     }
+					break;
             }
+			if (event.getCode() == KeyCode.UP) {
+				boost = 3;
+				for (Enemy enemy : game.enemies) {
+					enemy.boost = boost;
+				}
+			}
+			if (event.getCode() == KeyCode.SPACE) {
+				game.player.shoot();
+			}
         });
 
+        // To make sure the game.player does not continue moving after the key is released
         scene.setOnKeyReleased(event -> {
             switch (event.getCode()) {
                 case LEFT:
-                    player.velocity.x = 0;
+                    game.player.velocity.x = 0;
                     break;
                 case RIGHT:
-                    player.velocity.x = 0;
+                    game.player.velocity.x = 0;
                     break;
             }
+			if (event.getCode() == KeyCode.UP) {
+				boost = 1;
+				for (Enemy enemy : game.enemies) {
+					enemy.boost = boost;
+				}
+			}
         });
     }
 
@@ -153,9 +248,11 @@ public class GameController extends Application {
 
         gameView = new GameView(windowSize);
         messageView = new MessageView(root);
-        player = new Player(windowSize.w/2, windowSize.h*0.8, windowSize.w*0.1, windowSize.w*0.1);
-        enemies = new ArrayList<Enemy>();
+		game = new Game();
+        game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.05, windowSize.w*0.08);
+        game.enemies = new ArrayList<Enemy>();
         removedEnemies = new ArrayList<Enemy>();
+        removedBullets = new ArrayList<Point>();
         root.getChildren().add(gameView.getCanvas());
 
         gameLoop = new AnimationTimer() {

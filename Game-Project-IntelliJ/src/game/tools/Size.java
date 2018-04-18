@@ -1,8 +1,10 @@
 package game.tools;
 
+/**
+*  Simple class for storing object dimensions
+*/
 public class Size {
-    public double w;
-    public double h;
+    public double w, h;
 
     public Size(double w, double h) {
         this.w = w;

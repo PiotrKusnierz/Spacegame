@@ -1,6 +1,10 @@
 package game.tools;
 
-public class Rect {
+import java.io.Serializable;
+/**
+* Simple representation of a rectangle, with position and size.
+*/
+public class Rect implements Serializable {
     public double x, y, w, h;
 
     public Rect(double x, double y, double w, double h) {
@@ -22,15 +26,7 @@ public class Rect {
         this.y = point.y;
     }
 
-    public boolean intersects(Rect other) {
-        if (this.left() < other.right() && this.right() > other.left()) {
-            if (this.bottom() < other.top() && this.top() > other.bottom()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+    // Finds the y-coordinate of the rect-object. Default y value is the bottom of the object.
     public double top() {
         return this.y+this.h;
     }
@@ -47,13 +43,35 @@ public class Rect {
         return this.x+this.w;
     }
 
+    /**
+    * Method checking for collision between two objects. First if-statement checks for horizontal collision, the second for vertical
+    */
+    public boolean intersects(Rect other) {
+        if (this.left() < other.right() && this.right() > other.left()) {
+            if (this.bottom() < other.top() && this.top() > other.bottom()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+	public boolean contains(Point p) {
+		if (p.x > this.left() && p.x < this.right()) {
+			if (p.y > this.bottom() && p.y < this.top()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
     public Point center() {
         return new Point(x + w/2, y + h/2);
     }
 
+    // Text representation of rectangle object.
     @Override
     public String toString() {
         return String.format(
-            "Rect(x=%f, y=%f, w=%f, h=%f)", x, y, w, h);
+            "Rect(x=%.2f, y=%.2f, w=%.2f, h=%.2f)", x, y, w, h);
     }
 }
