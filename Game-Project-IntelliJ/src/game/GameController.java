@@ -19,6 +19,7 @@ import javafx.stage.Screen;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.input.KeyCode;
 
 import game.models.*;
 import game.views.*;
@@ -42,6 +43,7 @@ public class GameController extends Application {
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
 
+	public double boost = 1;
     // Defines the screenSize variable based on the user's screen size
     public Size screenSize = new Size(
         Screen.getPrimary().getVisualBounds().getWidth(),
@@ -119,7 +121,7 @@ public class GameController extends Application {
             }
         }
         // Generates enemies
-        if (Math.random() < 0.05) {
+        if (Math.random() < 0.05 * boost) {
             addEnemy();
         }
         // Uses the removeAll method from ArrayList to remove dead/inactive enemies from the enemies list
@@ -140,7 +142,7 @@ public class GameController extends Application {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.01, windowSize.w*0.1);
         double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
         double y = -r;
-        Enemy enemy = new Enemy(x, y, r);
+        Enemy enemy = new Enemy(x, y, r, boost);
         game.enemies.add(enemy);
     }
 
@@ -192,13 +194,14 @@ public class GameController extends Application {
                         messageView.removeMessage();
                     }
 					break;
-                case UP:
-                    for (Enemy enemy : game.enemies) {
-						enemy.boost = 2;
-                        enemy.update();
-                    }
-                    break;
             }
+			if (event.getCode() == KeyCode.UP) {
+				boost = 3;
+				for (Enemy enemy : game.enemies) {
+					enemy.boost = boost;
+					// enemy.update();
+				}
+			}
         });
 
         // To make sure the game.player does not continue moving after the key is released
@@ -210,13 +213,14 @@ public class GameController extends Application {
                 case RIGHT:
                     game.player.velocity.x = 0;
                     break;
-                case UP:
-                    for (Enemy enemy : game.enemies) {
-						enemy.boost = 1;
-                        enemy.update();
-                    }
-                    break;
             }
+			if (event.getCode() == KeyCode.UP) {
+				boost = 1;
+				for (Enemy enemy : game.enemies) {
+					enemy.boost = boost;
+					// enemy.update();
+				}
+			}
         });
     }
 

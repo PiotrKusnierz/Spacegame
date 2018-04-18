@@ -12,16 +12,21 @@ public class Enemy implements Serializable {
     public Point velocity;
     public Rect rect;
     public int lives;
-	public int boost = 1;
+	public double boost = 1;
 
-    public Enemy(double x, double y, double w, double h, int lives) {
+    public Enemy(double x, double y, double w, double h, int lives, double boost) {
         this.rect = new Rect(x, y, w, h);
         this.velocity = new Point(0, ThreadLocalRandom.current().nextInt(3, 6)); // Returns an integer from and including the lowest up to, but not including, the highest
         this.lives = lives;
+		this.boost = boost;
+    }
+
+    public Enemy(double x, double y, double r, double boost) {
+        this(x, y, r, r, 1, boost);
     }
 
     public Enemy(double x, double y, double r) {
-        this(x, y, r, r, 1);
+        this(x, y, r, r, 1, 1);
     }
 
     public void update() {
