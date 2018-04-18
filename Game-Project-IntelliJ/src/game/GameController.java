@@ -58,7 +58,7 @@ public class GameController extends Application {
         if (player.rect.intersects(enemy.rect)) {
             enemy.lives--;
             player.lives--;
-            gameView.lives.setText("Lives: " + Integer.toString(player.lives));
+            gameView.lives.setText("LIVES: " + Integer.toString(player.lives));
         }
     }
 
@@ -126,7 +126,7 @@ public class GameController extends Application {
         removedEnemies.clear();
         messageView.removeMessage();
         gameState = PLAYING;
-        gameView.lives.setText("Lives: " + Integer.toString(player.lives));
+        gameView.lives.setText("LIVES: " + Integer.toString(player.lives));
     }
 
     // Recognizes user input and acts accordingly
@@ -215,7 +215,7 @@ public class GameController extends Application {
 
         stage.show();
         stage.setTitle("SPACESHIT");
-        gameView.lives.setText("Lives: " + Integer.toString(player.lives));
+        gameView.lives.setText("LIVES: " + Integer.toString(player.lives));
 
 
     }
