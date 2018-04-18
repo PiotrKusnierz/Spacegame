@@ -4,9 +4,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<Pane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Canvas height="581.0" layoutX="-8.0" layoutY="-4.0" width="482.0" />
-      <Text layoutX="127.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Canvas  id="canvas" height="581.0" layoutX="-8.0" layoutY="-4.0" width="482.0" />
+      <Text layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="422.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
    </children>
 </Pane>

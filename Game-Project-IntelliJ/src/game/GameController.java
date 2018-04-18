@@ -12,7 +12,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
@@ -24,7 +23,7 @@ import game.views.*;
 import game.tools.*;
 
 /**                                                               _
-* Masterclass. This is where the magic happens \_( *   )( *   )_/
+ * Masterclass. This is where the magic happens \_( *   )( *   )_/
 *
 */
 public class GameController extends Application {
@@ -40,6 +39,10 @@ public class GameController extends Application {
     private final int PAUSED = 1;
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
+
+
+
+
 
     // Defines the screenSize variable based on the user's screen size
     public Size screenSize = new Size(
@@ -189,12 +192,12 @@ public class GameController extends Application {
         stage.setScene(new Scene(root, Color.BLACK));
         gameState = PLAYING;
 
-        gameView = new GameView(windowSize);
+
+        gameView = new GameView(windowSize, root);
         messageView = new MessageView(root);
         player = new Player(windowSize.w/2, windowSize.h*0.8, windowSize.w*0.05, windowSize.w*0.08);
         enemies = new ArrayList<Enemy>();
         removedEnemies = new ArrayList<Enemy>();
-        root.getChildren().add(gameView.getCanvas());
 
         gameLoop = new AnimationTimer() {
             @Override
