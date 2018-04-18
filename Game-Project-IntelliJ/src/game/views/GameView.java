@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import game.tools.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 /**
 * Class for creating the canvas (aka "drawing board") of the game.
@@ -15,10 +16,14 @@ public class GameView {
     private Size canvasSize;
     public PlayerView playerView;
     public EnemyView enemyView;
+    public Text lives;
+    public Text score;
 
     public GameView(Size canvasSize, Pane root) {
-        this.canvasSize = canvasSize;
         canvas = (Canvas) root.lookup("#canvas");
+        lives = (Text) root.lookup("#lives");
+        score = (Text) root.lookup("#score");
+        this.canvasSize = canvasSize;
         this.gc = canvas.getGraphicsContext2D();
         this.playerView = new PlayerView(this.gc);
         this.enemyView = new EnemyView(this.gc);
@@ -29,7 +34,8 @@ public class GameView {
         this.gc.clearRect(0, 0, canvasSize.w, canvasSize.h);
     }
 
+    /*
     public Canvas getCanvas() {
         return canvas;
-    }
+    }*/
 }

@@ -6,8 +6,8 @@
 
 <Pane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Canvas  id="canvas" height="581.0" layoutX="-8.0" layoutY="-4.0" width="482.0" />
-      <Text layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text layoutX="422.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Canvas id="canvas" height="581.0" layoutX="-8.0" layoutY="-4.0" width="482.0" />
+      <Text id="lives" fill="#eb1111" layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lives" />
+      <Text id="score" fill="#f50909" layoutX="422.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score" />
    </children>
 </Pane>
