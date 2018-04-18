@@ -153,7 +153,7 @@ public class GameController extends Application {
     public void addEnemy() {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.01, windowSize.w*0.1);
         double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
-        double y = windowSize.h-r;
+        double y = windowSize.h+r;
         Enemy enemy = new Enemy(x, y, r, boost);
         game.enemies.add(enemy);
     }
