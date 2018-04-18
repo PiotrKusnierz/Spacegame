@@ -37,6 +37,7 @@ public class GameController extends Application {
     private MessageView messageView;
 	private Game game;
     private List<Enemy> removedEnemies;
+    private List<Point> removedBullets;
 
     private int gameState;
     private final int PAUSED = 1;
@@ -116,7 +117,16 @@ public class GameController extends Application {
         for (Enemy enemy : game.enemies) {
             enemy.update();
             collisionHandler(enemy);
-            if (enemy.lives == 0 || enemy.rect.y > windowSize.h) {
+			for (Point bullet : game.player.bullets) {
+				if (bullet.y > windowSize.h) {
+					removedBullets.add(bullet);
+				}
+				if (enemy.rect.contains(bullet)) {
+					enemy.lives--;
+					removedBullets.add(bullet);
+				}
+			}
+            if (enemy.lives == 0 || enemy.rect.y < 0) {
                 removedEnemies.add(enemy);
             }
         }
@@ -126,7 +136,9 @@ public class GameController extends Application {
         }
         // Uses the removeAll method from ArrayList to remove dead/inactive enemies from the enemies list
         game.enemies.removeAll(removedEnemies);
+        game.player.bullets.removeAll(removedBullets);
         removedEnemies.clear();
+        removedBullets.clear();
     }
 
     // Runs every frame as it is called on in the gameloop/AnimationTimer
@@ -141,7 +153,7 @@ public class GameController extends Application {
     public void addEnemy() {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.01, windowSize.w*0.1);
         double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
-        double y = -r;
+        double y = windowSize.h-r;
         Enemy enemy = new Enemy(x, y, r, boost);
         game.enemies.add(enemy);
     }
@@ -151,7 +163,9 @@ public class GameController extends Application {
         game.player.rect.x = windowSize.w/2-game.player.rect.w/2;
         game.player.lives = 3;
         game.enemies.clear();
+        game.player.bullets.clear();
         removedEnemies.clear();
+        removedBullets.clear();
         messageView.removeMessage();
         gameState = PLAYING;
     }
@@ -175,7 +189,7 @@ public class GameController extends Application {
 					saveGame();
 					break;
 				case L:
-					if (gameState == PAUSED) {
+					if (gameState == PAUSED || gameState == GAMEOVER) {
 						break;
 					}
 					gameState = PAUSED;
@@ -199,8 +213,10 @@ public class GameController extends Application {
 				boost = 3;
 				for (Enemy enemy : game.enemies) {
 					enemy.boost = boost;
-					// enemy.update();
 				}
+			}
+			if (event.getCode() == KeyCode.SPACE) {
+				game.player.shoot();
 			}
         });
 
@@ -218,7 +234,6 @@ public class GameController extends Application {
 				boost = 1;
 				for (Enemy enemy : game.enemies) {
 					enemy.boost = boost;
-					// enemy.update();
 				}
 			}
         });
@@ -234,9 +249,10 @@ public class GameController extends Application {
         gameView = new GameView(windowSize);
         messageView = new MessageView(root);
 		game = new Game();
-        game.player = new Player(windowSize.w/2, windowSize.h*0.8, windowSize.w*0.05, windowSize.w*0.08);
+        game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.05, windowSize.w*0.08);
         game.enemies = new ArrayList<Enemy>();
         removedEnemies = new ArrayList<Enemy>();
+        removedBullets = new ArrayList<Point>();
         root.getChildren().add(gameView.getCanvas());
 
         gameLoop = new AnimationTimer() {

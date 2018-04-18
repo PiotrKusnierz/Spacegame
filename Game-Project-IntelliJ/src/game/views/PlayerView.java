@@ -3,6 +3,7 @@ package game.views;
 import javafx.scene.paint.Color;
 import javafx.scene.canvas.GraphicsContext;
 import game.models.Player;
+import game.tools.Point;
 
 /**
 * Class that determines how the player object is displayed in the game window.
@@ -25,5 +26,9 @@ public class PlayerView {
             player.rect.x, player.rect.y,
             player.rect.w, player.rect.h
         );
+		gc.setFill(Color.BLUE);
+		for (Point bullet : player.bullets) {
+			gc.fillOval(bullet.x, bullet.y, 10, 10);
+		}
     }
 }

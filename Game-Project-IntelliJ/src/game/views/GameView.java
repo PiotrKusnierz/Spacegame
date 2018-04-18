@@ -17,6 +17,7 @@ public class GameView {
     public GameView(Size canvasSize) {
         this.canvasSize = canvasSize;
         this.canvas = new Canvas(canvasSize.w, canvasSize.h);
+		this.canvas.setScaleY(-1);
         this.gc = canvas.getGraphicsContext2D();
         this.playerView = new PlayerView(this.gc);
         this.enemyView = new EnemyView(this.gc);

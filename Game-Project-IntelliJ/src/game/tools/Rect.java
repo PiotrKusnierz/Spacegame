@@ -55,6 +55,15 @@ public class Rect implements Serializable {
         return false;
     }
 
+	public boolean contains(Point p) {
+		if (p.x > this.left() && p.x < this.right()) {
+			if (p.y > this.bottom() && p.y < this.top()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
     public Point center() {
         return new Point(x + w/2, y + h/2);
     }
