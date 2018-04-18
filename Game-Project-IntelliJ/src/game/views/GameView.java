@@ -32,7 +32,7 @@ public class GameView {
 
     // Clears the screen / game window visually
     public void clearCanvas() {
-        this.gc.clearRect(0, 0, canvasSize.w, canvasSize.h);
+        this.gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     /*
