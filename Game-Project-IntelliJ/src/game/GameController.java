@@ -14,6 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
@@ -27,7 +28,7 @@ import game.tools.*;
 
 
 /**                                                               _
-* Masterclass. This is where the magic happens \_( *   )( *   )_/
+ * Masterclass. This is where the magic happens \_( *   )( *   )_/
 *
 */
 public class GameController extends Application {
@@ -59,7 +60,8 @@ public class GameController extends Application {
     public void collisionHandler(Enemy enemy) {
         if (game.player.rect.intersects(enemy.rect)) {
             enemy.lives--;
-            game.player.lives--;
+            player.lives--;
+            gameView.lives.setText("LIVES: " + Integer.toString(player.lives));
         }
     }
 
@@ -168,6 +170,7 @@ public class GameController extends Application {
         removedBullets.clear();
         messageView.removeMessage();
         gameState = PLAYING;
+        gameView.lives.setText("LIVES: " + Integer.toString(player.lives));
     }
 
     // Recognizes user input and acts accordingly
@@ -240,13 +243,16 @@ public class GameController extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
-        root = new Pane();
+    public void start(Stage stage) throws Exception{
+
+        Pane root = FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
         root.setPrefSize(windowSize.w, windowSize.h);
         stage.setScene(new Scene(root, Color.BLACK));
         gameState = PLAYING;
 
-        gameView = new GameView(windowSize);
+
+
+        gameView = new GameView(windowSize, root);
         messageView = new MessageView(root);
 		game = new Game();
         game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.05, windowSize.w*0.08);
@@ -268,5 +274,8 @@ public class GameController extends Application {
 
         stage.show();
         stage.setTitle("SPACESHIT");
+        gameView.lives.setText("LIVES: " + Integer.toString(player.lives));
+
+
     }
 }
