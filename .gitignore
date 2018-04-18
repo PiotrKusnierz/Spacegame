@@ -57,3 +57,6 @@ pom.xml.tag
 
 # Undo files from vim
 *.un~
+
+# Game save files
+*.sav
