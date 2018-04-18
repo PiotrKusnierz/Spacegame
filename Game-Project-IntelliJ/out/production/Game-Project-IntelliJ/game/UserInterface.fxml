@@ -12,7 +12,7 @@
          <font>
             <Font name="Arial" size="30.0" />
          </font></Text>
-      <Text id="score" fill="WHITE" layoutX="350.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE">
+      <Text id="score" fill="WHITE" layoutX="320.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE">
          <font>
             <Font name="Arial" size="30.0" />
          </font></Text>

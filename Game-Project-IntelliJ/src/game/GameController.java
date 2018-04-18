@@ -126,6 +126,8 @@ public class GameController extends Application {
 				if (enemy.rect.contains(bullet)) {
 					enemy.lives--;
 					removedBullets.add(bullet);
+					game.score++;
+                    gameView.score.setText("SCORE: " + Integer.toString(game.score));
 				}
 			}
             if (enemy.lives == 0 || enemy.rect.y < 0) {
@@ -164,6 +166,7 @@ public class GameController extends Application {
     public void newGame() {
         game.player.rect.x = windowSize.w/2-game.player.rect.w/2;
         game.player.lives = 3;
+        game.score = 0;
         game.enemies.clear();
         game.player.bullets.clear();
         removedEnemies.clear();
@@ -171,6 +174,7 @@ public class GameController extends Application {
         messageView.removeMessage();
         gameState = PLAYING;
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));
     }
 
     // Recognizes user input and acts accordingly
@@ -185,19 +189,19 @@ public class GameController extends Application {
                     break;
                 case R:
 					newGame();
-                    // if (gameState == GAMEOVER) {
-                    // }
                     break;
 				case S:
 					saveGame();
 					break;
 				case L:
 					if (gameState == PAUSED || gameState == GAMEOVER) {
-						break;
+                        gameState = PAUSED;
+                        loadGame();
+                        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+                        gameView.score.setText("SCORE: " + Integer.toString(game.score));
+                        messageView.removeMessage();
+                        messageView.showAnimatedMessage("LOADED");
 					}
-					gameState = PAUSED;
-					loadGame();
-                    messageView.showAnimatedMessage(String.format("Lives: %d", game.player.lives));
 					break;
                 case P:
                     if (gameState == GAMEOVER) {
@@ -246,7 +250,6 @@ public class GameController extends Application {
     public void start(Stage stage) throws Exception{
 
         Pane root = FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
-      //  root.setPrefSize(windowSize.w, windowSize.h);
         stage.setScene(new Scene(root, Color.BLACK));
         gameState = PLAYING;
 
@@ -274,6 +277,7 @@ public class GameController extends Application {
         stage.show();
         stage.setTitle("SPACESHIT");
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));
 
 
     }

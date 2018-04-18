@@ -10,4 +10,6 @@ import game.models.Enemy;
 public class Game implements Serializable {
 	public Player player;
 	public List<Enemy> enemies;
+	public int score = 0;
+
 }
