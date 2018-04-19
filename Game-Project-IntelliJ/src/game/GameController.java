@@ -31,6 +31,7 @@ import javafx.scene.image.Image;
 *
 */
 public class GameController extends Application {
+    public MenuView menyView;
     private Pane root;
     private AnimationTimer gameLoop;
     private GameView gameView;
@@ -249,17 +250,20 @@ public class GameController extends Application {
     public void start(Stage stage) throws Exception{
 
         Pane root = FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
+        menyView = new MenuView(root);
 
 
-
+    /*
         InputStream is = Files.newInputStream(Paths.get("C:\\Users\\piotr\\Documents\\GitHub\\java-semester-project\\Game-Project-IntelliJ\\src\\game\\images\\mbg.jpg"));
         //InputStream is = Files.newInputStream(Paths.get("game/images/mbg.jpg"));
 
         Image menuBackground = new Image(is);
         is.close();
 
-        ImageView imgView = new ImageView(menuBackground);
-        root.getChildren().addAll(imgView);
+        ImageView menuImageView = new ImageView(menuBackground);
+        root.getChildren().addAll(menuImageView);
+
+*/
 
 
 
