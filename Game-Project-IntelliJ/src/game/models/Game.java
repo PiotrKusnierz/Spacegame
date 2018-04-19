@@ -11,5 +11,10 @@ public class Game implements Serializable {
 	public Player player;
 	public List<Enemy> enemies;
 	public int score = 0;
+	public int frameCounter = 0;
+	public int level = 1;
 
+	public void countFrames() {
+		frameCounter = (frameCounter + 1);
+	}
 }

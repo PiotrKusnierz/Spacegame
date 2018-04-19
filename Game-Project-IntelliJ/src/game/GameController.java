@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-// import java.io.Scanner;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ import game.tools.*;
 
 
 /**                                                               _
- * Masterclass. This is where the magic happens \_( *   )( *   )_/
+* Masterclass. This is where the magic happens \_( *   )( *   )_/
 *
 */
 public class GameController extends Application {
@@ -109,6 +108,15 @@ public class GameController extends Application {
         if (gameState != PLAYING) {
             return;
         }
+		game.countFrames();
+		if (game.frameCounter % 3600 == 0) {
+			game.level++;
+			game.frameCounter = 0;
+			messageView.showAnimatedMessage(String.format("Level %d", game.level));
+		} else if (game.frameCounter % 100 == 0) {
+			// There should be a better solution to remove the message.
+			messageView.removeMessage();
+		}
         game.player.update();
         game.player.clampPosition(0, windowSize.w);
         if (game.player.lives <= 0) {
@@ -155,7 +163,7 @@ public class GameController extends Application {
 
     // Creates a new Enemy object with a random size and position
     public void addEnemy() {
-        double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.01, windowSize.w*0.1);
+        double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.05, windowSize.w*0.1);
         double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
         double y = windowSize.h+r;
         Enemy enemy = new Enemy(x, y, r, boost);
@@ -258,7 +266,7 @@ public class GameController extends Application {
         gameView = new GameView(windowSize, root);
         messageView = new MessageView(root);
 		game = new Game();
-        game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.05, windowSize.w*0.08);
+        game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.12, windowSize.w*0.12);
         game.enemies = new ArrayList<Enemy>();
         removedEnemies = new ArrayList<Enemy>();
         removedBullets = new ArrayList<Point>();

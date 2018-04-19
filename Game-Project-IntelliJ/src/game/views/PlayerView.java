@@ -1,5 +1,9 @@
 package game.views;
 
+import java.io.FileInputStream;
+import java.util.List;
+import java.util.ArrayList;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.canvas.GraphicsContext;
 import game.models.Player;
@@ -13,16 +17,37 @@ import game.tools.Point;
 public class PlayerView {
     public Color color;
     private GraphicsContext gc;
+	private List<Image> images;
 
     public PlayerView(GraphicsContext gc) {
         this.gc = gc;
         this.color = Color.MAGENTA;
+		this.images = new ArrayList<Image>();
+		loadImages();
     }
+
+	private void loadImage(String filePath) {
+		try {
+			FileInputStream fis = new FileInputStream(filePath);
+			images.add(new Image(fis));
+			fis.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} 
+	}
+
+	public void loadImages() {
+		loadImage("game/images/png/playerShip1_blue.png");
+	}
 
     // Method draws player object
     public void draw(Player player) {
         gc.setFill(this.color);
-        gc.fillRect(
+        // gc.fillRect(
+        //     player.rect.x, player.rect.y,
+        //     player.rect.w, player.rect.h
+        // );
+        gc.drawImage(images.get(0),
             player.rect.x, player.rect.y,
             player.rect.w, player.rect.h
         );

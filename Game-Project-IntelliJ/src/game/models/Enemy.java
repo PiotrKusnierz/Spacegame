@@ -14,6 +14,7 @@ public class Enemy implements Serializable {
     public int lives;
 	public double boost = 1;
 	public double step = 0;
+	public int type = ThreadLocalRandom.current().nextInt(2);
 
     public Enemy(double x, double y, double w, double h, int lives, double boost) {
         this.rect = new Rect(x, y, w, h);
