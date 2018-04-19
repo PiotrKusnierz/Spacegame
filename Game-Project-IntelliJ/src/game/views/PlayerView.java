@@ -33,11 +33,13 @@ public class PlayerView {
 			fis.close();
 		} catch(Exception e) {
 			e.printStackTrace();
+			System.out.println(System.getProperty("user.dir"));
+			System.exit(1);
 		} 
 	}
 
 	public void loadImages() {
-		loadImage("game/images/png/playerShip1_blue.png");
+		loadImage("src/game/images/png/playerShip1_blue.png");
 	}
 
     // Method draws player object
