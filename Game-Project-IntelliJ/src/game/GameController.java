@@ -1,13 +1,10 @@
 package game;
 
-import java.io.ObjectInputStream;
-import java.io.FileInputStream;
-import java.io.ObjectOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.FileNotFoundException;
+import java.io.*;
 // import java.io.Scanner;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -15,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
@@ -26,6 +24,7 @@ import game.models.*;
 import game.views.*;
 import game.tools.*;
 
+import javafx.scene.image.Image;
 
 /**                                                               _
  * Masterclass. This is where the magic happens \_( *   )( *   )_/
@@ -250,9 +249,23 @@ public class GameController extends Application {
     public void start(Stage stage) throws Exception{
 
         Pane root = FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
+
+
+
+        InputStream is = Files.newInputStream(Paths.get("C:\\Users\\piotr\\Documents\\GitHub\\java-semester-project\\Game-Project-IntelliJ\\src\\game\\images\\mbg.jpg"));
+        //InputStream is = Files.newInputStream(Paths.get("game/images/mbg.jpg"));
+
+        Image menuBackground = new Image(is);
+        is.close();
+
+        ImageView imgView = new ImageView(menuBackground);
+        root.getChildren().addAll(imgView);
+
+
+
+
         stage.setScene(new Scene(root, Color.BLACK));
         gameState = PLAYING;
-
 
 
         gameView = new GameView(windowSize, root);
@@ -279,6 +292,6 @@ public class GameController extends Application {
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
         gameView.score.setText("SCORE: " + Integer.toString(game.score));
 
-
+    
     }
 }
