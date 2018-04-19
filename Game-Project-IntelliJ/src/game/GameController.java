@@ -12,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
@@ -45,6 +46,8 @@ public class GameController extends Application {
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
 
+    public Button startGameButton;
+
 	public double boost = 1;
     // Defines the screenSize variable based on the user's screen size
     public Size screenSize = new Size(
@@ -55,6 +58,12 @@ public class GameController extends Application {
     // Defines the window size we will use for the game
     // public Size windowSize = new Size(screenSize.h*0.75, screenSize.h*0.9);
     public Size windowSize = new Size(482.0, 581.0);
+
+
+    public void startGame() {
+        gameState = PLAYING;
+        System.out.println("yo");
+    }
 
     // Method that runs the intersects-method from tools.Rect, making colliding objects lose a life.
     public void collisionHandler(Enemy enemy) {
@@ -251,25 +260,8 @@ public class GameController extends Application {
 
         Pane root = FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
         menyView = new MenuView(root);
-
-
-    /*
-        InputStream is = Files.newInputStream(Paths.get("C:\\Users\\piotr\\Documents\\GitHub\\java-semester-project\\Game-Project-IntelliJ\\src\\game\\images\\mbg.jpg"));
-        //InputStream is = Files.newInputStream(Paths.get("game/images/mbg.jpg"));
-
-        Image menuBackground = new Image(is);
-        is.close();
-
-        ImageView menuImageView = new ImageView(menuBackground);
-        root.getChildren().addAll(menuImageView);
-
-*/
-
-
-
-
         stage.setScene(new Scene(root, Color.BLACK));
-        gameState = PLAYING;
+        gameState = PAUSED;
 
 
         gameView = new GameView(windowSize, root);
