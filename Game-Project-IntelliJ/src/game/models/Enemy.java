@@ -13,6 +13,7 @@ public class Enemy implements Serializable {
     public Rect rect;
     public int lives;
 	public double boost = 1;
+	public double step = 0;
 
     public Enemy(double x, double y, double w, double h, int lives, double boost) {
         this.rect = new Rect(x, y, w, h);
@@ -29,8 +30,17 @@ public class Enemy implements Serializable {
         this(x, y, r, r, 1, 1);
     }
 
+	public void moveSin() {
+		this.velocity.x = Math.sin(this.step)*6;
+
+		// Move in a circle
+		// this.rect.y -= -Math.cos(this.step)*6;
+	}
+
     public void update() {
         this.rect.x += this.velocity.x;
         this.rect.y += this.velocity.y * this.boost;
+		this.step = (this.step + 0.1) % (2*Math.PI);
+		// moveSin();
     }
 }
