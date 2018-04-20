@@ -1,9 +1,13 @@
 package game.views;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.paint.Color;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import game.models.Player;
 import game.tools.Point;
+import game.tools.ImageLoader;
 
 /**
 * Class that determines how the player object is displayed in the game window.
@@ -13,11 +17,19 @@ import game.tools.Point;
 public class PlayerView {
     public Color color;
     private GraphicsContext gc;
+	private List<Image> images;
 
     public PlayerView(GraphicsContext gc) {
         this.gc = gc;
         this.color = Color.MAGENTA;
+		loadImages();
     }
+
+	public void loadImages() {
+		ImageLoader loader = new ImageLoader();
+		loader.load("game/images/png/playerShip1_blue.png");
+		images = loader.getAll();
+	}
 
     // Method draws player object
     public void draw(Player player) {

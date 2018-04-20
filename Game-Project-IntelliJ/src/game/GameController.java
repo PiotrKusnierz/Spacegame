@@ -14,10 +14,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.input.KeyCode;
 
@@ -32,12 +38,15 @@ import game.tools.*;
 */
 public class GameController extends Application {
     private Pane root;
+	private VBox startMenu;
     private AnimationTimer gameLoop;
     private GameView gameView;
     private MessageView messageView;
 	private Game game;
     private List<Enemy> removedEnemies;
     private List<Point> removedBullets;
+
+	private Button newGameButton;
 
     private int gameState;
     private final int PAUSED = 1;
@@ -92,6 +101,8 @@ public class GameController extends Application {
 			game = (Game)ois.readObject();
 			fis.close();
 			ois.close();
+			messageView.removeMessage();
+			gameState = PAUSED;
 		} catch (FileNotFoundException e) {
 			System.out.println(e);
 		} catch (IOException e) {
@@ -167,8 +178,22 @@ public class GameController extends Application {
         removedEnemies.clear();
         removedBullets.clear();
         messageView.removeMessage();
-        gameState = PLAYING;
+        // gameState = PLAYING;
+        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));
     }
+
+	public void toggleMenu() {
+		startMenu.setVisible(!startMenu.isVisible());
+		switch (gameState) {
+			case PAUSED:
+				gameState = PLAYING; break;
+			case PLAYING:
+				gameState = PAUSED; break;
+			case GAMEOVER:
+				break;
+		}
+	}
 
     // Recognizes user input and acts accordingly
     public void addEventHandler(Scene scene) {
@@ -185,29 +210,35 @@ public class GameController extends Application {
                     // if (gameState == GAMEOVER) {
                     // }
                     break;
-				case S:
-					saveGame();
+				// case S:
+				// 	saveGame();
+				// 	break;
+				// case L:
+				// 	if (gameState == PAUSED || gameState == GAMEOVER) {
+                //         gameState = PAUSED;
+                //         loadGame();
+                //         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+                //         gameView.score.setText("SCORE: " + Integer.toString(game.score));
+                //         messageView.removeMessage();
+                //         messageView.showAnimatedMessage("LOADED");
+				// 	}
+				// 	break;
+                // case P:
+                //     if (gameState == GAMEOVER) {
+                //         break;
+                //     }
+                //     gameState = gameState == PLAYING ? PAUSED : PLAYING;
+                //
+                //     if (gameState == PAUSED) {
+                //         messageView.showAnimatedMessage("PAUSED");
+                //     } else {
+                //         messageView.removeMessage();
+                //     }
+				// 	break;
+				case ESCAPE:
+					toggleMenu();
 					break;
-				case L:
-					if (gameState == PAUSED || gameState == GAMEOVER) {
-						break;
-					}
-					gameState = PAUSED;
-					loadGame();
-                    messageView.showAnimatedMessage(String.format("Lives: %d", game.player.lives));
-					break;
-                case P:
-                    if (gameState == GAMEOVER) {
-                        break;
-                    }
-                    gameState = gameState == PLAYING ? PAUSED : PLAYING;
-
-                    if (gameState == PAUSED) {
-                        messageView.showAnimatedMessage("PAUSED");
-                    } else {
-                        messageView.removeMessage();
-                    }
-					break;
+					// gameState = menu.isVisible() ? PAUSED : PLAYING;
             }
 			if (event.getCode() == KeyCode.UP) {
 				boost = 3;
@@ -239,14 +270,45 @@ public class GameController extends Application {
         });
     }
 
+	private void addButtonHandler(String buttonId) {
+        Button button = (Button) root.lookup("#"+buttonId);
+		button.setOnAction(event -> {
+			switch (buttonId) {
+				case "newGameButton":
+					newGame();
+					toggleMenu();
+					if (gameState == GAMEOVER) {
+						gameState = PLAYING;
+					}
+					break;
+				case "saveButton":
+					saveGame();
+					break;
+				case "loadButton":
+					loadGame();
+					break;
+			}
+		});
+	}
+
+	public void addButtonHandlers() {
+        Button newGameButton = (Button) root.lookup("#newGameButton");
+		addButtonHandler("newGameButton");
+		addButtonHandler("saveButton");
+		addButtonHandler("loadButton");
+	}
+
     @Override
-    public void start(Stage stage) {
-        root = new Pane();
-        root.setPrefSize(windowSize.w, windowSize.h);
+    public void start(Stage stage) throws Exception {
+        root = FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
+
+        startMenu = (VBox) root.lookup("#startMenu");
+		// newGameButton.setOnAction()
+		startMenu.setVisible(false);
         stage.setScene(new Scene(root, Color.BLACK));
         gameState = PLAYING;
 
-        gameView = new GameView(windowSize);
+        gameView = new GameView(windowSize, root);
         messageView = new MessageView(root);
 		game = new Game();
         game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.05, windowSize.w*0.08);
@@ -264,9 +326,12 @@ public class GameController extends Application {
         };
 
         addEventHandler(stage.getScene());
+		addButtonHandlers();
         gameLoop.start();
 
         stage.show();
         stage.setTitle("SPACESHIT");
+        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));
     }
 }
