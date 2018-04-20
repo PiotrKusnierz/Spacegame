@@ -14,7 +14,7 @@ import game.tools.Point;
 * The class does not modify the player object in any way,
 * only the way it is displayed.
 */
-public class PlayerView {
+public class PlayerView{
     public Color color;
     private GraphicsContext gc;
 	private List<Image> images;
@@ -39,7 +39,7 @@ public class PlayerView {
 	}
 
 	public void loadImages() {
-		loadImage("src/game/images/png/playerShip1_blue.png");
+		loadImage("game/images/png/playerShip1_blue.png");
 	}
 
     // Method draws player object

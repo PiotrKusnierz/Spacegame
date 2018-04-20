@@ -37,8 +37,8 @@ public class EnemyView {
 	}
 
 	public void loadImages() {
-		loadImage("src/game/images/png/enemies/enemyGreen1.png");
-		loadImage("src/game/images/png/enemies/enemyBlack3.png");
+		loadImage("game/images/png/enemies/enemyGreen1.png");
+		loadImage("game/images/png/enemies/enemyBlack3.png");
 	}
 
     // Method draws enemy objects
