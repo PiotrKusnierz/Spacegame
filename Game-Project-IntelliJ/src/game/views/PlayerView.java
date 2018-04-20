@@ -34,7 +34,7 @@ public class PlayerView {
     // Method draws player object
     public void draw(Player player) {
         gc.setFill(this.color);
-        gc.fillRect(
+        gc.drawImage(images.get(0),
             player.rect.x, player.rect.y,
             player.rect.w, player.rect.h
         );

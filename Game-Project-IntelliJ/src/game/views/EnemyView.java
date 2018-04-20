@@ -34,7 +34,7 @@ public class EnemyView {
     public void draw(List<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             gc.setFill(this.color);
-            gc.fillOval(
+            gc.drawImage(images.get(enemy.type),
                 enemy.rect.x, enemy.rect.y,
                 enemy.rect.w, enemy.rect.h
             );

@@ -62,7 +62,7 @@ public class GameController extends Application {
 
     // Defines the window size we will use for the game
     // public Size windowSize = new Size(screenSize.h*0.75, screenSize.h*0.9);
-    public Size windowSize = new Size(320, 480);
+    public Size windowSize = new Size(428, 581);
 
     // Method that runs the intersects-method from tools.Rect, making colliding objects lose a life.
     public void collisionHandler(Enemy enemy) {
@@ -162,7 +162,7 @@ public class GameController extends Application {
 
     // Creates a new Enemy object with a random size and position
     public void addEnemy() {
-        double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.01, windowSize.w*0.1);
+        double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.05, windowSize.w*0.1);
         double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
         double y = windowSize.h+r;
         Enemy enemy = new Enemy(x, y, r, boost);
@@ -311,11 +311,10 @@ public class GameController extends Application {
         gameView = new GameView(windowSize, root);
         messageView = new MessageView(root);
 		game = new Game();
-        game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.05, windowSize.w*0.08);
+        game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.12, windowSize.w*0.12);
         game.enemies = new ArrayList<Enemy>();
         removedEnemies = new ArrayList<Enemy>();
         removedBullets = new ArrayList<Point>();
-        root.getChildren().add(gameView.getCanvas());
 
         gameLoop = new AnimationTimer() {
             @Override

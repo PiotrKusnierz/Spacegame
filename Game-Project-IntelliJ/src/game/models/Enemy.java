@@ -13,12 +13,14 @@ public class Enemy implements Serializable {
     public Rect rect;
     public int lives;
 	public double boost = 1;
+	public int type;
 
     public Enemy(double x, double y, double w, double h, int lives, double boost) {
         this.rect = new Rect(x, y, w, h);
         this.velocity = new Point(0, -ThreadLocalRandom.current().nextInt(3, 6)); // Returns an integer from and including the lowest up to, but not including, the highest
         this.lives = lives;
 		this.boost = boost;
+		this.type = ThreadLocalRandom.current().nextInt(2);
     }
 
     public Enemy(double x, double y, double r, double boost) {
