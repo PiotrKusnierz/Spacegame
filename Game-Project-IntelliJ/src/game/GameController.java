@@ -70,7 +70,7 @@ public class GameController extends Application {
         if (game.player.rect.intersects(enemy.rect)) {
             enemy.lives--;
             game.player.lives--;
-            gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+            gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         }
     }
 
@@ -136,7 +136,7 @@ public class GameController extends Application {
 					enemy.lives--;
 					removedBullets.add(bullet);
 					game.score++;
-                    gameView.score.setText("SCORE: " + Integer.toString(game.score));
+                    gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
 				}
 			}
             if (enemy.lives == 0 || enemy.rect.y < 0) {
@@ -182,6 +182,7 @@ public class GameController extends Application {
         removedBullets.clear();
         messageView.removeMessage();
         gameState = PLAYING;
+        // [P] Sets Lives, Score counter and converts Integer to String
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
         gameView.score.setText("SCORE: " + Integer.toString(game.score));
     }
@@ -206,8 +207,8 @@ public class GameController extends Application {
 					if (gameState == PAUSED || gameState == GAMEOVER) {
                         gameState = PAUSED;
                         loadGame();
-                        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
-                        gameView.score.setText("SCORE: " + Integer.toString(game.score));
+                        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
+                        gameView.score.setText("SCORE: " + Integer.toString(game.score)); // [P]
                         messageView.removeMessage();
                         messageView.showAnimatedMessage("LOADED");
 					}
@@ -285,8 +286,8 @@ public class GameController extends Application {
 
         stage.show();
         stage.setTitle("SPACESHIT");
-        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
-        gameView.score.setText("SCORE: " + Integer.toString(game.score));
+        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
 
     
     }

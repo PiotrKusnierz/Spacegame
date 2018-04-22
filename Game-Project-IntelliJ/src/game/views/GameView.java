@@ -21,8 +21,10 @@ public class GameView {
 
     public GameView(Size canvasSize, Pane root) {
         canvas = (Canvas) root.lookup("#canvas");
+        // [P]  Retrieves lives and score objects   ??
         lives = (Text) root.lookup("#lives");
         score = (Text) root.lookup("#score");
+
         this.canvasSize = canvasSize;
         this.canvas.setScaleY(-1);
         this.gc = canvas.getGraphicsContext2D();
