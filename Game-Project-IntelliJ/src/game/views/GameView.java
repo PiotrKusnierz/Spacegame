@@ -16,8 +16,8 @@ public class GameView {
     private Size canvasSize;
     public PlayerView playerView;
     public EnemyView enemyView;
-    public Text lives;
-    public Text score;
+    public Text lives; // [P]
+    public Text score; // [P]
 
     public GameView(Size canvasSize, Pane root) {
         canvas = (Canvas) root.lookup("#canvas");

@@ -262,7 +262,7 @@ public class GameController extends Application {
         Pane root = FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
         menyView = new MenuView(root);
         stage.setScene(new Scene(root, Color.BLACK));
-        gameState = PAUSED;
+        gameState = PLAYING;
 
 
         gameView = new GameView(windowSize, root);
