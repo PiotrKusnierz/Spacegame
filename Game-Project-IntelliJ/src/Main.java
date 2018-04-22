@@ -8,5 +8,5 @@ public class Main {
         System.out.println(System.getProperty("java.class.path"));
         System.setProperty("quantum.multithreaded", "false");
         Application.launch(MenuController.class, args);
-    }//jo
+    }
 }
