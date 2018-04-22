@@ -1,3 +1,4 @@
+import game.MenuController;
 import javafx.application.Application;
 import game.GameController;
 

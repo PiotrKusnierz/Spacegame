@@ -32,7 +32,7 @@ import javafx.scene.image.Image;
 *
 */
 public class GameController extends Application {
-    public MenuView menyView;
+    public MenuView menuView;
     private Pane root;
     private AnimationTimer gameLoop;
     private GameView gameView;
@@ -46,7 +46,7 @@ public class GameController extends Application {
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
 
-    public Button startGameButton;
+    public Button startGame;
 
 	public double boost = 1;
     // Defines the screenSize variable based on the user's screen size
@@ -260,7 +260,7 @@ public class GameController extends Application {
     public void start(Stage stage) throws Exception{
 
         Pane root = FXMLLoader.load(this.getClass().getResource("UserInterface.fxml"));
-        menyView = new MenuView(root);
+        menuView = new MenuView(root);
         stage.setScene(new Scene(root, Color.BLACK));
         gameState = PLAYING;
 
@@ -289,6 +289,6 @@ public class GameController extends Application {
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
 
-    
+
     }
 }
