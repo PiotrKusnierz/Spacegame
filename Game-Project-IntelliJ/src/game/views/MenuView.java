@@ -1,5 +1,6 @@
 package game.views;
-
+// class unused for now
+/*
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
@@ -12,4 +13,4 @@ public class MenuView {
     }
 
 
-}
+}*/

@@ -22,7 +22,7 @@ import game.models.*;
 import game.views.*;
 import game.tools.*;
 
-import game.views.MenuView;
+//import game.views.MenuView;
 import javafx.scene.Node;
 
 /**                                                               _
@@ -43,7 +43,7 @@ public class GameController extends Application {
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
 
-    public MenuView menuView;
+    //public MenuView menuView;
 
 
 
@@ -207,7 +207,7 @@ public class GameController extends Application {
                         messageView.showAnimatedMessage("LOADED");
                     }
                     break;
-                case P:
+                case ESCAPE:
                     if (gameState == GAMEOVER) {
                         break;
                     }
@@ -291,7 +291,7 @@ public class GameController extends Application {
     public void start(Stage stage) throws Exception{
 
         Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml"));
-        menuView = new MenuView(root);
+        //menuView = new MenuView(root);
         stage.setScene(new Scene(root, Color.YELLOW));
         stage.show();
         stage.setTitle("SPACESHIT");
