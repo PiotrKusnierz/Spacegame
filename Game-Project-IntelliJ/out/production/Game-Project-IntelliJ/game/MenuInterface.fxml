@@ -26,7 +26,7 @@
                <font>
                   <Font size="35.0" />
                </font></Text>
-            <Text onMouseClicked="#exit" strokeType="OUTSIDE" strokeWidth="0.0" text="EXIT" translateX="65.0">
+            <Text onMouseClicked="#exitGame" strokeType="OUTSIDE" strokeWidth="0.0" text="EXIT" translateX="65.0">
                <font>
                   <Font size="35.0" />
                </font></Text>

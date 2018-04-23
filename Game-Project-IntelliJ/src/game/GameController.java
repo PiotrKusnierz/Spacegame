@@ -1,29 +1,29 @@
 package game;
 
-        import java.io.*;
+import java.io.*;
 // import java.io.Scanner;
 
-        import java.util.List;
-        import java.util.ArrayList;
-        import java.util.concurrent.ThreadLocalRandom;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
-        import javafx.application.Application;
-        import javafx.animation.AnimationTimer;
-        import javafx.fxml.FXMLLoader;
-        import javafx.scene.input.MouseEvent;
-        import javafx.stage.Stage;
-        import javafx.stage.Screen;
-        import javafx.scene.Scene;
-        import javafx.scene.layout.Pane;
-        import javafx.scene.paint.Color;
-        import javafx.scene.input.KeyCode;
+import javafx.application.Application;
+import javafx.animation.AnimationTimer;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.Screen;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.input.KeyCode;
 
-        import game.models.*;
-        import game.views.*;
-        import game.tools.*;
+import game.models.*;
+import game.views.*;
+import game.tools.*;
 
-        import game.views.MenuView;
-        import javafx.scene.Node;
+import game.views.MenuView;
+import javafx.scene.Node;
 
 /**                                                               _
  * Masterclass. This is where the magic happens \_( *   )( *   )_/
@@ -282,8 +282,8 @@ public class GameController extends Application {
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
     }
 
-    // Closes game
-    public void exit(MouseEvent mouseEvent) {
+    // [P] Closes game
+    public void exitGame(MouseEvent mouseEvent) {
         System.exit(0);
     }
 
