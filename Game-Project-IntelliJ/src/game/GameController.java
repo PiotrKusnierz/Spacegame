@@ -10,6 +10,7 @@ package game;
         import javafx.application.Application;
         import javafx.animation.AnimationTimer;
         import javafx.fxml.FXMLLoader;
+        import javafx.scene.input.MouseEvent;
         import javafx.stage.Stage;
         import javafx.stage.Screen;
         import javafx.scene.Scene;
@@ -249,11 +250,10 @@ public class GameController extends Application {
         });
     }
 
-
-    public void startGame(javafx.event.ActionEvent actionEvent) throws Exception {
+    public void startGame(MouseEvent mouseEvent) throws Exception{
         Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
-        Stage game_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        game_stage.setScene(new Scene(root));
+        Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        game_stage.setScene(new Scene(root, Color.BLACK));
 
         gameState = PLAYING;
 
@@ -277,11 +277,10 @@ public class GameController extends Application {
         gameLoop.start();
 
         game_stage.show();
-        game_stage.setTitle("SPACEGAME");
+        game_stage.setTitle("SPACESHIT");
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
     }
-
 
     @Override
     public void start(Stage stage) throws Exception{
