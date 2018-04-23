@@ -1,36 +1,39 @@
 package game;
 
-import java.io.*;
+        import java.io.*;
 // import java.io.Scanner;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
+        import java.util.List;
+        import java.util.ArrayList;
+        import java.util.concurrent.ThreadLocalRandom;
 
-import javafx.application.Application;
-import javafx.animation.AnimationTimer;
-import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
-import javafx.stage.Screen;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.input.KeyCode;
+        import javafx.application.Application;
+        import javafx.animation.AnimationTimer;
+        import javafx.fxml.FXMLLoader;
+        import javafx.stage.Stage;
+        import javafx.stage.Screen;
+        import javafx.scene.Scene;
+        import javafx.scene.layout.Pane;
+        import javafx.scene.paint.Color;
+        import javafx.scene.input.KeyCode;
 
-import game.models.*;
-import game.views.*;
-import game.tools.*;
+        import game.models.*;
+        import game.views.*;
+        import game.tools.*;
+
+        import game.views.MenuView;
+        import javafx.scene.Node;
 
 /**                                                               _
  * Masterclass. This is where the magic happens \_( *   )( *   )_/
-*
-*/
+ *
+ */
 public class GameController extends Application {
     private Pane root;
     private AnimationTimer gameLoop;
     private GameView gameView;
     private MessageView messageView;
-	private Game game;
+    private Game game;
     private List<Enemy> removedEnemies;
     private List<Point> removedBullets;
 
@@ -39,13 +42,15 @@ public class GameController extends Application {
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
 
+    public MenuView menuView;
 
 
-	public double boost = 1;
+
+    public double boost = 1;
     // Defines the screenSize variable based on the user's screen size
     public Size screenSize = new Size(
-        Screen.getPrimary().getVisualBounds().getWidth(),
-        Screen.getPrimary().getVisualBounds().getHeight()
+            Screen.getPrimary().getVisualBounds().getWidth(),
+            Screen.getPrimary().getVisualBounds().getHeight()
     );
 
     // Defines the window size we will use for the game
@@ -64,40 +69,40 @@ public class GameController extends Application {
 
     // WIP
     public void saveGame() {
-		FileOutputStream fout = null;
-		ObjectOutputStream oos = null;
-		try {
-			fout = new FileOutputStream("./game.sav");
-			oos = new ObjectOutputStream(fout);
-			oos.writeObject(game);
-			if (fout != null) {
-				fout.close();
-			}
-			if (oos != null) {
-				oos.close();
-			}
-		} catch (FileNotFoundException e) {
-			System.out.println(e);
-		} catch (IOException e) {
-			System.out.println(e);
-		}
+        FileOutputStream fout = null;
+        ObjectOutputStream oos = null;
+        try {
+            fout = new FileOutputStream("./game.sav");
+            oos = new ObjectOutputStream(fout);
+            oos.writeObject(game);
+            if (fout != null) {
+                fout.close();
+            }
+            if (oos != null) {
+                oos.close();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 
     // WIP
     public void loadGame() {
-		try {
-			FileInputStream fis = new FileInputStream("./game.sav");
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			game = (Game)ois.readObject();
-			fis.close();
-			ois.close();
-		} catch (FileNotFoundException e) {
-			System.out.println(e);
-		} catch (IOException e) {
-			System.out.println(e);
-		} catch (ClassNotFoundException e) {
-			System.out.println(e);
-		}
+        try {
+            FileInputStream fis = new FileInputStream("./game.sav");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            game = (Game)ois.readObject();
+            fis.close();
+            ois.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+        } catch (IOException e) {
+            System.out.println(e);
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        }
     }
 
     // Runs every frame as it is called on in the gameloop/AnimationTimer
@@ -116,17 +121,17 @@ public class GameController extends Application {
         for (Enemy enemy : game.enemies) {
             enemy.update();
             collisionHandler(enemy);
-			for (Point bullet : game.player.bullets) {
-				if (bullet.y > windowSize.h) {
-					removedBullets.add(bullet);
-				}
-				if (enemy.rect.contains(bullet)) {
-					enemy.lives--;
-					removedBullets.add(bullet);
-					game.score++;
+            for (Point bullet : game.player.bullets) {
+                if (bullet.y > windowSize.h) {
+                    removedBullets.add(bullet);
+                }
+                if (enemy.rect.contains(bullet)) {
+                    enemy.lives--;
+                    removedBullets.add(bullet);
+                    game.score++;
                     gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
-				}
-			}
+                }
+            }
             if (enemy.lives == 0 || enemy.rect.y < 0) {
                 removedEnemies.add(enemy);
             }
@@ -186,21 +191,21 @@ public class GameController extends Application {
                     game.player.velocity.x = 6;
                     break;
                 case R:
-					newGame();
+                    newGame();
                     break;
-				case S:
-					saveGame();
-					break;
-				case L:
-					if (gameState == PAUSED || gameState == GAMEOVER) {
+                case S:
+                    saveGame();
+                    break;
+                case L:
+                    if (gameState == PAUSED || gameState == GAMEOVER) {
                         gameState = PAUSED;
                         loadGame();
                         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
                         gameView.score.setText("SCORE: " + Integer.toString(game.score)); // [P]
                         messageView.removeMessage();
                         messageView.showAnimatedMessage("LOADED");
-					}
-					break;
+                    }
+                    break;
                 case P:
                     if (gameState == GAMEOVER) {
                         break;
@@ -212,17 +217,17 @@ public class GameController extends Application {
                     } else {
                         messageView.removeMessage();
                     }
-					break;
+                    break;
             }
-			if (event.getCode() == KeyCode.UP) {
-				boost = 3;
-				for (Enemy enemy : game.enemies) {
-					enemy.boost = boost;
-				}
-			}
-			if (event.getCode() == KeyCode.SPACE) {
-				game.player.shoot();
-			}
+            if (event.getCode() == KeyCode.UP) {
+                boost = 3;
+                for (Enemy enemy : game.enemies) {
+                    enemy.boost = boost;
+                }
+            }
+            if (event.getCode() == KeyCode.SPACE) {
+                game.player.shoot();
+            }
         });
 
         // To make sure the game.player does not continue moving after the key is released
@@ -235,26 +240,27 @@ public class GameController extends Application {
                     game.player.velocity.x = 0;
                     break;
             }
-			if (event.getCode() == KeyCode.UP) {
-				boost = 1;
-				for (Enemy enemy : game.enemies) {
-					enemy.boost = boost;
-				}
-			}
+            if (event.getCode() == KeyCode.UP) {
+                boost = 1;
+                for (Enemy enemy : game.enemies) {
+                    enemy.boost = boost;
+                }
+            }
         });
     }
 
-    @Override
-    public void start(Stage stage) throws Exception{
-        
-        Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
-        stage.setScene(new Scene(root, Color.BLACK));
-        gameState = PLAYING;
 
+    public void startGame(javafx.event.ActionEvent actionEvent) throws Exception {
+        Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
+        Scene game_page_scene = new Scene(root);
+        Stage game_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        game_stage.setScene(game_page_scene);
+
+        gameState = PLAYING;
 
         gameView = new GameView(windowSize, root);
         messageView = new MessageView(root);
-		game = new Game();
+        game = new Game();
         game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.05, windowSize.w*0.08);
         game.enemies = new ArrayList<Enemy>();
         removedEnemies = new ArrayList<Enemy>();
@@ -268,14 +274,23 @@ public class GameController extends Application {
             }
         };
 
-        addEventHandler(stage.getScene());
+        addEventHandler(game_stage.getScene());
         gameLoop.start();
 
-        stage.show();
-        stage.setTitle("SPACESHIT");
+        game_stage.show();
+        game_stage.setTitle("SPACEGAME");
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
+    }
 
 
+    @Override
+    public void start(Stage stage) throws Exception{
+
+        Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml"));
+        menuView = new MenuView(root);
+        stage.setScene(new Scene(root, Color.YELLOW));
+        stage.show();
+        stage.setTitle("SPACESHIT");
     }
 }
