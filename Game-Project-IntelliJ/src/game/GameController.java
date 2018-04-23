@@ -246,7 +246,7 @@ public class GameController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-
+        
         Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
         stage.setScene(new Scene(root, Color.BLACK));
         gameState = PLAYING;

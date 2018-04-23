@@ -17,8 +17,8 @@ public class MenuController extends Application {
 
 
     public void startGame(javafx.event.ActionEvent actionEvent) throws Exception {
-        Parent game_page_parent = FXMLLoader.load(getClass().getResource("GameInterface.fxml"));
-        Scene game_page_scene = new Scene(game_page_parent);
+        Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
+        Scene game_page_scene = new Scene(root);
         Stage game_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         game_stage.setScene(game_page_scene);
         game_stage.show();
