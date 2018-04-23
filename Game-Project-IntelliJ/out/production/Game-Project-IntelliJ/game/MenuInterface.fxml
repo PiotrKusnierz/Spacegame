@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -25,10 +24,7 @@
                </VBox.margin>
                <font>
                   <Font size="35.0" />
-               </font>
-               <effect>
-                  <ColorAdjust brightness="-0.47" />
-               </effect></Text>
+               </font></Text>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="OPTIONS" translateX="30.0">
                <VBox.margin>
                   <Insets bottom="20.0" />
