@@ -282,6 +282,11 @@ public class GameController extends Application {
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
     }
 
+    // Closes game
+    public void exit(MouseEvent mouseEvent) {
+        System.exit(0);
+    }
+
     @Override
     public void start(Stage stage) throws Exception{
 
