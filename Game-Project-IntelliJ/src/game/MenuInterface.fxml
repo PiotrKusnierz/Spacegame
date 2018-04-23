@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
     <children>
         <Canvas id="canvas" height="581.0" layoutX="-8.0" layoutY="-4.0" width="482.0" />
-      <VBox layoutX="191.0" layoutY="178.0" prefHeight="200.0" prefWidth="100.0">
+      <VBox layoutX="139.0" layoutY="150.0" prefHeight="200.0" prefWidth="181.0">
          <children>
-            <Text onMouseClicked="#startGame" strokeType="OUTSIDE" strokeWidth="0.0" text="START GAME" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="OPTIONS" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EXIT" />
+            <Text onMouseClicked="#startGame" strokeType="OUTSIDE" strokeWidth="0.0" text="START GAME">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="35.0" />
+               </font></Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="OPTIONS" translateX="30.0">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="35.0" />
+               </font></Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EXIT" translateX="65.0">
+               <font>
+                  <Font size="35.0" />
+               </font></Text>
          </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
       </VBox>
     </children>
 </Pane>
