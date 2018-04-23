@@ -271,7 +271,7 @@ public class GameController extends Application {
                 update();
                 draw();
             }
-        };
+        };  // lalala
 
         addEventHandler(game_stage.getScene());
         gameLoop.start();
