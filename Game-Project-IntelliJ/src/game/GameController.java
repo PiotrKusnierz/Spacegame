@@ -252,9 +252,8 @@ public class GameController extends Application {
 
     public void startGame(javafx.event.ActionEvent actionEvent) throws Exception {
         Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
-        Scene game_page_scene = new Scene(root);
         Stage game_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        game_stage.setScene(game_page_scene);
+        game_stage.setScene(new Scene(root));
 
         gameState = PLAYING;
 
