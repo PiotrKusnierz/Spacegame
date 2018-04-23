@@ -282,6 +282,10 @@ public class GameController extends Application {
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
     }
 
+    // [P] WIP
+    public void goToOptions(MouseEvent mouseEvent) {
+    }
+
     // [P] Closes game
     public void exitGame(MouseEvent mouseEvent) {
         System.exit(0);
