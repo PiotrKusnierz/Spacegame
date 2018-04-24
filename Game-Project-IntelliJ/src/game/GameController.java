@@ -313,6 +313,12 @@ public class GameController extends Application {
         System.exit(0);
     }  // [P]
 
+    // [P] WIP  not working yet
+    public void resumeGame(MouseEvent mouseEvent) {
+       // gameView.pausedMenuBox.setVisible(false);
+        gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
+    }
+
     @Override
     public void start(Stage stage) throws Exception{
 
@@ -323,4 +329,6 @@ public class GameController extends Application {
         stage.show();
         stage.setTitle("SPACESHIT");
     }
+
+
 }

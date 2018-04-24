@@ -21,7 +21,7 @@
          </font></Text>
       <VBox id="pausedMenuBox" layoutX="153.0" layoutY="134.0" prefHeight="241.0" prefWidth="153.0" visible="false">
          <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Resume Game">
+            <Text fill="WHITE" onMouseClicked="#resumeGame" strokeType="OUTSIDE" strokeWidth="0.0" text="Resume Game">
                <font>
                   <Font size="23.0" />
                </font>
@@ -51,7 +51,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Game">
+            <Text fill="WHITE" onMouseClicked="#exitGame" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Game">
                <font>
                   <Font size="23.0" />
                </font>
