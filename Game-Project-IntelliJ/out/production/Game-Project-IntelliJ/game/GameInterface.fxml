@@ -18,35 +18,35 @@
          <font>
             <Font name="Arial" size="30.0" />
          </font></Text>
-      <VBox id="pausedMenuBox" layoutX="150.0" layoutY="134.0" prefHeight="241.0" prefWidth="153.0" visible="false">
+      <VBox id="pausedMenuBox" layoutX="153.0" layoutY="134.0" prefHeight="241.0" prefWidth="153.0" visible="false">
          <children>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Resume Game">
                <font>
                   <Font size="23.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" />
+                  <Insets bottom="10.0" left="11.0" />
                </VBox.margin></Text>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Save Game">
                <font>
                   <Font size="23.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="10.0" left="15.0" />
+                  <Insets bottom="10.0" left="26.0" />
                </VBox.margin></Text>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Load Game">
                <font>
                   <Font size="23.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="10.0" left="15.0" />
+                  <Insets bottom="10.0" left="25.0" />
                </VBox.margin></Text>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Game">
                <font>
                   <Font size="23.0" />
                </font>
                <VBox.margin>
-                  <Insets left="20.0" />
+                  <Insets left="31.0" />
                </VBox.margin></Text>
          </children>
       </VBox>
