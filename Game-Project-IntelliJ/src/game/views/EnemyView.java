@@ -31,14 +31,15 @@ public class EnemyView {
 			FileInputStream fis = new FileInputStream(filePath);
 			images.add(new Image(fis));
 			fis.close();
+			System.out.println(getClass().getResource("../images").toString().split(":")[1]);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} 
 	}
 
 	public void loadImages() {
-		loadImage("game/images/png/enemies/enemyGreen1.png");
-		loadImage("game/images/png/enemies/enemyBlack3.png");
+		loadImage(getClass().getResource("../images/png/enemies/enemyRed1.png").toString().split(":")[1]);
+		loadImage(getClass().getResource("../images/png/enemies/enemyGreen2.png").toString().split(":")[1]);
 	}
 
     // Method draws enemy objects

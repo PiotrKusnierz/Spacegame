@@ -1,5 +1,6 @@
 package game.views;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class PlayerView{
 			FileInputStream fis = new FileInputStream(filePath);
 			images.add(new Image(fis));
 			fis.close();
+			// System.out.println(getClass().getResource("../images").toString().split(":")[1]);
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println(System.getProperty("user.dir"));
@@ -39,7 +41,8 @@ public class PlayerView{
 	}
 
 	public void loadImages() {
-		loadImage("game/images/png/playerShip1_blue.png");
+		// loadImage("game/images/png/playerShip1_blue.png");
+		loadImage(getClass().getResource("../images/png/playerShip1_blue.png").toString().split(":")[1]);
 	}
 
     // Method draws player object
