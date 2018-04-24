@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="581.0" maxWidth="482.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
+<Pane maxHeight="581.0" maxWidth="482.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
     <children>
         <Canvas id="canvas" height="581.0" layoutX="-8.0" layoutY="-4.0" width="482.0" />
       <ImageView fitHeight="962.0" fitWidth="490.0" layoutY="-381.0" pickOnBounds="true">
@@ -18,7 +18,7 @@
             <Image url="@images/mbg1.png" />
          </image>
       </ImageView>
-      <VBox layoutX="139.0" layoutY="150.0" prefHeight="200.0" prefWidth="181.0">
+      <VBox layoutX="139.0" layoutY="275.0" prefHeight="200.0" prefWidth="181.0">
          <children>
             <Text fill="WHITE" onMouseClicked="#startGame" strokeType="OUTSIDE" strokeWidth="0.0" text="START GAME">
                <VBox.margin>
@@ -52,5 +52,10 @@
             <Insets top="20.0" />
          </padding>
       </VBox>
+      <Text fill="#e16031" layoutX="86.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACESHIT">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Text>
     </children>
 </Pane>
