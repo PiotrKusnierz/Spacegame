@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -26,28 +27,40 @@
                </font>
                <VBox.margin>
                   <Insets bottom="10.0" left="11.0" />
-               </VBox.margin></Text>
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Text>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Save Game">
                <font>
                   <Font size="23.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="10.0" left="26.0" />
-               </VBox.margin></Text>
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Text>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Load Game">
                <font>
                   <Font size="23.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="10.0" left="25.0" />
-               </VBox.margin></Text>
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Text>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Game">
                <font>
                   <Font size="23.0" />
                </font>
                <VBox.margin>
                   <Insets left="31.0" />
-               </VBox.margin></Text>
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Text>
          </children>
       </VBox>
    </children>
