@@ -21,6 +21,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.input.KeyCode;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import game.models.*;
 import game.views.*;
@@ -311,6 +313,13 @@ public class GameController extends Application {
     public void start(Stage stage) throws Exception{
 
         Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml"));
+		ImageLoader imgLoader = new ImageLoader();
+		System.out.println(getClass().getResource("images/mbg1.jpg").toString().substring(5));
+		imgLoader.load(getClass().getResource("images/mbg1.png").toString().substring(5));
+		ImageView background = new ImageView(imgLoader.getImage(0));
+		root.getChildren().add(background);
+		background.toBack();
+
         //menuView = new MenuView(root);
         stage.setScene(new Scene(root, Color.YELLOW));
         stage.show();
