@@ -19,14 +19,14 @@ public class GameView {
     public EnemyView enemyView;
     public Text lives; // [P]
     public Text score; // [P]
-    public VBox pausedMenuBox;
+    public VBox pausedMenuBox; // [P]
 
     public GameView(Size canvasSize, Pane root) {
         canvas = (Canvas) root.lookup("#canvas");
-        // [P]  Retrieves lives and score objects   ??
-        lives = (Text) root.lookup("#lives");
-        score = (Text) root.lookup("#score");
-        pausedMenuBox = (VBox) root.lookup("#pausedMenuBox");
+        // [P]  Retrieves lives, score, pausedMenuBox objects   ??
+        lives = (Text) root.lookup("#lives");   // [P]
+        score = (Text) root.lookup("#score");   // [P]
+        pausedMenuBox = (VBox) root.lookup("#pausedMenuBox");   // [P]
 
         this.canvasSize = canvasSize;
         this.canvas.setScaleY(-1);

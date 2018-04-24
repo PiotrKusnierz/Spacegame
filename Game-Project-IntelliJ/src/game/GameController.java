@@ -145,7 +145,7 @@ public class GameController extends Application {
                 if (enemy.rect.contains(bullet)) {
                     enemy.lives--;
                     removedBullets.add(bullet);
-                    game.score++;
+                    game.score++;   // [P]
                     gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
                 }
             }
@@ -193,8 +193,8 @@ public class GameController extends Application {
         messageView.removeMessage();
         gameState = PLAYING;
         // [P] Sets Lives, Score counter and converts Integer to String
-        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
-        gameView.score.setText("SCORE: " + Integer.toString(game.score));
+        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));  // [P]
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
     }
 
     // Recognizes user input and acts accordingly
@@ -235,7 +235,8 @@ public class GameController extends Application {
                     } else {
                         messageView.removeMessage();
                     }*/
-                    gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
+                    //  [P] Sets the menu visible when paused and not visible otherwise
+                    gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());  // [P]
 
                     break;
             }
@@ -269,9 +270,10 @@ public class GameController extends Application {
         });
     }
 
+    // [P] Starts the game on onMouseClicked event when "Start Game" options from the menu is chosen
     public void startGame(MouseEvent mouseEvent) throws Exception{
-        Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
-        Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));  // [P]
+        Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();  // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
 
         gameState = PLAYING;
@@ -315,7 +317,7 @@ public class GameController extends Application {
     @Override
     public void start(Stage stage) throws Exception{
 
-        Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml"));
+        Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml")); // [P]
 
         //menuView = new MenuView(root);
         stage.setScene(new Scene(root, Color.YELLOW));
