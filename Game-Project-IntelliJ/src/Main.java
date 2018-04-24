@@ -7,5 +7,5 @@ public class Main {
         // This line fixes a bug with linux, which removes the 60fps cap of AnimationTimer.
         System.setProperty("quantum.multithreaded", "false");
         Application.launch(GameController.class, args);
-    }//jo
+    }
 }

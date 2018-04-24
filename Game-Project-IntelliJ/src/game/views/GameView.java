@@ -16,15 +16,17 @@ public class GameView {
     private Size canvasSize;
     public PlayerView playerView;
     public EnemyView enemyView;
-    public Text lives;
-    public Text score;
+    public Text lives; // [P]
+    public Text score; // [P]
 
     public GameView(Size canvasSize, Pane root) {
         canvas = (Canvas) root.lookup("#canvas");
+        // [P]  Retrieves lives and score objects   ??
         lives = (Text) root.lookup("#lives");
         score = (Text) root.lookup("#score");
+
         this.canvasSize = canvasSize;
-		    this.canvas.setScaleY(-1);
+        this.canvas.setScaleY(-1);
         this.gc = canvas.getGraphicsContext2D();
         this.playerView = new PlayerView(this.gc);
         this.enemyView = new EnemyView(this.gc);
