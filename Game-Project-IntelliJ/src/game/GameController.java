@@ -233,11 +233,14 @@ public class GameController extends Application {
                     }
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
 
+                    /*
                     if (gameState == PAUSED) {
                         messageView.showPeristantAnimatedMessage("PAUSED");
                     } else {
                         messageView.removeMessage();
-                    }
+                    }*/
+                    gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
+
                     break;
             }
             if (event.getCode() == KeyCode.UP) {

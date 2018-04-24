@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import game.tools.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
@@ -18,12 +19,14 @@ public class GameView {
     public EnemyView enemyView;
     public Text lives; // [P]
     public Text score; // [P]
+    public VBox pausedMenuBox;
 
     public GameView(Size canvasSize, Pane root) {
         canvas = (Canvas) root.lookup("#canvas");
         // [P]  Retrieves lives and score objects   ??
         lives = (Text) root.lookup("#lives");
         score = (Text) root.lookup("#score");
+        pausedMenuBox = (VBox) root.lookup("#pausedMenuBox");
 
         this.canvasSize = canvasSize;
         this.canvas.setScaleY(-1);

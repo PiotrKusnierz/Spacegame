@@ -53,7 +53,7 @@ public class MessageView {
 		}
 		view.autosize();
 		view.setTranslateX(root.getWidth()/2-view.getWidth()/2);
-		view.setTranslateY(root.getHeight()/2-view.getHeight()/2);
+		view.setTranslateY(root.getHeight()/2-view.getHeight()*1.5);
 	}
 
     public void showPeristantAnimatedMessage(String msg) {

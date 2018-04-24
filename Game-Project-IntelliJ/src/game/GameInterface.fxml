@@ -2,19 +2,29 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
    <children>
       <Canvas id="canvas" height="581.0" layoutX="-8.0" layoutY="-4.0" width="482.0" />
-      <Text id="lives" fill="WHITE" layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIVES">
+      <Text id="lives" fill="WHITE" layoutX="341.0" layoutY="533.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIVES">
          <font>
             <Font name="Arial" size="30.0" />
          </font></Text>
-      <Text id="score" fill="WHITE" layoutX="320.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE">
+      <Text id="score" fill="WHITE" layoutX="14.0" layoutY="533.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCORE">
          <font>
             <Font name="Arial" size="30.0" />
          </font></Text>
+      <VBox id="pausedMenuBox" layoutX="130.0" layoutY="134.0" prefHeight="241.0" prefWidth="153.0" visible="false">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Paused" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Resume Game" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Save Game" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Load Geme" />
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Game" />
+         </children>
+      </VBox>
    </children>
 </Pane>
