@@ -43,7 +43,7 @@ public class PlayerView{
 
 	public void loadImages() {
 		// loadImage("game/images/png/playerShip1_blue.png");
-		loadImage(getClass().getResource("../images/png/playerShip1_blue.png").toString().substring(6));
+		loadImage(getClass().getResource("../images/png/playerShip1_blue.png").toString().substring(5));
 	}
 
     // Method draws player object

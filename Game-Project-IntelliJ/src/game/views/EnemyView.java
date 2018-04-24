@@ -38,8 +38,8 @@ public class EnemyView {
 	}
 
 	public void loadImages() {
-		loadImage(getClass().getResource("../images/png/enemies/enemyRed1.png").toString().substring(6));
-		loadImage(getClass().getResource("../images/png/enemies/enemyGreen2.png").toString().substring(6));
+		loadImage(getClass().getResource("../images/png/enemies/enemyRed1.png").toString().substring(5));
+		loadImage(getClass().getResource("../images/png/enemies/enemyGreen2.png").toString().substring(5));
 	}
 
     // Method draws enemy objects
