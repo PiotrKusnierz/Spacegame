@@ -70,7 +70,7 @@ public class GameController extends Application {
     public void collisionHandler(Enemy enemy) {
         if (game.player.rect.intersects(enemy.rect)) {
             enemy.lives--;
-            game.player.lives--;
+            game.player.lives--; // [P]
             gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         }
     }
@@ -237,7 +237,6 @@ public class GameController extends Application {
                     }*/
                     //  [P] Sets the menu visible when paused and not visible otherwise
                     gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());  // [P]
-
                     break;
             }
             if (event.getCode() == KeyCode.UP) {
@@ -271,7 +270,7 @@ public class GameController extends Application {
     }
 
     // [P] Starts the game on onMouseClicked event when "Start Game" options from the menu is chosen
-    public void startGame(MouseEvent mouseEvent) throws Exception{
+    public void startGame(MouseEvent mouseEvent) throws Exception{  // [P]
         Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));  // [P]
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();  // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
@@ -306,13 +305,13 @@ public class GameController extends Application {
     }
 
     // [P] WIP
-    public void goToOptions(MouseEvent mouseEvent) {
+    public void goToOptions(MouseEvent mouseEvent) {  // [P]
     }
 
     // [P] Closes game
     public void exitGame(MouseEvent mouseEvent) {
         System.exit(0);
-    }
+    }  // [P]
 
     @Override
     public void start(Stage stage) throws Exception{
