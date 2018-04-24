@@ -44,6 +44,7 @@ public class GameController extends Application {
     private Game game;
     private List<Enemy> removedEnemies;
     private List<Point> removedBullets;
+	private boolean isShooting = false;
 
     private int gameState;
     private final int PAUSED = 1;
@@ -128,11 +129,14 @@ public class GameController extends Application {
 			// There should be a better solution to remove the message.
 			messageView.removeMessage();
 		}
+		if (game.frameCounter % 10 == 0 && this.isShooting) {
+			game.player.shoot();
+		}
         game.player.update();
         game.player.clampPosition(0, windowSize.w);
         if (game.player.lives <= 0) {
             gameState = GAMEOVER;
-            messageView.showAnimatedMessage("GAME OVER");
+            messageView.showPeristantAnimatedMessage("GAME OVER");
             return;
         }
         for (Enemy enemy : game.enemies) {
@@ -230,7 +234,7 @@ public class GameController extends Application {
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
 
                     if (gameState == PAUSED) {
-                        messageView.showAnimatedMessage("PAUSED");
+                        messageView.showPeristantAnimatedMessage("PAUSED");
                     } else {
                         messageView.removeMessage();
                     }
@@ -243,7 +247,8 @@ public class GameController extends Application {
                 }
             }
             if (event.getCode() == KeyCode.SPACE) {
-                game.player.shoot();
+                // game.player.shoot();
+				this.isShooting = true;
             }
         });
 
@@ -263,6 +268,9 @@ public class GameController extends Application {
                     enemy.boost = boost;
                 }
             }
+			if (event.getCode() == KeyCode.SPACE) {
+				this.isShooting = false;
+			}
         });
     }
 

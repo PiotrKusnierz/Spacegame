@@ -22,7 +22,9 @@ public class MessageView {
         this.root = root;
     }
 
-    public void showAnimatedMessage(String msg) {
+	// [S] made this one private, and allowing for a persistant message or one
+	// that automatically disappears.
+	private void animatedMessage(String msg, boolean persistant) {
 		root.getChildren().add(view);
 
 		for (int i = 0; i < msg.toCharArray().length; i++) {   //toCharArray() converts string into character array
@@ -38,12 +40,28 @@ public class MessageView {
 			//FadeTransition creates a fade effect animation
 			FadeTransition ft = new FadeTransition(Duration.seconds(0.66), text);
 			ft.setToValue(1);
+			if (!persistant) {
+				ft.setCycleCount(2);
+				ft.setAutoReverse(true);
+			}
 			ft.setDelay(Duration.seconds(i * 0.05));
 			ft.play();
+			// FadeTransition ft2 = new FadeTransition(Duration.seconds(0.66), text);
+			// ft2.setToValue(0);
+			// ft2.setDelay(Duration.seconds(i * 0.05));
+			// ft2.play();
 		}
 		view.autosize();
 		view.setTranslateX(root.getWidth()/2-view.getWidth()/2);
 		view.setTranslateY(root.getHeight()/2-view.getHeight()/2);
+	}
+
+    public void showPeristantAnimatedMessage(String msg) {
+		animatedMessage(msg, true);
+	}
+
+	public void showAnimatedMessage(String msg) {
+		animatedMessage(msg, false);
 	}
 
     public void removeMessage() {
