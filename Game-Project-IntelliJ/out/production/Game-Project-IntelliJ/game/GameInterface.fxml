@@ -2,6 +2,7 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -16,5 +17,14 @@
          <font>
             <Font name="Arial" size="30.0" />
          </font></Text>
+      <VBox id="pausedMenuBox" layoutX="130.0" layoutY="134.0" prefHeight="241.0" prefWidth="153.0" visible="false">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Paused" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Resume Game" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Save Game" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Load Geme" />
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Game" />
+         </children>
+      </VBox>
    </children>
 </Pane>
