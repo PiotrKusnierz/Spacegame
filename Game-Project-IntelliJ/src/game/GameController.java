@@ -299,7 +299,7 @@ public class GameController extends Application {
         gameLoop.start();
 
         game_stage.show();
-        game_stage.setTitle("SPACESHIT");
+        game_stage.setTitle("SPACEGAME");
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
     }
@@ -327,7 +327,7 @@ public class GameController extends Application {
         //menuView = new MenuView(root);
         stage.setScene(new Scene(root, Color.YELLOW));
         stage.show();
-        stage.setTitle("SPACESHIT");
+        stage.setTitle("SPACEGAME");
     }
 
 

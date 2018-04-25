@@ -52,7 +52,7 @@
             <Insets top="20.0" />
          </padding>
       </VBox>
-      <Text fill="#e16031" layoutX="86.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACESHIT">
+      <Text fill="#e16031" layoutX="63.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACEGAME">
          <font>
             <Font size="64.0" />
          </font>
