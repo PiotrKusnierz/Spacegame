@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
@@ -23,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.input.KeyCode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 
 import game.models.*;
 import game.views.*;
@@ -310,6 +312,14 @@ public class GameController extends Application {
         game_stage.setTitle("SPACEGAME");
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
+
+		Text resumeButton = (Text) root.lookup("#resumeButton");
+		resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				resumeGame(event);
+			}
+		});
     }
 
     // [P] WIP
@@ -325,6 +335,8 @@ public class GameController extends Application {
     public void resumeGame(MouseEvent mouseEvent) {
        // gameView.pausedMenuBox.setVisible(false);
         gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
+		gameState = PLAYING;
+		// System.out.println(gameView);
     }
 
     @Override
