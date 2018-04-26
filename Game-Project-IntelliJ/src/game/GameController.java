@@ -34,7 +34,8 @@ import game.tools.*;
 import javafx.scene.Node;
 
 /**                                                               _
- * Masterclass. This is where the magic happens \_( *   )( *   )_/
+ * This class controls the logic behind the game and calls the games draw
+ * functions.
  *
  */
 
@@ -47,17 +48,13 @@ public class GameController extends Application {
     private List<Enemy> removedEnemies;
     private List<Point> removedBullets;
 	private boolean isShooting = false;
+    public double boost = 1;
 
     private int gameState;
     private final int PAUSED = 1;
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
 
-    //public MenuView menuView;
-
-
-
-    public double boost = 1;
     // Defines the screenSize variable based on the user's screen size
     public Size screenSize = new Size(
             Screen.getPrimary().getVisualBounds().getWidth(),
@@ -68,8 +65,13 @@ public class GameController extends Application {
     // public Size windowSize = new Size(screenSize.h*0.75, screenSize.h*0.9);
     public Size windowSize = new Size(482.0, 581.0);
 
-
     // Method that runs the intersects-method from tools.Rect, making colliding objects lose a life.
+	/**
+	 * Handles collision detection between the enemies and the player, and
+	 * removes a life from both the player and the enemy if a collision is
+	 * detected.
+	 * @param enemy an enemy that the player might collide with.
+	 */
     public void collisionHandler(Enemy enemy) {
         if (game.player.rect.intersects(enemy.rect)) {
             enemy.lives--;
@@ -78,7 +80,9 @@ public class GameController extends Application {
         }
     }
 
-    // WIP
+	/**
+	 * Saves the game
+	 */
     public void saveGame() {
         FileOutputStream fout = null;
         ObjectOutputStream oos = null;
@@ -99,7 +103,9 @@ public class GameController extends Application {
         }
     }
 
-    // WIP
+	/**
+	 * Loads the game.
+	 */
     public void loadGame() {
         try {
             FileInputStream fis = new FileInputStream("./game.sav");
@@ -116,8 +122,9 @@ public class GameController extends Application {
         }
     }
 
-    // Runs every frame as it is called on in the gameloop/AnimationTimer
-    // Does nothing if the game is not running, i.e it's paused or game over.
+	/**
+	 * This runs every frame, and contains the logic part of the game.
+	 */
     public void update() {
         if (gameState != PLAYING) {
             return;
@@ -170,15 +177,19 @@ public class GameController extends Application {
         removedBullets.clear();
     }
 
-    // Runs every frame as it is called on in the gameloop/AnimationTimer
-    // Updates the visuals of the game
+	/**
+	 * This runs every frame to update the game graphics.
+	 */
     public void draw() {
         gameView.clearCanvas();
         gameView.playerView.draw(game.player);
         gameView.enemyView.draw(game.enemies);
     }
 
-    // Creates a new Enemy object with a random size and position
+	/**
+	 * Creates a new enemy with a random size and position and adds it to the
+	 * games enemies list.
+	 */
     public void addEnemy() {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.05, windowSize.w*0.1);
         double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
@@ -188,6 +199,9 @@ public class GameController extends Application {
     }
 
     // Resets all the game conditions
+	/**
+	 * Resets all the game conditions to get ready for a new game.
+	 */
     public void newGame() {
         game.player.rect.x = windowSize.w/2-game.player.rect.w/2;
         game.player.lives = 3;
@@ -203,7 +217,9 @@ public class GameController extends Application {
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
     }
 
-    // Recognizes user input and acts accordingly
+	/**
+	 * Adds a keyboard input event handler to the scene.
+	 */
     public void addEventHandler(Scene scene) {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
@@ -252,7 +268,9 @@ public class GameController extends Application {
                 }
             }
             if (event.getCode() == KeyCode.SPACE) {
-                // game.player.shoot();
+                if (!this.isShooting) {
+                	game.player.shoot();
+                }
 				this.isShooting = true;
             }
         });
@@ -344,11 +362,8 @@ public class GameController extends Application {
 
         Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml")); // [P]
 
-        //menuView = new MenuView(root);
         stage.setScene(new Scene(root, Color.YELLOW));
         stage.show();
         stage.setTitle("SPACEGAME");
     }
-
-
 }

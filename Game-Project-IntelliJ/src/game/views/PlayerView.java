@@ -57,7 +57,7 @@ public class PlayerView{
             player.rect.x, player.rect.y,
             player.rect.w, player.rect.h
         );
-		gc.setFill(Color.BLUE);
+		gc.setFill(Color.YELLOW);
 		for (Point bullet : player.bullets) {
 			gc.fillOval(bullet.x, bullet.y, 10, 10);
 		}
