@@ -369,15 +369,23 @@ public class GameController extends Application {
     }
 
     // [P] Closes game
-    public void exitGame(MouseEvent mouseEvent) {
-        System.exit(0);
-    }  // [P]
+    public void exitGame(MouseEvent mouseEvent) {   // [P]
+        System.exit(0);  // [P]
+    }
 
     // [P]
-    public void resumeGame(MouseEvent mouseEvent) {
-        gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
+    public void resumeGame(MouseEvent mouseEvent) {   // [P]
+        gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible()); // [P]
 		gameState = PLAYING;
     }
+
+
+    public void continueGame(MouseEvent mouseEvent) throws Exception{
+        startGame(mouseEvent);
+        loadGame();
+    }
+
+
 
     @Override
     public void start(Stage stage) throws Exception{
@@ -389,6 +397,19 @@ public class GameController extends Application {
         stage.show();
         stage.setTitle("SPACEGAME");
     }
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// [P] Continues the game from the moment when it was ended when last time playing
