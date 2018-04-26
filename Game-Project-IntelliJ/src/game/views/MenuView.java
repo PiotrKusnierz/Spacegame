@@ -15,6 +15,7 @@ public class MenuView {
     public Text saveButton;   // [P]
     public Text loadButton;  // [P]
     public Text exitButton;  // [P]
+    public Text restartButton;  // [P]
     public Text continueButton; // [P]
 
     public MenuView(Pane root) {
@@ -23,6 +24,7 @@ public class MenuView {
         saveButton = (Text) root.lookup("#saveButton");  // [P]
         loadButton = (Text) root.lookup("#loadButton");  // [P]
         exitButton = (Text) root.lookup("#exitButton");   // [P]
+        restartButton = (Text) root.lookup("#restartButton");   // [P]
         continueButton = (Text) root.lookup("#continueButton");  // [P]
     }
 }
