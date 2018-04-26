@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
+<Pane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
    <children>
       <Canvas id="canvas" height="581.0" layoutX="-8.0" layoutY="-4.0" width="482.0" />
       <Text id="lives" fill="WHITE" layoutX="341.0" layoutY="533.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIVES">
@@ -21,7 +21,7 @@
          </font></Text>
       <VBox id="pausedMenuBox" layoutX="153.0" layoutY="134.0" prefHeight="241.0" prefWidth="153.0" visible="false">
          <children>
-            <Text fill="WHITE" onMouseClicked="#resumeGame" strokeType="OUTSIDE" strokeWidth="0.0" text="Resume Game">
+            <Text fx:id="resumeButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Resume Game">
                <font>
                   <Font size="23.0" />
                </font>
@@ -31,7 +31,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Save Game">
+            <Text fx:id="saveButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Save Game">
                <font>
                   <Font size="23.0" />
                </font>
@@ -41,7 +41,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Load Game">
+            <Text fx:id="loadButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Load Game">
                <font>
                   <Font size="23.0" />
                </font>
@@ -51,7 +51,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Text>
-            <Text fill="WHITE" onMouseClicked="#exitGame" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Game">
+            <Text fx:id="exitButton" fill="WHITE"  strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Game">
                <font>
                   <Font size="23.0" />
                </font>

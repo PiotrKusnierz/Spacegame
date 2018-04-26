@@ -313,6 +313,8 @@ public class GameController extends Application {
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
 
+
+        // [S] [P]
 		Text resumeButton = (Text) root.lookup("#resumeButton");
 		resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
@@ -320,6 +322,46 @@ public class GameController extends Application {
 				resumeGame(event);
 			}
 		});
+
+		// [S] [P]
+        Text saveButton = (Text) root.lookup("#saveButton");
+        saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                saveGame();
+                gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
+                gameState = PLAYING;
+                messageView.showAnimatedMessage("SAVED");
+            }
+        });
+
+        //[S] [P]
+        Text loadButton = (Text) root.lookup("#loadButton");
+        loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                    loadGame();
+                    gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
+                    gameView.score.setText("SCORE: " + Integer.toString(game.score)); // [P]
+                    gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
+                    messageView.removeMessage();
+                    gameState = PLAYING;
+                    messageView.showAnimatedMessage("LOADED");
+            }
+        });
+
+        // [S] [P]
+        Text exitButton = (Text) root.lookup("#exitButton");
+        exitButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                exitGame(event);
+            }
+        });
+
+
+
+
     }
 
     // [P] WIP
@@ -331,12 +373,10 @@ public class GameController extends Application {
         System.exit(0);
     }  // [P]
 
-    // [P] WIP  not working yet
+    // [P]
     public void resumeGame(MouseEvent mouseEvent) {
-       // gameView.pausedMenuBox.setVisible(false);
         gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
 		gameState = PLAYING;
-		// System.out.println(gameView);
     }
 
     @Override
