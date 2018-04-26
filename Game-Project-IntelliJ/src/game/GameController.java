@@ -329,6 +329,14 @@ public class GameController extends Application {
             }
         });
 
+        // [P] Associates clicked button to the right method - restartGame
+        menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                restartGame(event);
+            }
+        });
+
         // [S] [P] Associates clicked button to the right method  - exitGame
         menuView.exitButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
@@ -336,6 +344,12 @@ public class GameController extends Application {
                 exitGame(event);
             }
         });
+    }
+
+    // [P] Restarts the game
+    private void restartGame(MouseEvent event) {
+        newGame();
+        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
     }
 
     // [P] WIP
@@ -347,7 +361,7 @@ public class GameController extends Application {
         System.exit(0);  // [P]
     }
 
-    // [P]
+    // [P] Resumes the game
     public void resumeGame(MouseEvent mouseEvent) {   // [P]
         menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible()); // [P]
 		gameState = PLAYING;
@@ -358,6 +372,7 @@ public class GameController extends Application {
         startGame(mouseEvent);
         loadGame();
     }
+
 
 
 
