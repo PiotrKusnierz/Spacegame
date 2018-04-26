@@ -230,15 +230,8 @@ public class GameController extends Application {
                         break;
                     }
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
-
-                    /*
-                    if (gameState == PAUSED) {
-                        messageView.showPeristantAnimatedMessage("PAUSED");
-                    } else {
-                        messageView.removeMessage();
-                    }*/
-                    //  [P] Sets the menu visible when paused and not visible otherwise
-                    gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());  // [P]
+                    System.out.println(menuView);
+                    menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
                     break;
             }
             if (event.getCode() == KeyCode.UP) {
@@ -282,7 +275,7 @@ public class GameController extends Application {
         game_stage.setScene(new Scene(root, Color.BLACK));
 
         gameState = PLAYING;
-
+        menuView = new MenuView(root);
         gameView = new GameView(windowSize, root);
         messageView = new MessageView(root);
 
@@ -311,8 +304,7 @@ public class GameController extends Application {
 
 
         // [S] [P]
-		Text resumeButton = (Text) root.lookup("#resumeButton");
-		resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				resumeGame(event);
@@ -320,26 +312,24 @@ public class GameController extends Application {
 		});
 
 		// [S] [P]
-        Text saveButton = (Text) root.lookup("#saveButton");
-        saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 saveGame();
-                gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
+                menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
                 gameState = PLAYING;
                 messageView.showAnimatedMessage("SAVED");
             }
         });
 
         //[S] [P]
-        Text loadButton = (Text) root.lookup("#loadButton");
-        loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                     loadGame();
                     gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
                     gameView.score.setText("SCORE: " + Integer.toString(game.score)); // [P]
-                    gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
+                    menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
                     messageView.removeMessage();
                     gameState = PLAYING;
                     messageView.showAnimatedMessage("LOADED");
@@ -347,17 +337,12 @@ public class GameController extends Application {
         });
 
         // [S] [P]
-        Text exitButton = (Text) root.lookup("#exitButton");
-        exitButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        menuView.exitButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 exitGame(event);
             }
         });
-
-
-
-
     }
 
     // [P] WIP
@@ -371,7 +356,7 @@ public class GameController extends Application {
 
     // [P]
     public void resumeGame(MouseEvent mouseEvent) {   // [P]
-        gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible()); // [P]
+        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible()); // [P]
 		gameState = PLAYING;
     }
 
@@ -389,6 +374,7 @@ public class GameController extends Application {
         Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml")); // [P]
 
         menuView = new MenuView(root);
+        System.out.println(menuView);
         stage.setScene(new Scene(root, Color.YELLOW));
         stage.show();
         stage.setTitle("SPACEGAME");

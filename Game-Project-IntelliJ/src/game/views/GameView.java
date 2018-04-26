@@ -20,14 +20,13 @@ public class GameView {
     public Text lives; // [P]
     public Text score; // [P]
 
-    public VBox pausedMenuBox; // [P]
 
     public GameView(Size canvasSize, Pane root) {
         canvas = (Canvas) root.lookup("#canvas");
         // [P]  Retrieves lives, score, pausedMenuBox objects   ??
         lives = (Text) root.lookup("#lives");   // [P]
         score = (Text) root.lookup("#score");   // [P]
-        pausedMenuBox = (VBox) root.lookup("#pausedMenuBox");   // [P]
+
 
 
         this.canvasSize = canvasSize;
