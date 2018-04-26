@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -17,13 +19,48 @@
          <font>
             <Font name="Arial" size="30.0" />
          </font></Text>
-      <VBox id="pausedMenuBox" layoutX="130.0" layoutY="134.0" prefHeight="241.0" prefWidth="153.0" visible="false">
+      <VBox id="pausedMenuBox" layoutX="153.0" layoutY="134.0" prefHeight="241.0" prefWidth="153.0" visible="false">
          <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Paused" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Resume Game" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Save Game" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Load Geme" />
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Game" />
+            <Text fill="WHITE" onMouseClicked="#resumeGame" strokeType="OUTSIDE" strokeWidth="0.0" text="Resume Game">
+               <font>
+                  <Font size="23.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="11.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Save Game">
+               <font>
+                  <Font size="23.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="26.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Load Game">
+               <font>
+                  <Font size="23.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="25.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Text>
+            <Text fill="WHITE" onMouseClicked="#exitGame" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Game">
+               <font>
+                  <Font size="23.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="31.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Text>
          </children>
       </VBox>
    </children>

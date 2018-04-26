@@ -71,7 +71,7 @@ public class GameController extends Application {
     public void collisionHandler(Enemy enemy) {
         if (game.player.rect.intersects(enemy.rect)) {
             enemy.lives--;
-            game.player.lives--;
+            game.player.lives--; // [P]
             gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         }
     }
@@ -149,7 +149,7 @@ public class GameController extends Application {
                 if (enemy.rect.contains(bullet)) {
                     enemy.lives--;
                     removedBullets.add(bullet);
-                    game.score++;
+                    game.score++;   // [P]
                     gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
                 }
             }
@@ -197,8 +197,8 @@ public class GameController extends Application {
         messageView.removeMessage();
         gameState = PLAYING;
         // [P] Sets Lives, Score counter and converts Integer to String
-        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
-        gameView.score.setText("SCORE: " + Integer.toString(game.score));
+        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));  // [P]
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
     }
 
     // Recognizes user input and acts accordingly
@@ -239,8 +239,8 @@ public class GameController extends Application {
                     } else {
                         messageView.removeMessage();
                     }*/
-                    gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
-
+                    //  [P] Sets the menu visible when paused and not visible otherwise
+                    gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());  // [P]
                     break;
             }
             if (event.getCode() == KeyCode.UP) {
@@ -277,9 +277,10 @@ public class GameController extends Application {
         });
     }
 
-    public void startGame(MouseEvent mouseEvent) throws Exception{
-        Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
-        Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+    // [P] Starts the game on onMouseClicked event when "Start Game" options from the menu is chosen
+    public void startGame(MouseEvent mouseEvent) throws Exception{  // [P]
+        Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));  // [P]
+        Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();  // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
 
         gameState = PLAYING;
@@ -306,28 +307,36 @@ public class GameController extends Application {
         gameLoop.start();
 
         game_stage.show();
-        game_stage.setTitle("SPACESHIT");
+        game_stage.setTitle("SPACEGAME");
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
     }
 
     // [P] WIP
-    public void goToOptions(MouseEvent mouseEvent) {
+    public void goToOptions(MouseEvent mouseEvent) {  // [P]
     }
 
     // [P] Closes game
     public void exitGame(MouseEvent mouseEvent) {
         System.exit(0);
+    }  // [P]
+
+    // [P] WIP  not working yet
+    public void resumeGame(MouseEvent mouseEvent) {
+       // gameView.pausedMenuBox.setVisible(false);
+        gameView.pausedMenuBox.setVisible(!gameView.pausedMenuBox.isVisible());
     }
 
     @Override
     public void start(Stage stage) throws Exception{
 
-        Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml"));
+        Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml")); // [P]
 
         //menuView = new MenuView(root);
         stage.setScene(new Scene(root, Color.YELLOW));
         stage.show();
-        stage.setTitle("SPACESHIT");
+        stage.setTitle("SPACEGAME");
     }
+
+
 }
