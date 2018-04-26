@@ -295,6 +295,8 @@ public class GameController extends Application {
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
 
+        messageView.showAnimatedMessage("NEW GAME");      // [P]
+
 
         // [S] [P] Associates clicked button to the right method - resumeGame
 		menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -347,9 +349,10 @@ public class GameController extends Application {
     }
 
     // [P] Restarts the game
-    private void restartGame(MouseEvent event) {
-        newGame();
-        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
+    private void restartGame(MouseEvent event) {              // [P]
+        newGame();                                            // [P]
+        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());        // [P]
+        messageView.showAnimatedMessage("NEW GAME");                    // [P]
     }
 
     // [P] WIP
