@@ -17,15 +17,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.input.KeyCode;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
-
 import game.models.*;
 import game.views.*;
 import game.tools.*;
 
-//import game.views.MenuView;
 import javafx.scene.Node;
 
 /**                                                               _
@@ -34,7 +29,6 @@ import javafx.scene.Node;
  */
 
 public class GameController extends Application {
-    private Pane root;
     private AnimationTimer gameLoop;
     private GameView gameView;
     private MenuView menuView;
@@ -49,7 +43,6 @@ public class GameController extends Application {
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
 
-    //public MenuView menuView;
 
 
 
@@ -74,7 +67,7 @@ public class GameController extends Application {
         }
     }
 
-    // WIP
+
     public void saveGame() {
         FileOutputStream fout = null;
         ObjectOutputStream oos = null;
@@ -95,7 +88,7 @@ public class GameController extends Application {
         }
     }
 
-    // WIP
+
     public void loadGame() {
         try {
             FileInputStream fis = new FileInputStream("./game.sav");
@@ -303,7 +296,7 @@ public class GameController extends Application {
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
 
 
-        // [S] [P]
+        // [S] [P] Associates clicked button to the right method - resumeGame
 		menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -311,7 +304,7 @@ public class GameController extends Application {
 			}
 		});
 
-		// [S] [P]
+		// [S] [P] Associates clicked button to the right method - saveGame
         menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -322,7 +315,7 @@ public class GameController extends Application {
             }
         });
 
-        //[S] [P]
+        //[S] [P] Associates clicked button to the right method - loadGame
         menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -336,7 +329,7 @@ public class GameController extends Application {
             }
         });
 
-        // [S] [P]
+        // [S] [P] Associates clicked button to the right method  - exitGame
         menuView.exitButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
