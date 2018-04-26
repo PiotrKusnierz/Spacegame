@@ -19,6 +19,7 @@ public class GameView {
     public EnemyView enemyView;
     public Text lives; // [P]
     public Text score; // [P]
+
     public VBox pausedMenuBox; // [P]
 
     public GameView(Size canvasSize, Pane root) {
@@ -27,6 +28,7 @@ public class GameView {
         lives = (Text) root.lookup("#lives");   // [P]
         score = (Text) root.lookup("#score");   // [P]
         pausedMenuBox = (VBox) root.lookup("#pausedMenuBox");   // [P]
+
 
         this.canvasSize = canvasSize;
         this.canvas.setScaleY(-1);

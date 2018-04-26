@@ -1,11 +1,6 @@
 package game;
 
-import java.io.ObjectInputStream;
-import java.io.FileInputStream;
-import java.io.ObjectOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -42,6 +37,7 @@ public class GameController extends Application {
     private Pane root;
     private AnimationTimer gameLoop;
     private GameView gameView;
+    private MenuView menuView;
     private MessageView messageView;
     private Game game;
     private List<Enemy> removedEnemies;
@@ -379,7 +375,7 @@ public class GameController extends Application {
 		gameState = PLAYING;
     }
 
-
+    // [P] Continues the game from the moment when it was ended when last time playing
     public void continueGame(MouseEvent mouseEvent) throws Exception{
         startGame(mouseEvent);
         loadGame();
@@ -392,10 +388,19 @@ public class GameController extends Application {
 
         Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml")); // [P]
 
-        //menuView = new MenuView(root);
+        menuView = new MenuView(root);
         stage.setScene(new Scene(root, Color.YELLOW));
         stage.show();
         stage.setTitle("SPACEGAME");
+
+        // [P]  Checks if the game savings exists from before. If that is the case, than it enables
+        //      continuing the game from the previous state from the Main Menu.
+        File f = new File("./game.sav");        // [P]
+        if(f.exists()) {                                 // [P]
+            menuView.continueButton.setVisible(true);    // [P]
+        } else {                                         // [P]
+            menuView.continueButton.setVisible(false);   // [P]
+        }
     }
 }
 
@@ -412,4 +417,3 @@ public class GameController extends Application {
 
 
 
-// [P] Continues the game from the moment when it was ended when last time playing

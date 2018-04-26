@@ -1,16 +1,16 @@
 package game.views;
-// class unused for now
-/*
-import javafx.scene.image.ImageView;
+
+
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class MenuView {
-    public ImageView menuImageView;
+    public Text continueButton;
 
 
     public MenuView(Pane root) {
-        menuImageView = (ImageView) root.lookup("#menuImgView");
+        continueButton = (Text) root.lookup("#continueButton");
     }
 
 
-}*/
+}
