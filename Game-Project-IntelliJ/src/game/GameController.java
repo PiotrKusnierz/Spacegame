@@ -327,13 +327,19 @@ public class GameController extends Application {
         menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                    loadGame();
-                    gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
-                    gameView.score.setText("SCORE: " + Integer.toString(game.score));
-                    menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
-                    messageView.removeMessage();
-                    gameState = PLAYING;
-                    messageView.showAnimatedMessage("LOADED");
+                loadGame();
+                gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+                gameView.score.setText("SCORE: " + Integer.toString(game.score));
+                menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
+                messageView.removeMessage();
+                gameState = PLAYING;
+
+                File f = new File("./game.sav");               // [P]
+                if(f.exists()) {                                        // [P]
+                    messageView.showAnimatedMessage("LOADED");     // [P]
+                } else {                                                // [P]
+                    messageView.showAnimatedMessage("ERROR");      // [P]
+                }
             }
         });
 
