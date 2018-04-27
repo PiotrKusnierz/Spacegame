@@ -128,6 +128,9 @@ public class GameController extends Application {
         if (game.player.lives <= 0) {
             gameState = GAMEOVER;
             messageView.showPeristantAnimatedMessage("GAME OVER");
+            //messageView.showAnimatedMessage("GAME OVER");
+            //messageView.removeMessage();
+
             return;
         }
         for (Enemy enemy : game.enemies) {
@@ -140,7 +143,7 @@ public class GameController extends Application {
                 if (enemy.rect.contains(bullet)) {
                     enemy.lives--;
                     removedBullets.add(bullet);
-                    game.score++;   // [P]
+                    game.score++;                                                      // [P]
                     gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
                 }
             }
@@ -189,7 +192,7 @@ public class GameController extends Application {
         gameState = PLAYING;
         // [P] Sets Lives, Score counter and converts Integer to String
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));  // [P]
-        gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));         // [P]
     }
 
     // Recognizes user input and acts accordingly
@@ -213,17 +216,20 @@ public class GameController extends Application {
                         gameState = PAUSED;
                         loadGame();
                         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
-                        gameView.score.setText("SCORE: " + Integer.toString(game.score)); // [P]
+                        gameView.score.setText("SCORE: " + Integer.toString(game.score));        // [P]
                         messageView.removeMessage();
                         messageView.showAnimatedMessage("LOADED");
                     }
                     break;
-                case ESCAPE:
-                    if (gameState == GAMEOVER) {
-                        break;
+                case ESCAPE:                                                                 // [P]
+                    if (gameState == GAMEOVER) {                                             // [P]
+                        menuView.resumeButton.setVisible(false);                             // [P]
+                        menuView.saveButton.setVisible(false);
                     }
+                    messageView.removeMessage();                                             // [P]
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
-                    System.out.println(menuView);
+
+                    //System.out.println(menuView);
                     menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
                     break;
             }
@@ -262,9 +268,9 @@ public class GameController extends Application {
     }
 
     // [P] Starts the game on onMouseClicked event when "Start Game" options from the menu is chosen
-    public void startGame(MouseEvent mouseEvent) throws Exception{  // [P]
+    public void startGame(MouseEvent mouseEvent) throws Exception{                             // [P]
         Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));  // [P]
-        Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();  // [P]
+        Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();     // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
 
         gameState = PLAYING;
@@ -293,9 +299,9 @@ public class GameController extends Application {
         game_stage.show();
         game_stage.setTitle("SPACEGAME");
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
-        gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));        // [P]
 
-       // messageView.showAnimatedMessage("NEW GAME");      // [P]
+
 
 
         // [S] [P] Associates clicked button to the right method - resumeGame
@@ -322,8 +328,8 @@ public class GameController extends Application {
             @Override
             public void handle(MouseEvent event) {
                     loadGame();
-                    gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
-                    gameView.score.setText("SCORE: " + Integer.toString(game.score)); // [P]
+                    gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+                    gameView.score.setText("SCORE: " + Integer.toString(game.score));
                     menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
                     messageView.removeMessage();
                     gameState = PLAYING;
@@ -349,10 +355,12 @@ public class GameController extends Application {
     }
 
     // [P] Restarts the game
-    private void restartGame(MouseEvent event) {              // [P]
-        newGame();                                            // [P]
-        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());        // [P]
-        messageView.showAnimatedMessage("NEW GAME");                    // [P]
+    private void restartGame(MouseEvent event) {                                 // [P]
+        newGame();                                                               // [P]
+        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
+        messageView.showAnimatedMessage("NEW GAME");                         // [P]
+        menuView.resumeButton.setVisible(true);                                  // [P]
+        menuView.saveButton.setVisible(true);                                    // [P]
     }
 
     // [P] WIP
@@ -360,14 +368,14 @@ public class GameController extends Application {
     }
 
     // [P] Closes game
-    public void exitGame(MouseEvent mouseEvent) {   // [P]
-        System.exit(0);  // [P]
+    public void exitGame(MouseEvent mouseEvent) {     // [P]
+        System.exit(0);                         // [P]
     }
 
     // [P] Resumes the game
-    public void resumeGame(MouseEvent mouseEvent) {   // [P]
+    public void resumeGame(MouseEvent mouseEvent) {                             // [P]
         menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible()); // [P]
-		gameState = PLAYING;
+		gameState = PLAYING;                                                    // [P]
     }
 
     // [P] Continues the game from the moment when it was ended when last time playing
