@@ -295,7 +295,7 @@ public class GameController extends Application {
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
 
-        messageView.showAnimatedMessage("NEW GAME");      // [P]
+       // messageView.showAnimatedMessage("NEW GAME");      // [P]
 
 
         // [S] [P] Associates clicked button to the right method - resumeGame
@@ -371,9 +371,13 @@ public class GameController extends Application {
     }
 
     // [P] Continues the game from the moment when it was ended when last time playing
-    public void continueGame(MouseEvent mouseEvent) throws Exception{
-        startGame(mouseEvent);
-        loadGame();
+    public void continueGame(MouseEvent mouseEvent) throws Exception{              // [P]
+        startGame(mouseEvent);                                                     // [P]
+        loadGame();                                                                // [P]
+        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));   // [P]
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));          // [P]
+        messageView.showAnimatedMessage("LOADED");                             // [P]
+
     }
 
 
