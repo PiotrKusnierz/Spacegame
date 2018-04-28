@@ -336,6 +336,8 @@ public class GameController extends Application {
                     messageView.removeMessage();                                                      // [P]
                     gameState = PLAYING;                                                              // [P]
                     messageView.showAnimatedMessage("LOADED");                                   // [P]
+                    menuView.resumeButton.setVisible(true);                                           // [P]
+                    menuView.saveButton.setVisible(true);                                             // [P]
                 } else {                                                                              // [P]
                     if (gameState == GAMEOVER) {                                                      // [P]
                         gameState = GAMEOVER;                                                         // [P]
