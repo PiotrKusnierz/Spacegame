@@ -341,11 +341,11 @@ public class GameController extends Application {
                 } else {                                                                              // [P]
                     if (gameState == GAMEOVER) {                                                      // [P]
                         gameState = GAMEOVER;                                                         // [P]
-                        System.out.println("File with saves is not existing!");                       // [P]
+                        System.out.println("File with saves don't exist!");                       // [P]
                     } else {                                                                          // [P]
                         messageView.showAnimatedMessage("ERROR");                                 // [P]
                         resumeGame(event);                                                            // [P]
-                        System.out.println("File with saves is not existing!");                       // [P]
+                        System.out.println("File with saves don't exist!!");                       // [P]
                     }
                 }
             }
