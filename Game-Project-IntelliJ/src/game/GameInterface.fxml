@@ -31,6 +31,17 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Text>
+            <Text fx:id="goToMainMenuButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Menu">
+               <font>
+                  <Font size="23.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="24.0" />
+               </VBox.margin>
+            </Text>
             <Text fx:id="saveButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Save Game">
                <font>
                   <Font size="23.0" />
