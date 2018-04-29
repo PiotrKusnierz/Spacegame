@@ -312,6 +312,15 @@ public class GameController extends Application {
 			}
 		});
 
+        // [P] Associates clicked button to the right method - menuGame
+        menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("Czesc");
+                menuView.pausedMenuBox.setVisible(false);                                           // [P]
+            }
+        });
+
 		// [S] [P] Associates clicked button to the right method - saveGame
         menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
