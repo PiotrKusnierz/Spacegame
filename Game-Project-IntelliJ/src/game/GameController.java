@@ -316,8 +316,9 @@ public class GameController extends Application {
         menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("Czesc");
                 menuView.pausedMenuBox.setVisible(false);                                           // [P]
+                menuView.messageBox.setVisible(true);                                           // [P]
+
             }
         });
 

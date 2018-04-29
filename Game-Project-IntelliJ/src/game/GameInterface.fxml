@@ -85,14 +85,49 @@
                </cursor></Text>
          </children>
       </VBox>
-      <VBox fx:id="messageBox" layoutX="92.0" layoutY="114.0" prefHeight="241.0" prefWidth="313.0">
+      <VBox fx:id="messageBox" layoutX="92.0" layoutY="130.0" prefHeight="241.0" prefWidth="313.0" visible="false">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure you want to leave?" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Game will be saved automatically." />
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure you want to leave?">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="7.0" />
+               </VBox.margin></Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Game will be saved automatically.">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin></Text>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Yes" />
-                  <Text layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Yes">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="90.0" />
+                     </HBox.margin></Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="/">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fill="WHITE" layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="20.0" />
+                     </font></Text>
                </children>
             </HBox>
          </children></VBox>
