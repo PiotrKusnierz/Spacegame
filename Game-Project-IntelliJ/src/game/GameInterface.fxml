@@ -32,17 +32,6 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Text>
-            <Text fx:id="menuButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Menu">
-               <font>
-                  <Font size="23.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="24.0" />
-               </VBox.margin>
-            </Text>
             <Text fx:id="saveButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Save Game">
                <font>
                   <Font size="23.0" />
@@ -73,33 +62,27 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Text>
-            <Text fx:id="exitButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Exit Game">
+            <Text fx:id="menuButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Menu">
                <font>
                   <Font size="23.0" />
                </font>
-               <VBox.margin>
-                  <Insets left="31.0" />
-               </VBox.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></Text>
+               </cursor>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="24.0" />
+               </VBox.margin>
+            </Text>
          </children>
       </VBox>
-      <VBox fx:id="messageBox" layoutX="92.0" layoutY="130.0" prefHeight="241.0" prefWidth="313.0" visible="false">
+      <VBox fx:id="messageBox" layoutX="13.0" layoutY="130.0" prefHeight="241.0" prefWidth="457.0" visible="false">
          <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure you want to leave?">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you sure you want to leave the game?">
                <font>
                   <Font size="20.0" />
                </font>
                <VBox.margin>
-                  <Insets left="7.0" />
-               </VBox.margin></Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Game will be saved automatically.">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="30.0" />
+                  <Insets bottom="25.0" left="7.0" />
                </VBox.margin></Text>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
@@ -111,7 +94,7 @@
                         <Font size="20.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="90.0" />
+                        <Insets left="130.0" />
                      </HBox.margin></Text>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="/">
                      <font>
@@ -129,7 +112,13 @@
                         <Font size="20.0" />
                      </font></Text>
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </HBox>
-         </children></VBox>
+         </children>
+         <padding>
+            <Insets left="35.0" />
+         </padding></VBox>
    </children>
 </Pane>

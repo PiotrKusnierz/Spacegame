@@ -229,7 +229,7 @@ public class GameController extends Application {
                     messageView.removeMessage();                                             // [P]
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
 
-                    //System.out.println(menuView);
+
                     menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
                     break;
             }
@@ -312,12 +312,16 @@ public class GameController extends Application {
 			}
 		});
 
-        // [P] Associates clicked button to the right method - menuGame
+        // [P] If "Main Menu" button is pressed - asks question to the user if he really wants to leave the game
         menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
                 menuView.pausedMenuBox.setVisible(false);                                             // [P]
                 menuView.messageBox.setVisible(true);                                                 // [P]
+                if (gameState == GAMEOVER) {                                                          // [P]
+                    messageView.removeMessage();                                                      // [P]
+                }
+
             }
         });
 
@@ -334,7 +338,6 @@ public class GameController extends Application {
         menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
-                saveGame();                                                                           // [P]
                 try {                                                                                 // [P]
                     start(game_stage);                                                                // [P]
                 } catch (Exception e) {                                                               // [P]
@@ -387,14 +390,6 @@ public class GameController extends Application {
             @Override
             public void handle(MouseEvent event) {
                 restartGame(event);
-            }
-        });
-
-        // [S] [P] Associates clicked button to the right method  - exitGame
-        menuView.exitButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                exitGame(event);
             }
         });
     }
