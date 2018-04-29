@@ -330,6 +330,19 @@ public class GameController extends Application {
             }
         });
 
+        // [P] If "Yes" button is pressed - saves game and sends user to the main menu
+        menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  // [P]
+            @Override                                                                                 // [P]
+            public void handle(MouseEvent event) {                                                    // [P]
+                saveGame();                                                                           // [P]
+                try {                                                                                 // [P]
+                    start(game_stage);                                                                // [P]
+                } catch (Exception e) {                                                               // [P]
+                    e.printStackTrace();                                                              // [P]
+                }
+            }
+        });
+
 		// [S] [P] Associates clicked button to the right method - saveGame
         menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
@@ -359,11 +372,11 @@ public class GameController extends Application {
                 } else {                                                                              // [P]
                     if (gameState == GAMEOVER) {                                                      // [P]
                         gameState = GAMEOVER;                                                         // [P]
-                        System.out.println("File with saves don't exist!");                       // [P]
+                        System.out.println("File with saves don't exist!");                           // [P]
                     } else {                                                                          // [P]
                         messageView.showAnimatedMessage("ERROR");                                 // [P]
                         resumeGame(event);                                                            // [P]
-                        System.out.println("File with saves don't exist!!");                       // [P]
+                        System.out.println("File with saves don't exist!!");                          // [P]
                     }
                 }
             }
