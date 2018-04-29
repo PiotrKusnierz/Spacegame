@@ -103,7 +103,7 @@
                </VBox.margin></Text>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Yes">
+                  <Text fx:id="yesButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Yes">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -121,7 +121,7 @@
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </Text>
-                  <Text fill="WHITE" layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No">
+                  <Text fx:id="noButton" fill="WHITE" layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

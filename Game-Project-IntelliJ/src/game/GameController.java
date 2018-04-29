@@ -313,12 +313,20 @@ public class GameController extends Application {
 		});
 
         // [P] Associates clicked button to the right method - menuGame
-        menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                menuView.pausedMenuBox.setVisible(false);                                           // [P]
-                menuView.messageBox.setVisible(true);                                           // [P]
+        menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
+            @Override                                                                                 // [P]
+            public void handle(MouseEvent event) {                                                    // [P]
+                menuView.pausedMenuBox.setVisible(false);                                             // [P]
+                menuView.messageBox.setVisible(true);                                                 // [P]
+            }
+        });
 
+        // [P] If "No" button is pressed - sends user back to the paused menu
+        menuView.noButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {   // [P]
+            @Override                                                                                 // [P]
+            public void handle(MouseEvent event) {                                                    // [P]
+                menuView.pausedMenuBox.setVisible(true);                                              // [P]
+                menuView.messageBox.setVisible(false);                                                // [P]
             }
         });
 

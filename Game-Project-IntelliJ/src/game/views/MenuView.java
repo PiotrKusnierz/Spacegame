@@ -18,7 +18,9 @@ public class MenuView {
     public Text exitButton;      // [P]
     public Text restartButton;   // [P]
     public Text continueButton;  // [P]
-    public VBox messageBox;   // [P]
+    public VBox messageBox;      // [P]
+    public Text yesButton;       // [P]
+    public Text noButton;        // [P]
 
     public MenuView(Pane root) {
         pausedMenuBox = (VBox) root.lookup("#pausedMenuBox");    // [P]
@@ -30,6 +32,7 @@ public class MenuView {
         restartButton = (Text) root.lookup("#restartButton");    // [P]
         continueButton = (Text) root.lookup("#continueButton");  // [P]
         messageBox = (VBox) root.lookup("#messageBox");          // [P]
-
+        yesButton = (Text) root.lookup("#yesButton");            // [P]
+        noButton = (Text) root.lookup("#noButton");              // [P]
     }
 }
