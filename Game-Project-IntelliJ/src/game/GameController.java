@@ -114,6 +114,7 @@ public class GameController extends Application {
 	 */
     public void collisionHandler(Enemy enemy) {
         if (game.player.rect.intersects(enemy.rect)) {
+            playSound("sound/boom7.mp3");      // [P]
             enemy.lives--;
             game.player.lives--; // [P]
             gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
@@ -138,6 +139,7 @@ public class GameController extends Application {
             return;
         }
 		game.countFrames();
+        // playSound("sound/enginehum.mp3");    // [P]    slows down the game !!!!!!!!!!!!!!
 		if (game.frameCounter % 3600 == 0) {
 			game.level++;
 			game.frameCounter = 0;
@@ -333,6 +335,7 @@ public class GameController extends Application {
             public void handle(long now) {
                 update();
                 draw();
+                // playSound("sound/enginehum.mp3");    // [P]    makes sound not commplete!!!!!!!!!!!!!!
             }
         };
 
