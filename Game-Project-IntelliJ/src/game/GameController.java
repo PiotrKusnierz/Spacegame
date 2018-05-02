@@ -26,7 +26,6 @@ import javafx.scene.Node;
 /**                                                               _
  * This class controls the logic behind the game and calls the games draw
  * functions.
- *
  */
 
 public class GameController extends Application {
@@ -71,7 +70,7 @@ public class GameController extends Application {
     }
 
 	/**
-	 * Saves the game
+	 * Saves the game.
 	 */
     public void saveGame() {
         FileOutputStream fout = null;
@@ -266,14 +265,9 @@ public class GameController extends Application {
 
         // To make sure the game.player does not continue moving after the key is released
         scene.setOnKeyReleased(event -> {
-            switch (event.getCode()) {
-                case LEFT:
-                    game.player.velocity.x = 0;
-                    break;
-                case RIGHT:
-                    game.player.velocity.x = 0;
-                    break;
-            }
+			if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT) {
+				game.player.velocity.x = 0;
+			}
             if (event.getCode() == KeyCode.UP) {
                 boost = 1;
                 for (Enemy enemy : game.enemies) {
