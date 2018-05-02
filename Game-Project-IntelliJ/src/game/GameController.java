@@ -11,6 +11,8 @@ import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
@@ -54,6 +56,14 @@ public class GameController extends Application {
     // public Size windowSize = new Size(screenSize.h*0.75, screenSize.h*0.9);
     public Size windowSize = new Size(482.0, 581.0);
 
+    // [P] Method creates one object of type Media which downloads sound files, and one object if type
+    //     MediaPlayer which plays those sound files.
+    public void playSound(String filename) {                                            // [P]
+        Media sound  = new Media(getClass().getResource(filename).toString());           // [P]
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);                                // [P]
+        mediaPlayer.play();                                                              // [P]
+    }
+
 	/**
 	 * Saves the game.
 	 */
@@ -96,7 +106,6 @@ public class GameController extends Application {
         }
     }
 
-    // Method that runs the intersects-method from tools.Rect, making colliding objects lose a life.
 	/**
 	 * Handles collision detection between the enemies and the player, and
 	 * removes a life from both the player and the enemy if a collision is
@@ -295,11 +304,14 @@ public class GameController extends Application {
         });
     }
 
+
     // [P] Starts the game on onMouseClicked event when "Start Game" options from the menu is chosen
     public void startGame(MouseEvent mouseEvent) throws Exception{                             // [P]
         Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));  // [P]
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();     // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
+
+        playSound("sound/sound1.mp3");       // sound for testing [P]
 
         gameState = PLAYING;
         menuView = new MenuView(root);
@@ -455,9 +467,6 @@ public class GameController extends Application {
         messageView.showAnimatedMessage("LOADED");                             // [P]
 
     }
-
-
-
 
     @Override
     public void start(Stage stage) throws Exception{
