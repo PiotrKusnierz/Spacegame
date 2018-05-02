@@ -170,6 +170,7 @@ public class GameController extends Application {
                     enemy.lives--;
                     removedBullets.add(bullet);
 					updateScore(10);
+					playSound("sound/8bit_bomb_explosion.mp3");   // [P]
                 }
             }
             if (enemy.lives < 1 || enemy.rect.top() < 0) {
@@ -282,6 +283,7 @@ public class GameController extends Application {
             if (event.getCode() == KeyCode.SPACE) {
                 if (!this.isShooting) {
                 	game.player.shoot();
+                    playSound("sound/laserfire01.mp3");  //  [P]
                 }
 				this.isShooting = true;
             }
