@@ -144,6 +144,7 @@ public class GameController extends Application {
 			game.level++;
 			game.frameCounter = 0;
 			messageView.showAnimatedMessage(String.format("Level %d", game.level));
+			playSound("sound/Upper01.mp3");   // [P]
 		} else if (game.frameCounter % 100 == 0) {
 			// There should be a better solution to remove the message.
 			messageView.removeMessage();
