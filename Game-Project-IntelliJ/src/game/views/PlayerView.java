@@ -3,12 +3,14 @@ package game.views;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
+import java.util.Arrays;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.canvas.GraphicsContext;
 import game.models.Player;
 import game.tools.Point;
+import game.tools.ImageLoader;
 
 /**
 * Class that determines how the player object is displayed in the game window.
@@ -27,23 +29,9 @@ public class PlayerView{
 		loadImages();
     }
 
-	private void loadImage(String filePath) {
-		try {
-			FileInputStream fis = new FileInputStream(filePath);
-			images.add(new Image(fis));
-			fis.close();
-
-		} catch(Exception e) {
-			e.printStackTrace();
-			System.out.println(System.getProperty("user.dir"));
-			System.out.println(getClass().getResource("../images").toString().substring(6));
-			System.exit(1);
-		} 
-	}
-
 	public void loadImages() {
-		// loadImage("game/images/png/playerShip1_blue.png");
-		loadImage(getClass().getResource("../images/png/playerShip1_blue.png").toString().substring(5));
+		images = ImageLoader.load(Arrays.asList("png/playerShip1_blue.png"));
+		System.out.println(images);
 	}
 
     // Method draws player object

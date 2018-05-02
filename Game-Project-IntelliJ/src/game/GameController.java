@@ -37,7 +37,7 @@ public class GameController extends Application {
     private List<Enemy> removedEnemies;
     private List<Point> removedBullets;
 	private boolean isShooting = false;
-    public double boost = 1;
+    private double boost = 1;
 
     private int gameState;
     private final int PAUSED = 1;
@@ -53,21 +53,6 @@ public class GameController extends Application {
     // Defines the window size we will use for the game
     // public Size windowSize = new Size(screenSize.h*0.75, screenSize.h*0.9);
     public Size windowSize = new Size(482.0, 581.0);
-
-    // Method that runs the intersects-method from tools.Rect, making colliding objects lose a life.
-	/**
-	 * Handles collision detection between the enemies and the player, and
-	 * removes a life from both the player and the enemy if a collision is
-	 * detected.
-	 * @param enemy an enemy that the player might collide with.
-	 */
-    public void collisionHandler(Enemy enemy) {
-        if (game.player.rect.intersects(enemy.rect)) {
-            enemy.lives--;
-            game.player.lives--; // [P]
-            gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
-        }
-    }
 
 	/**
 	 * Saves the game.
@@ -111,6 +96,31 @@ public class GameController extends Application {
         }
     }
 
+    // Method that runs the intersects-method from tools.Rect, making colliding objects lose a life.
+	/**
+	 * Handles collision detection between the enemies and the player, and
+	 * removes a life from both the player and the enemy if a collision is
+	 * detected.
+	 * @param enemy an enemy that the player might collide with.
+	 */
+    public void collisionHandler(Enemy enemy) {
+        if (game.player.rect.intersects(enemy.rect)) {
+            enemy.lives--;
+            game.player.lives--; // [P]
+            gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
+        }
+    }
+
+	/**
+	 * Adds a value to the score and updates it on the screen.
+	 * @param value what will be added to the score.
+	 * @author Sebastian
+	 */
+	public void updateScore(int value) {
+		game.score += value;
+		gameView.score.setText("SCORE: " + Integer.toString(game.score));      // [P]
+	}
+
 	/**
 	 * This runs every frame, and contains the logic part of the game.
 	 */
@@ -127,6 +137,9 @@ public class GameController extends Application {
 			// There should be a better solution to remove the message.
 			messageView.removeMessage();
 		}
+		if (game.frameCounter % 50 == 0) {
+			updateScore(1);
+		}
 		if (game.frameCounter % 10 == 0 && this.isShooting) {
 			game.player.shoot();
 		}
@@ -135,9 +148,6 @@ public class GameController extends Application {
         if (game.player.lives <= 0) {
             gameState = GAMEOVER;
             messageView.showPeristantAnimatedMessage("GAME OVER");
-            //messageView.showAnimatedMessage("GAME OVER");
-            //messageView.removeMessage();
-
             return;
         }
         for (Enemy enemy : game.enemies) {
@@ -150,17 +160,21 @@ public class GameController extends Application {
                 if (enemy.rect.contains(bullet)) {
                     enemy.lives--;
                     removedBullets.add(bullet);
-                    game.score++;                                                      // [P]
-                    gameView.score.setText("SCORE: " + Integer.toString(game.score));  // [P]
+					updateScore(10);
                 }
             }
-            if (enemy.lives == 0 || enemy.rect.y < 0) {
+            if (enemy.lives < 1 || enemy.rect.top() < 0) {
                 removedEnemies.add(enemy);
             }
         }
         // Generates enemies
         if (Math.random() < 0.05 * boost) {
-            addEnemy();
+			switch (game.level) {
+				case 1:  addEnemy(ThreadLocalRandom.current().nextInt(0, 3)); break;
+				case 2:  addEnemy(ThreadLocalRandom.current().nextInt(3, 5)); break;
+				case 3:  addEnemy(ThreadLocalRandom.current().nextInt(4, 6)); break;
+				default: addEnemy(ThreadLocalRandom.current().nextInt(3, 5)); break;
+			}
         }
         // Uses the removeAll method from ArrayList to remove dead/inactive enemies from the enemies list
         game.enemies.removeAll(removedEnemies);
@@ -182,11 +196,12 @@ public class GameController extends Application {
 	 * Creates a new enemy with a random size and position and adds it to the
 	 * games enemies list.
 	 */
-    public void addEnemy() {
-        double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.05, windowSize.w*0.1);
+    public void addEnemy(int type) {
+        double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.08, windowSize.w*0.13);
         double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
         double y = windowSize.h+r;
         Enemy enemy = new Enemy(x, y, r, boost);
+		enemy.type = type;
         game.enemies.add(enemy);
     }
 

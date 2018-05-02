@@ -1,46 +1,44 @@
 package game.tools;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.io.FileInputStream;
 import javafx.scene.image.Image;
 
 /**
- * This class loads images to its images list, which you later can get from
- * its getImage and getAll method.
+ * This is a static class used to load images. Either from a single String file
+ * path, or fram a List of file paths.
+ * @author Sebastian
  */
 public class ImageLoader {
-	private FileInputStream fis;
-	private ArrayList<Image> images = new ArrayList<Image>();
-
 	/**
-	 * Loads images into the images array.
+	 * Loads an image and returns it as a Image object.
 	 * @param filePath string value of the image file location.
+	 * @return Image
 	 */
-	public void load(String filePath) {
+	public static Image load(String file) {
 		try {
-			fis = new FileInputStream(filePath);
-			images.add(new Image(fis));
+			file = ImageLoader.class.getResource("../images/"+file).getPath();
+			FileInputStream fis = new FileInputStream(file);
+			Image image = new Image(fis);
 			fis.close();
+			return image;
 		} catch(Exception e) {
 			e.printStackTrace();
 		} 
+		return null;
 	}
 
 	/**
-	 * Returns an image from the images array.
-	 * @param index images gets stored in an array ordered in chronological
-	 * order. The index will retrieve one of the images in the array.
-	 * @return Image
+	 * Returns an List of Image objects.
+	 * @param files List<String> with image file paths.
+	 * @return List<Image>
 	 */
-	public Image getImage(int index) {
-		return images.get(index);
-	}
-
-	/**
-	 * Returns the whole images array.
-	 * @return ArrayList<Image>
-	 */
-	public ArrayList<Image> getAll() {
+	public static List<Image> load(List<String> files) {
+		List<Image> images = new ArrayList<Image>();
+		for (String file : files) {
+			images.add(load(file));
+		}
 		return images;
 	}
 }
