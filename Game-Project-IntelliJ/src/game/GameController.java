@@ -11,6 +11,8 @@ import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
@@ -275,8 +277,14 @@ public class GameController extends Application {
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();     // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
 
-        //audioPlayer = new AudioPlayer("/sound/sound1.mp3");        // testing [P]
-        //audioPlayer.play();                                        // testing  [P]
+        audioPlayer = new AudioPlayer("../sound/sound1.mp3");        // testing [P]
+        audioPlayer.play();                                               // testing  [P]
+
+        // Different aproach to be tested !!!
+        //String fileWithMusic = "../sound/sound1.mp3";
+        //Media sound  = new Media(new File(fileWithMusic).toURI().toString());
+        //MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        //mediaPlayer.play();
 
         gameState = PLAYING;
         menuView = new MenuView(root);
