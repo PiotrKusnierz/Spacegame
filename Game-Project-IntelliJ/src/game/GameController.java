@@ -20,7 +20,6 @@ import javafx.scene.input.KeyCode;
 import game.models.*;
 import game.views.*;
 import game.tools.*;
-import game.tools.AudioPlayer;  // testing [P]
 
 import javafx.scene.Node;
 
@@ -34,7 +33,6 @@ public class GameController extends Application {
     private GameView gameView;
     private MenuView menuView;
     private MessageView messageView;
-    private AudioPlayer audioPlayer;  // testing [P]
     private Game game;
     private List<Enemy> removedEnemies;
     private List<Point> removedBullets;
@@ -274,9 +272,6 @@ public class GameController extends Application {
         Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));  // [P]
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();     // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
-
-        //audioPlayer = new AudioPlayer("/sound/sound1.mp3");        // testing [P]
-        //audioPlayer.play();                                        // testing  [P]
 
         gameState = PLAYING;
         menuView = new MenuView(root);
