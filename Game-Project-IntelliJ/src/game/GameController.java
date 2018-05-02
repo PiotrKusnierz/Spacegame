@@ -352,6 +352,7 @@ public class GameController extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				resumeGame(event);
+				playSound("sound/Flashpoint001b.mp3");   // [P]
 			}
 		});
 
@@ -359,6 +360,7 @@ public class GameController extends Application {
         menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
+                playSound("sound/Flashpoint001b.mp3");   // [P]
                 menuView.pausedMenuBox.setVisible(false);                                             // [P]
                 menuView.messageBox.setVisible(true);                                                 // [P]
                 if (gameState == GAMEOVER) {                                                          // [P]
@@ -372,6 +374,7 @@ public class GameController extends Application {
         menuView.noButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {   // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
+                playSound("sound/Flashpoint001b.mp3");   // [P]
                 menuView.pausedMenuBox.setVisible(true);                                              // [P]
                 menuView.messageBox.setVisible(false);                                                // [P]
             }
@@ -381,6 +384,7 @@ public class GameController extends Application {
         menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
+                playSound("sound/Flashpoint001b.mp3");   // [P]
                 try {                                                                                 // [P]
                     start(game_stage);                                                                // [P]
                 } catch (Exception e) {                                                               // [P]
@@ -393,6 +397,7 @@ public class GameController extends Application {
         menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                playSound("sound/Flashpoint001b.mp3");   // [P]
                 saveGame();
                 menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
                 gameState = PLAYING;
@@ -404,6 +409,7 @@ public class GameController extends Application {
         menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
+                playSound("sound/Flashpoint001b.mp3");   // [P]
                 File f = new File("./game.sav");                                             // [P]
                 if(f.exists()) {                                                                      // [P]
                     loadGame();                                                                       // [P]
@@ -432,6 +438,7 @@ public class GameController extends Application {
         menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                playSound("sound/Flashpoint001b.mp3");   // [P]
                 restartGame(event);
             }
         });
