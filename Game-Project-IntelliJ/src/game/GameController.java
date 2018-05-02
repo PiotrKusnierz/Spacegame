@@ -276,6 +276,7 @@ public class GameController extends Application {
             }
             if (event.getCode() == KeyCode.UP) {
                 boost = 3;
+                playSound("sound/warpengine.mp3");  // [P]
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
                 }
@@ -313,7 +314,7 @@ public class GameController extends Application {
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();     // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
 
-        playSound("sound/sound1.mp3");       // sound for testing [P]
+        playSound("sound/Flashpoint001a.mp3");   // [P]
 
         gameState = PLAYING;
         menuView = new MenuView(root);
@@ -446,12 +447,14 @@ public class GameController extends Application {
     }
 
     // [P] WIP
-    public void goToOptions(MouseEvent mouseEvent) {  // [P]
+    public void goToOptions(MouseEvent mouseEvent) {     // [P]
+        playSound("sound/Flashpoint001a.mp3");   // [P]
     }
 
     // [P] Closes game
-    public void exitGame(MouseEvent mouseEvent) {     // [P]
-        System.exit(0);                         // [P]
+    public void exitGame(MouseEvent mouseEvent) {      // [P]
+        System.exit(0);                          // [P]
+
     }
 
     // [P] Resumes the game
