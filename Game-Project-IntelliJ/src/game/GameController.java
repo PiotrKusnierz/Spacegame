@@ -284,6 +284,7 @@ public class GameController extends Application {
                     }
                     messageView.removeMessage();                                             // [P]
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
+                    playMusic("sound/Mercury.mp3");
 
 
                     menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
