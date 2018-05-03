@@ -73,6 +73,7 @@ public class GameController extends Application {
         Media music  = new Media(getClass().getResource(filename).toString());            // [P]
         mediaPlayer = new MediaPlayer(music);                                             // [P]
         mediaPlayer.setCycleCount(INDEFINITE);                                            // [P]
+        mediaPlayer.setVolume(0.3);
         mediaPlayer.play();                                                               // [P]
     }
 
@@ -284,7 +285,7 @@ public class GameController extends Application {
                     }
                     messageView.removeMessage();                                             // [P]
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
-                    playMusic("sound/Mercury.mp3");
+                    playMusic("sound/StarCommander1.mp3");                           // [P]
 
 
                     menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
@@ -500,9 +501,8 @@ public class GameController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-
         Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml")); // [P]
-
+        playMusic("sound/Mercury.mp3");                                               // [P]
 
         menuView = new MenuView(root);
         System.out.println(menuView);
@@ -517,7 +517,6 @@ public class GameController extends Application {
             menuView.continueButton.setVisible(true);    // [P]
         } else {                                         // [P]
             menuView.continueButton.setVisible(false);   // [P]
-        }
-        playMusic("sound/StarCommander1.mp3");    // [P]
+        }                                                // [P]
     }
 }
