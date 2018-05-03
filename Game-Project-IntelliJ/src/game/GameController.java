@@ -46,6 +46,8 @@ public class GameController extends Application {
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
 
+    private static MediaPlayer mediaPlayer;   // [P]
+
     // Defines the screenSize variable based on the user's screen size
     public Size screenSize = new Size(
             Screen.getPrimary().getVisualBounds().getWidth(),
@@ -58,9 +60,9 @@ public class GameController extends Application {
 
     // [P] Method creates one object of type Media which downloads sound files, and one object if type
     //     MediaPlayer which plays those sound files.
-    public void playSound(String filename) {                                            // [P]
+    public void playSound(String filename) {                                              // [P]
         Media sound  = new Media(getClass().getResource(filename).toString());           // [P]
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);                                // [P]
+        mediaPlayer = new MediaPlayer(sound);                                             // [P]
         mediaPlayer.play();                                                              // [P]
     }
 
@@ -128,7 +130,7 @@ public class GameController extends Application {
 	 */
 	public void updateScore(int value) {
 		game.score += value;
-		gameView.score.setText("SCORE: " + Integer.toString(game.score));      // [P]
+		gameView.score.setText("SCORE: " + Integer.toString(game.score));                  // [P]
 	}
 
 	/**
@@ -144,7 +146,7 @@ public class GameController extends Application {
 			game.level++;
 			game.frameCounter = 0;
 			messageView.showAnimatedMessage(String.format("Level %d", game.level));
-			playSound("sound/Upper01.mp3");   // [P]
+			playSound("sound/Upper01.mp3");                                         // [P]
 		} else if (game.frameCounter % 100 == 0) {
 			// There should be a better solution to remove the message.
 			messageView.removeMessage();
@@ -173,7 +175,7 @@ public class GameController extends Application {
                     enemy.lives--;
                     removedBullets.add(bullet);
 					updateScore(10);
-					playSound("sound/8bit_bomb_explosion.mp3");   // [P]
+					playSound("sound/8bit_bomb_explosion.mp3");                  // [P]
                 }
             }
             if (enemy.lives < 1 || enemy.rect.top() < 0) {
@@ -233,8 +235,8 @@ public class GameController extends Application {
         messageView.removeMessage();
         gameState = PLAYING;
         // [P] Sets Lives, Score counter and converts Integer to String
-        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));  // [P]
-        gameView.score.setText("SCORE: " + Integer.toString(game.score));         // [P]
+        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));           // [P]
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));                  // [P]
     }
 
 	/**
@@ -318,6 +320,7 @@ public class GameController extends Application {
         game_stage.setScene(new Scene(root, Color.BLACK));
 
         playSound("sound/ambient_techno1.mp3");   // [P]
+        //playSound("sound/StarCommander1.mp3");    // [P]    not working yet
 
         gameState = PLAYING;
         menuView = new MenuView(root);
@@ -364,7 +367,7 @@ public class GameController extends Application {
         menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
-                playSound("sound/Flashpoint001b.mp3");   // [P]
+                playSound("sound/Flashpoint001b.mp3");                                         // [P]
                 menuView.pausedMenuBox.setVisible(false);                                             // [P]
                 menuView.messageBox.setVisible(true);                                                 // [P]
                 if (gameState == GAMEOVER) {                                                          // [P]
@@ -378,7 +381,7 @@ public class GameController extends Application {
         menuView.noButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {   // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
-                playSound("sound/Flashpoint001b.mp3");   // [P]
+                playSound("sound/Flashpoint001b.mp3");                                         // [P]
                 menuView.pausedMenuBox.setVisible(true);                                              // [P]
                 menuView.messageBox.setVisible(false);                                                // [P]
             }
@@ -388,7 +391,7 @@ public class GameController extends Application {
         menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
-                playSound("sound/Flashpoint001b.mp3");   // [P]
+                playSound("sound/Flashpoint001b.mp3");                                         // [P]
                 try {                                                                                 // [P]
                     start(game_stage);                                                                // [P]
                 } catch (Exception e) {                                                               // [P]
@@ -439,11 +442,11 @@ public class GameController extends Application {
         });
 
         // [P] Associates clicked button to the right method - restartGame
-        menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                playSound("sound/ambient_techno1.mp3");   // [P]
-                restartGame(event);
+        menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
+            @Override                                                                                    // [P]
+            public void handle(MouseEvent event) {                                                       // [P]
+                playSound("sound/ambient_techno1.mp3");                                          // [P]
+                restartGame(event);                                                                      // [P]
             }
         });
     }
@@ -458,13 +461,13 @@ public class GameController extends Application {
     }
 
     // [P] WIP
-    public void goToOptions(MouseEvent mouseEvent) {     // [P]
-        playSound("sound/Flashpoint001a.mp3");   // [P]
+    public void goToOptions(MouseEvent mouseEvent) {                              // [P]
+        playSound("sound/Flashpoint001a.mp3");                             // [P]
     }
 
     // [P] Closes game
-    public void exitGame(MouseEvent mouseEvent) {      // [P]
-        System.exit(0);                          // [P]
+    public void exitGame(MouseEvent mouseEvent) {                                 // [P]
+        System.exit(0);                                                     // [P]
 
     }
 
@@ -489,6 +492,7 @@ public class GameController extends Application {
 
         Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml")); // [P]
 
+
         menuView = new MenuView(root);
         System.out.println(menuView);
         stage.setScene(new Scene(root, Color.YELLOW));
@@ -503,5 +507,6 @@ public class GameController extends Application {
         } else {                                         // [P]
             menuView.continueButton.setVisible(false);   // [P]
         }
+        playSound("sound/StarCommander1.mp3");    // [P]    not working yet
     }
 }
