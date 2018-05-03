@@ -331,7 +331,8 @@ public class GameController extends Application {
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();     // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
 
-        playSound("sound/ambient_techno1.mp3");   // [P]
+        mediaPlayer.stop();                                                                    // [P]
+        playSound("sound/ambient_techno1.mp3");                                         // [P]
         //playSound("sound/StarCommander1.mp3");    // [P]    not working yet
 
         gameState = PLAYING;
@@ -395,7 +396,7 @@ public class GameController extends Application {
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
                 playSound("sound/Flashpoint001b.mp3");                                         // [P]
-                playMusic("sound/theme_menu.mp3");                                // [P]
+                playMusic("sound/theme_menu.mp3");                                 // [P]
                 menuView.pausedMenuBox.setVisible(true);                                              // [P]
                 menuView.messageBox.setVisible(false);                                                // [P]
             }
@@ -405,6 +406,7 @@ public class GameController extends Application {
         menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
+                mediaPlayer.stop();                                                                   // [P]
                 playSound("sound/Flashpoint001b.mp3");                                         // [P]
                 try {                                                                                 // [P]
                     start(game_stage);                                                                // [P]
