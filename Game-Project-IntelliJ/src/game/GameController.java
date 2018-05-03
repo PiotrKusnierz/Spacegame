@@ -25,6 +25,8 @@ import game.tools.*;
 
 import javafx.scene.Node;
 
+import static javafx.scene.media.MediaPlayer.INDEFINITE;
+
 /**                                                               _
  * This class controls the logic behind the game and calls the games draw
  * functions.
@@ -58,12 +60,20 @@ public class GameController extends Application {
     // public Size windowSize = new Size(screenSize.h*0.75, screenSize.h*0.9);
     public Size windowSize = new Size(482.0, 581.0);
 
-    // [P] Method creates one object of type Media which downloads sound files, and one object if type
-    //     MediaPlayer which plays those sound files.
+    // [P] Method creates one object of type Media which downloads sound files, and one object of type
+    //     MediaPlayer which plays those sound files one time.
     public void playSound(String filename) {                                              // [P]
-        Media sound  = new Media(getClass().getResource(filename).toString());           // [P]
+        Media sound  = new Media(getClass().getResource(filename).toString());            // [P]
         mediaPlayer = new MediaPlayer(sound);                                             // [P]
-        mediaPlayer.play();                                                              // [P]
+        mediaPlayer.play();                                                               // [P]
+    }
+
+    // [P] Method plays and constantly repeats music.
+    public  void playMusic(String filename) {                                             // [P]
+        Media music  = new Media(getClass().getResource(filename).toString());            // [P]
+        mediaPlayer = new MediaPlayer(music);                                             // [P]
+        mediaPlayer.setCycleCount(INDEFINITE);                                            // [P]
+        mediaPlayer.play();                                                               // [P]
     }
 
 	/**
@@ -507,6 +517,6 @@ public class GameController extends Application {
         } else {                                         // [P]
             menuView.continueButton.setVisible(false);   // [P]
         }
-        playSound("sound/StarCommander1.mp3");    // [P]    not working yet
+        playMusic("sound/StarCommander1.mp3");    // [P]
     }
 }
