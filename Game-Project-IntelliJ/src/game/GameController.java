@@ -285,7 +285,7 @@ public class GameController extends Application {
                     }
                     messageView.removeMessage();                                             // [P]
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
-                    playMusic("sound/StarCommander1.mp3");                           // [P]
+                    playMusic("sound/theme_menu.mp3");                                // [P]
 
 
                     menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
@@ -380,6 +380,7 @@ public class GameController extends Application {
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
                 playSound("sound/Flashpoint001b.mp3");                                         // [P]
+                playMusic("sound/theme_menu.mp3");                                // [P]
                 menuView.pausedMenuBox.setVisible(false);                                             // [P]
                 menuView.messageBox.setVisible(true);                                                 // [P]
                 if (gameState == GAMEOVER) {                                                          // [P]
@@ -394,6 +395,7 @@ public class GameController extends Application {
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
                 playSound("sound/Flashpoint001b.mp3");                                         // [P]
+                playMusic("sound/theme_menu.mp3");                                // [P]
                 menuView.pausedMenuBox.setVisible(true);                                              // [P]
                 menuView.messageBox.setVisible(false);                                                // [P]
             }
@@ -428,7 +430,7 @@ public class GameController extends Application {
         menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
-                playSound("sound/Flashpoint001b.mp3");   // [P]
+                playSound("sound/Flashpoint001b.mp3");                                        // [P]
                 File f = new File("./game.sav");                                             // [P]
                 if(f.exists()) {                                                                      // [P]
                     loadGame();                                                                       // [P]
