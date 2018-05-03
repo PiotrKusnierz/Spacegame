@@ -371,6 +371,7 @@ public class GameController extends Application {
 		menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+                mediaPlayer.stop();                                                                    // [P]
 				resumeGame(event);
 				playSound("sound/ambient_techno1.mp3");   // [P]
 			}
@@ -420,6 +421,7 @@ public class GameController extends Application {
         menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                mediaPlayer.stop();                                                                    // [P]
                 playSound("sound/Flashpoint001b.mp3");   // [P]
                 saveGame();
                 menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
@@ -432,6 +434,7 @@ public class GameController extends Application {
         menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
+                mediaPlayer.stop();                                                                    // [P]
                 playSound("sound/Flashpoint001b.mp3");                                        // [P]
                 File f = new File("./game.sav");                                             // [P]
                 if(f.exists()) {                                                                      // [P]
@@ -461,6 +464,7 @@ public class GameController extends Application {
         menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                    // [P]
             public void handle(MouseEvent event) {                                                       // [P]
+                mediaPlayer.stop();                                                                    // [P]
                 playSound("sound/ambient_techno1.mp3");                                          // [P]
                 restartGame(event);                                                                      // [P]
             }
@@ -505,8 +509,9 @@ public class GameController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml")); // [P]
         playMusic("sound/Mercury.mp3");                                               // [P]
+        Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml")); // [P]
+
 
         menuView = new MenuView(root);
         System.out.println(menuView);
