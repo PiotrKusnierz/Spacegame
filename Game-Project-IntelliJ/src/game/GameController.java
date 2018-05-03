@@ -65,6 +65,7 @@ public class GameController extends Application {
     public void playSound(String filename) {                                              // [P]
         Media sound  = new Media(getClass().getResource(filename).toString());            // [P]
         mediaPlayer = new MediaPlayer(sound);                                             // [P]
+        mediaPlayer.setVolume(0.2);                                                       // [P]
         mediaPlayer.play();                                                               // [P]
     }
 
@@ -73,7 +74,7 @@ public class GameController extends Application {
         Media music  = new Media(getClass().getResource(filename).toString());            // [P]
         mediaPlayer = new MediaPlayer(music);                                             // [P]
         mediaPlayer.setCycleCount(INDEFINITE);                                            // [P]
-        mediaPlayer.setVolume(0.3);
+        mediaPlayer.setVolume(0.6);                                                       // [P]
         mediaPlayer.play();                                                               // [P]
     }
 
@@ -152,7 +153,7 @@ public class GameController extends Application {
             return;
         }
 		game.countFrames();
-        // playSound("sound/enginehum.mp3");    // [P]    slows down the game !!!!!!!!!!!!!!
+        //playSound("sound/enginehum.mp3");    // [P]    slows down the game !!!!!!!!!!!!!!
 		if (game.frameCounter % 3600 == 0) {
 			game.level++;
 			game.frameCounter = 0;
@@ -197,9 +198,16 @@ public class GameController extends Application {
         // Generates enemies
         if (Math.random() < 0.05 * boost) {
 			switch (game.level) {
-				case 1:  addEnemy(ThreadLocalRandom.current().nextInt(0, 3)); break;
-				case 2:  addEnemy(ThreadLocalRandom.current().nextInt(3, 5)); break;
-				case 3:  addEnemy(ThreadLocalRandom.current().nextInt(4, 6)); break;
+				case 1:  addEnemy(ThreadLocalRandom.current().nextInt(0, 3));
+				playSound("sound/sci-fi1_2.mp3");   // [P]
+				break;
+				case 2:  addEnemy(ThreadLocalRandom.current().nextInt(3, 5));
+				playSound("sound/space_ship_floating_sound_1.mp3");   // [P]
+				break;
+				case 3:  addEnemy(ThreadLocalRandom.current().nextInt(4, 6));
+				playSound("sound/sci-fi1_2.mp3");   // [P]
+                playSound("sound/space_ship_floating_sound_1.mp3");   // [P]
+				break;
 				default: addEnemy(ThreadLocalRandom.current().nextInt(3, 5)); break;
 			}
         }
