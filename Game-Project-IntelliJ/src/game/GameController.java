@@ -317,7 +317,7 @@ public class GameController extends Application {
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();     // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
 
-        playSound("sound/Flashpoint001a.mp3");   // [P]
+        playSound("sound/ambient_techno1.mp3");   // [P]
 
         gameState = PLAYING;
         menuView = new MenuView(root);
@@ -356,7 +356,7 @@ public class GameController extends Application {
 			@Override
 			public void handle(MouseEvent event) {
 				resumeGame(event);
-				playSound("sound/Flashpoint001b.mp3");   // [P]
+				playSound("sound/ambient_techno1.mp3");   // [P]
 			}
 		});
 
@@ -442,7 +442,7 @@ public class GameController extends Application {
         menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                playSound("sound/Flashpoint001b.mp3");   // [P]
+                playSound("sound/ambient_techno1.mp3");   // [P]
                 restartGame(event);
             }
         });
