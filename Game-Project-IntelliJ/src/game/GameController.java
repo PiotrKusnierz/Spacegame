@@ -172,6 +172,7 @@ public class GameController extends Application {
         game.player.clampPosition(0, windowSize.w);
         if (game.player.lives <= 0) {
             gameState = GAMEOVER;
+            playSound("sound/GAMEOVER.mp3");   //????????????????????????????????????????????????
             messageView.showPeristantAnimatedMessage("GAME OVER");
             return;
         }
@@ -279,6 +280,7 @@ public class GameController extends Application {
                     }
                     break;
                 case ESCAPE:                                                                 // [P]
+                    mediaPlayer.stop();            // [P]
                     if (gameState == GAMEOVER) {                                             // [P]
                         menuView.resumeButton.setVisible(false);                             // [P]
                         menuView.saveButton.setVisible(false);
@@ -286,8 +288,6 @@ public class GameController extends Application {
                     messageView.removeMessage();                                             // [P]
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
                     playMusic("sound/theme_menu.mp3");                                // [P]
-
-
                     menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
                     break;
             }
@@ -317,6 +317,7 @@ public class GameController extends Application {
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
                 }
+                mediaPlayer.stop();
             }
 			if (event.getCode() == KeyCode.SPACE) {
 				this.isShooting = false;
