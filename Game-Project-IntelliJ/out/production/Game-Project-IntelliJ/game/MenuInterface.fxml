@@ -19,7 +19,7 @@
             <Image url="@images/mbg1.png" />
          </image>
       </ImageView>
-      <VBox layoutX="139.0" layoutY="200.0" prefHeight="200.0" prefWidth="181.0">
+      <VBox fx:id="mainMenuBox" layoutX="139.0" layoutY="200.0" prefHeight="200.0" prefWidth="181.0">
          <children>
             <Text fx:id="continueButton" fill="WHITE" onMouseClicked="#continueGame" strokeType="OUTSIDE" strokeWidth="0.0" text="CONTINUE" translateX="15.0">
                <font>
@@ -69,27 +69,88 @@
             <Font size="64.0" />
          </font>
       </Text>
-      <VBox prefHeight="200.0" prefWidth="100.0">
+      <VBox fx:id="controlsBox" layoutX="80.0" layoutY="200.0" prefHeight="200.0" prefWidth="100.0" visible="false">
          <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="KEYBOARDS" />
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="CONTROLS">
+               <font>
+                  <Font size="30.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="80.0" />
+               </VBox.margin></Text>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Text fill="#fcfcfc" strokeType="OUTSIDE" strokeWidth="0.0" text="UP" />
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Boost" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="ESC">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="150.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Pause/Menu">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Text>
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE" />
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Shot" />
+                  <Text fill="#fcfcfc" strokeType="OUTSIDE" strokeWidth="0.0" text="UP">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="160.0" />
+                     </HBox.margin></Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Boost">
+                     <font>
+                        <Font size="23.0" />
+                     </font></Text>
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="LEFT/RIGHT" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fly left/right" />
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="122.0" />
+                     </HBox.margin></Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Shot">
+                     <font>
+                        <Font size="23.0" />
+                     </font></Text>
                </children>
             </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="LEFT/RIGHT">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="70.0" />
+                     </HBox.margin></Text>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Fly left/right">
+                     <font>
+                        <Font size="23.0" />
+                     </font></Text>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <Text fx:id="goBackButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="GO BACK">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="100.0" top="30.0" />
+               </VBox.margin>
+            </Text>
          </children>
       </VBox>
     </children>

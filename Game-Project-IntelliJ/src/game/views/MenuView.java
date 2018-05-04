@@ -11,6 +11,8 @@ import javafx.scene.text.Text;
 
 public class MenuView {
     public VBox pausedMenuBox;   // [P]
+    public VBox mainMenuBox;     // [P]
+    public VBox controlsBox;     // [P]
     public Text resumeButton;    // [P]
     public Text menuButton;      // [P]
     public Text saveButton;      // [P]
@@ -23,6 +25,8 @@ public class MenuView {
 
     public MenuView(Pane root) {
         pausedMenuBox = (VBox) root.lookup("#pausedMenuBox");    // [P]
+        mainMenuBox = (VBox) root.lookup("#mainMenuBox");        // [P]
+        controlsBox = (VBox) root.lookup("#controlsMenuBox");    // [P]
         resumeButton = (Text) root.lookup("#resumeButton");      // [P]
         menuButton = (Text) root.lookup("#menuButton");          // [P]
         saveButton = (Text) root.lookup("#saveButton");          // [P]
