@@ -52,6 +52,8 @@ public class Enemy implements Serializable {
 		switch (this.type) {
 			case 3: moveSin(); break;
 			case 4: moveSin(); break;
+			case 5: moveCircClockwise(); break;
+			case 6: moveCircCounterClockwise(); break;
 		}
     }
 }

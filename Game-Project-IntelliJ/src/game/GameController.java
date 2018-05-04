@@ -27,7 +27,7 @@ import javafx.scene.Node;
 
 import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
-/**                                                               _
+/**                                                               
  * This class controls the logic behind the game and calls the games draw
  * functions.
  */
@@ -70,7 +70,7 @@ public class GameController extends Application {
     }
 
     // [P] Method plays and constantly repeats music.
-    public  void playMusic(String filename) {                                             // [P]
+    public void playMusic(String filename) {                                              // [P]
         Media music  = new Media(getClass().getResource(filename).toString());            // [P]
         mediaPlayer = new MediaPlayer(music);                                             // [P]
         mediaPlayer.setCycleCount(INDEFINITE);                                            // [P]
@@ -205,7 +205,7 @@ public class GameController extends Application {
 				case 2:  addEnemy(ThreadLocalRandom.current().nextInt(3, 5));
 				playSound("sound/space2.mp3");   // [P]
 				break;
-				case 3:  addEnemy(ThreadLocalRandom.current().nextInt(4, 6));
+				case 3:  addEnemy(ThreadLocalRandom.current().nextInt(5, 7));
 				playSound("sound/burnfire.mp3");   // [P]
                 playSound("sound/space2.mp3");   // [P]
 				break;
@@ -255,6 +255,8 @@ public class GameController extends Application {
         removedBullets.clear();
         messageView.removeMessage();
         gameState = PLAYING;
+		game.frameCounter = 0;
+		game.level = 1;
         // [P] Sets Lives, Score counter and converts Integer to String
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));           // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));                  // [P]
@@ -373,9 +375,6 @@ public class GameController extends Application {
         game_stage.setTitle("SPACEGAME");
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));        // [P]
-
-
-
 
         // [S] [P] Associates clicked button to the right method - resumeGame
 		menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
