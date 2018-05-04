@@ -10,9 +10,10 @@ import game.models.Enemy;
 public class Game implements Serializable {
 	public Player player;
 	public List<Enemy> enemies;
+	public Enemy boss;
 	public int score = 0;
 	public int frameCounter = 0;
-	public int level = 1;
+	public int level = 3;
 
 	public void countFrames() {
 		frameCounter = (frameCounter + 1);

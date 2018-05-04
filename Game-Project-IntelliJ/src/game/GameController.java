@@ -154,13 +154,17 @@ public class GameController extends Application {
         }
 		game.countFrames();
         //playSound("sound/enginehum.mp3");    // [P]    slows down the game !!!!!!!!!!!!!!
-		if (game.frameCounter % 1800 == 0) {
+		if (game.frameCounter % 10 == 0 && game.level < 4) {
 			game.level++;
 			game.frameCounter = 0;
 			if (game.level < 4) {
 				messageView.showAnimatedMessage(String.format("Level %d", game.level));
 			} else {
-				messageView.showAnimatedMessage("Final Level");
+				messageView.showAnimatedMessage("Final Level");                         // S P
+				game.boss = new Enemy(windowSize.w/2 - 50,800,100);
+				game.boss.type = 7;
+				game.boss.lives = 50;
+				game.enemies.add(game.boss);
 			}
 			playSound("sound/Upper01.mp3");                                         // [P]
 		} else if (game.frameCounter % 100 == 0) {
@@ -185,6 +189,11 @@ public class GameController extends Application {
         for (Enemy enemy : game.enemies) {
             enemy.update();
             collisionHandler(enemy);
+            if (enemy.type == 7) {                              // S P
+                if(enemy.rect.y <= 400) {
+                    enemy.velocity.y = 0;
+                }
+            }
             for (Point bullet : game.player.bullets) {
                 if (bullet.y > windowSize.h) {
                     removedBullets.add(bullet);
@@ -216,10 +225,11 @@ public class GameController extends Application {
 					playSound("sound/burnfire.mp3");   // [P]
 					playSound("sound/space2.mp3");     // [P]
 					break;
-				default:
-					addEnemy(ThreadLocalRandom.current().nextInt(3, 5)); break;
+                case 4:
+                    addEnemyChildren();
 			}
         }
+
         // Uses the removeAll method from ArrayList to remove dead/inactive enemies from the enemies list
         game.enemies.removeAll(removedEnemies);
         game.player.bullets.removeAll(removedBullets);
@@ -249,6 +259,18 @@ public class GameController extends Application {
         Enemy enemy = new Enemy(x, y, r, boost);
 		enemy.type = type;
         game.enemies.add(enemy);
+    }
+
+    public void addEnemyChildren() {
+        double r = 20;
+        Point position = game.boss.rect.center();
+        //Point position = new Point(100,100);
+        Enemy enemy = new Enemy(position.x, position.y, r, boost);
+        enemy.type = 8;
+        game.enemies.remove(game.boss);
+        game.enemies.add(enemy);
+        game.enemies.add(game.boss);
+
     }
 
     // Resets all the game conditions
