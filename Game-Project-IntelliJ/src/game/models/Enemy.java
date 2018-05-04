@@ -5,8 +5,8 @@ import java.util.concurrent.ThreadLocalRandom;  // A random number generator iso
 import game.tools.*;
 
 /**
-* Class for creating an Enemy object
-*/
+ * Class for creating an Enemy object
+ */
 public class Enemy implements Serializable {
     public Point position;
     public Point velocity;

@@ -525,7 +525,7 @@ public class GameController extends Application {
         loadGame();                                                                // [P]
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));   // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));          // [P]
-        messageView.showAnimatedMessage("LOADED");                             // [P]
+        messageView.showAnimatedMessage("LOADED");                                 // [P]
 
     }
 
