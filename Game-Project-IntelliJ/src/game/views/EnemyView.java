@@ -40,6 +40,7 @@ public class EnemyView {
 			"png/enemies/enemyRed1.png",
 			"png/enemies/enemyRed4.png",
 			"png/enemies/enemyGreen4.png"
+			"png/ufoRed.png"
 		));
 	}
 
