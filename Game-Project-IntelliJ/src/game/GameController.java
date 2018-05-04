@@ -168,6 +168,7 @@ public class GameController extends Application {
 		}
 		if (game.frameCounter % 10 == 0 && this.isShooting) {
 			game.player.shoot();
+			playSound("sound/laserfire01.mp3");  //  [P]
 		}
         game.player.update();
         game.player.clampPosition(0, windowSize.w);
