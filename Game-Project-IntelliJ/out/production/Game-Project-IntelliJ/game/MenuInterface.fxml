@@ -41,9 +41,9 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Text>
-            <Text fill="WHITE" onMouseClicked="#goToOptions" strokeType="OUTSIDE" strokeWidth="0.0" text="OPTIONS" translateX="30.0">
+            <Text fill="WHITE" onMouseClicked="#goToHelp" strokeType="OUTSIDE" strokeWidth="0.0" text="HELP" translateX="30.0">
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="20.0" left="29.0" />
                </VBox.margin>
                <font>
                   <Font size="35.0" />
