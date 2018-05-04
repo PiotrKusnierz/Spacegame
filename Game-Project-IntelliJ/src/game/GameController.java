@@ -513,11 +513,14 @@ public class GameController extends Application {
         messageView.showAnimatedMessage("NEW GAME");                         // [P]
         menuView.resumeButton.setVisible(true);                                  // [P]
         menuView.saveButton.setVisible(true);                                    // [P]
+        System.out.println(menuView);
     }
 
+
     // [P] WIP
-    public void goToHelp(MouseEvent mouseEvent) {                                  // [P]
+    public void goToHelp(MouseEvent event) {                                  // [P]
         playSound("sound/Flashpoint001a.mp3");                             // [P]
+        //System.out.println(menuView);
     }
 
     // [P] Closes game
@@ -549,7 +552,7 @@ public class GameController extends Application {
 
 
         menuView = new MenuView(root);
-        System.out.println(menuView);
+       // System.out.println(menuView);
         stage.setScene(new Scene(root, Color.YELLOW));
         stage.show();
         stage.setTitle("SPACEGAME");
@@ -562,5 +565,19 @@ public class GameController extends Application {
         } else {                                         // [P]
             menuView.continueButton.setVisible(false);   // [P]
         }                                                // [P]
+
+
+
+        // [P] Associates clicked button to the right method - help
+        menuView.helpButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
+            @Override                                                                                    // [P]
+            public void handle(MouseEvent event) {                                                       // [P]
+                mediaPlayer.stop();                                                                    // [P]
+                playSound("sound/Flashpoint001a.mp3");                             // [P]
+                menuView.mainMenuBox.setVisible(false);
+                System.out.println(menuView.controlsBox);
+                //menuView.controlsBox.setVisible(true);
+            }
+        });
     }
 }
