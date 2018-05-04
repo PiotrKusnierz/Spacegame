@@ -5,14 +5,16 @@ import java.util.concurrent.ThreadLocalRandom;  // A random number generator iso
 import game.tools.*;
 
 /**
-* Class for creating an Enemy object
-*/
+ * Class for creating an Enemy object
+ */
 public class Enemy implements Serializable {
     public Point position;
     public Point velocity;
     public Rect rect;
     public int lives;
 	public double boost = 1;
+	public double step = 0;
+	public int type;
 
     public Enemy(double x, double y, double w, double h, int lives, double boost) {
         this.rect = new Rect(x, y, w, h);
@@ -29,8 +31,30 @@ public class Enemy implements Serializable {
         this(x, y, r, r, 1, 1);
     }
 
+	public void moveSin() {
+		this.velocity.x = Math.sin(this.step)*6;
+	}
+
+	public void moveCircClockwise() {
+		this.velocity.x = Math.sin(this.step)*6;
+		this.rect.y -= -Math.cos(this.step)*6;
+	}
+
+	public void moveCircCounterClockwise() {
+		this.velocity.x = -Math.sin(this.step)*6;
+		this.rect.y -= -Math.cos(this.step)*6;
+	}
+
     public void update() {
         this.rect.x += this.velocity.x;
         this.rect.y += this.velocity.y * this.boost;
+		this.step = (this.step + 0.1) % (2*Math.PI);
+		switch (this.type) {
+			case 3: moveSin(); break;
+			case 4: moveSin(); break;
+			case 5: moveCircClockwise(); break;
+			case 6: moveCircCounterClockwise(); break;
+			case 8: moveSin(); break;                                        // S P
+		}
     }
 }
