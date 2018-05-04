@@ -132,7 +132,7 @@ public class GameController extends Application {
             playSound("sound/boom7.mp3");      // [P]
             enemy.lives--;
             game.player.lives--; // [P]
-            gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
+            gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));    // [P]
         }
     }
 
@@ -143,7 +143,7 @@ public class GameController extends Application {
 	 */
 	public void updateScore(int value) {
 		game.score += value;
-		gameView.score.setText("SCORE: " + Integer.toString(game.score));                  // [P]
+		gameView.score.setText("SCORE: " + Integer.toString(game.score));         // [P]
 	}
 
 	/**
@@ -161,14 +161,14 @@ public class GameController extends Application {
 			if (game.level < 4) {
 				messageView.showAnimatedMessage(String.format("Level %d", game.level));
 			} else {
-				messageView.showAnimatedMessage("Final Level");                         // S P
-				game.boss = new Enemy(windowSize.w/2 - 50,800,100);
-				game.boss.type = 7;
-				game.boss.velocity.y = -0.5;
-				game.boss.lives = 50;
-				game.enemies.add(game.boss);
+				messageView.showAnimatedMessage("Final Level");                          // S P
+				game.boss = new Enemy(windowSize.w/2 - 50,800,100);                   // S P
+				game.boss.type = 7;                                                          // S P
+				game.boss.velocity.y = -0.5;                                                 // S P
+				game.boss.lives = 50;                                                        // S P
+				game.enemies.add(game.boss);                                                 // S P
 			}
-			playSound("sound/Upper01.mp3");                                         // [P]
+			playSound("sound/Upper01.mp3");               // [P]
 		} else if (game.frameCounter % 100 == 0) {
 			// There should be a better solution to remove the message.
 			messageView.removeMessage();
@@ -184,7 +184,7 @@ public class GameController extends Application {
 		}
 		if (game.frameCounter % 10 == 0 && this.isShooting) {
 			game.player.shoot();
-			playSound("sound/laserfire01.mp3");  //  [P]
+			playSound("sound/laserfire01.mp3");           //  [P]
 		}
         game.player.update();
         game.player.clampPosition(0, windowSize.w);
@@ -198,8 +198,8 @@ public class GameController extends Application {
             enemy.update();
             collisionHandler(enemy);
             if (enemy.type == 7) {                              // S P
-                if(enemy.rect.y <= 400) {
-                    enemy.velocity.y = 0;
+                if(enemy.rect.y <= 400) {                       // S P
+                    enemy.velocity.y = 0;                       // S P
                 }
             }
             for (Point bullet : game.player.bullets) {
@@ -233,8 +233,8 @@ public class GameController extends Application {
 					playSound("sound/burnfire.mp3");   // [P]
 					playSound("sound/space2.mp3");     // [P]
 					break;
-                case 4:
-                    addEnemyChildren();
+                case 4:                                      // S P
+                    addEnemyChildren();                      // S P
 			}
         }
 
@@ -269,15 +269,14 @@ public class GameController extends Application {
         game.enemies.add(enemy);
     }
 
-    public void addEnemyChildren() {
-        double r = 20;
-        Point position = game.boss.rect.center();
-        //Point position = new Point(100,100);
-        Enemy enemy = new Enemy(position.x, position.y, r, boost);
-        enemy.type = 8;
-        game.enemies.remove(game.boss);
-        game.enemies.add(enemy);
-        game.enemies.add(game.boss);
+    public void addEnemyChildren() {                                       // S P
+        double r = 20;                                                     // S P
+        Point position = game.boss.rect.center();                          // S P
+        Enemy enemy = new Enemy(position.x, position.y, r, boost);         // S P
+        enemy.type = 8;                                                    // S P
+        game.enemies.remove(game.boss);                                    // S P
+        game.enemies.add(enemy);                                           // S P
+        game.enemies.add(game.boss);                                       // S P
 
     }
 
@@ -309,10 +308,10 @@ public class GameController extends Application {
     public void addEventHandler(Scene scene) {
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-				mediaPlayer.stop();            // [P]
-				if (gameState == GAMEOVER || gameState == GAMEWON) {                                             // [P]
+				mediaPlayer.stop();                                                      // [P]
+				if (gameState == GAMEOVER || gameState == GAMEWON) {
 					menuView.resumeButton.setVisible(false);                             // [P]
-					menuView.saveButton.setVisible(false);
+					menuView.saveButton.setVisible(false);                               // [P]
 				} else {
 					gameState = gameState == PLAYING ? PAUSED : PLAYING;
 				}
@@ -331,7 +330,7 @@ public class GameController extends Application {
 			}
             if (event.getCode() == KeyCode.UP && game.level < 4) {
                 boost = 3;
-                playSound("sound/warpengine.mp3");  // [P]
+                playSound("sound/warpengine.mp3");        // [P]
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
                 }
@@ -355,7 +354,7 @@ public class GameController extends Application {
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
                 }
-                mediaPlayer.stop();
+                mediaPlayer.stop();              // [P]
             }
 			if (event.getCode() == KeyCode.SPACE) {
 				this.isShooting = false;
@@ -418,7 +417,7 @@ public class GameController extends Application {
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
                 playSound("sound/Flashpoint001b.mp3");                                         // [P]
-                playMusic("sound/theme_menu.mp3");                                // [P]
+                playMusic("sound/theme_menu.mp3");                                             // [P]
                 menuView.pausedMenuBox.setVisible(false);                                             // [P]
                 menuView.messageBox.setVisible(true);                                                 // [P]
                 if (gameState == GAMEOVER) {                                                          // [P]
@@ -433,7 +432,7 @@ public class GameController extends Application {
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
                 playSound("sound/Flashpoint001b.mp3");                                         // [P]
-                playMusic("sound/theme_menu.mp3");                                 // [P]
+                playMusic("sound/theme_menu.mp3");                                             // [P]
                 menuView.pausedMenuBox.setVisible(true);                                              // [P]
                 menuView.messageBox.setVisible(false);                                                // [P]
             }
@@ -457,8 +456,8 @@ public class GameController extends Application {
         menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                mediaPlayer.stop();                                                                    // [P]
-                playSound("sound/Flashpoint001b.mp3");   // [P]
+                mediaPlayer.stop();                                           // [P]
+                playSound("sound/Flashpoint001b.mp3");               // [P]
                 saveGame();
                 menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
                 gameState = PLAYING;
@@ -470,7 +469,7 @@ public class GameController extends Application {
         menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
-                mediaPlayer.stop();                                                                    // [P]
+                mediaPlayer.stop();                                                                   // [P]
                 playSound("sound/Flashpoint001b.mp3");                                        // [P]
                 File f = new File("./game.sav");                                             // [P]
                 if(f.exists()) {                                                                      // [P]
@@ -539,7 +538,7 @@ public class GameController extends Application {
         loadGame();                                                                // [P]
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));   // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));          // [P]
-        messageView.showAnimatedMessage("LOADED");                                 // [P]
+        messageView.showAnimatedMessage("LOADED");                             // [P]
 
     }
 
