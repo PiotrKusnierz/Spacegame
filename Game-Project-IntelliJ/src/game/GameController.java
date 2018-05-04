@@ -503,7 +503,7 @@ public class GameController extends Application {
     }
 
     // [P] WIP
-    public void goToOptions(MouseEvent mouseEvent) {                              // [P]
+    public void goToHelp(MouseEvent mouseEvent) {                                  // [P]
         playSound("sound/Flashpoint001a.mp3");                             // [P]
     }
 
