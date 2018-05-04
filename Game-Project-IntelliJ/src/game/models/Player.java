@@ -27,7 +27,7 @@ public class Player implements Serializable {
 
 	public void shoot() {
 		Point bullet = new Point();
-		bullet.x = this.rect.center().x;
+		bullet.x = this.rect.center().x - 5;
 		bullet.y = this.rect.top();
 		this.bullets.add(bullet);
 	}

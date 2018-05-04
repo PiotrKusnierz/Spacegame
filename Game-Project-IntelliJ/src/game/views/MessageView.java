@@ -25,6 +25,7 @@ public class MessageView {
 	// [S] made this one private, and allowing for a persistant message or one
 	// that automatically disappears.
 	private void animatedMessage(String msg, boolean persistant) {
+		// removeMessage();
 		root.getChildren().add(view);
 
 		for (int i = 0; i < msg.toCharArray().length; i++) {   //toCharArray() converts string into character array

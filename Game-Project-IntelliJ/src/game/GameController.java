@@ -27,7 +27,7 @@ import javafx.scene.Node;
 
 import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
-/**                                                               _
+/**                                                               
  * This class controls the logic behind the game and calls the games draw
  * functions.
  */
@@ -47,6 +47,7 @@ public class GameController extends Application {
     private final int PAUSED = 1;
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
+    private final int GAMEWON = 4;
 
     private static MediaPlayer mediaPlayer;   // [P]
 
@@ -70,7 +71,7 @@ public class GameController extends Application {
     }
 
     // [P] Method plays and constantly repeats music.
-    public  void playMusic(String filename) {                                             // [P]
+    public void playMusic(String filename) {                                              // [P]
         Media music  = new Media(getClass().getResource(filename).toString());            // [P]
         mediaPlayer = new MediaPlayer(music);                                             // [P]
         mediaPlayer.setCycleCount(INDEFINITE);                                            // [P]
@@ -154,14 +155,29 @@ public class GameController extends Application {
         }
 		game.countFrames();
         //playSound("sound/enginehum.mp3");    // [P]    slows down the game !!!!!!!!!!!!!!
-		if (game.frameCounter % 3600 == 0) {
+		if (game.frameCounter % 1800 == 0 && game.level < 4) {
 			game.level++;
 			game.frameCounter = 0;
-			messageView.showAnimatedMessage(String.format("Level %d", game.level));
+			if (game.level < 4) {
+				messageView.showAnimatedMessage(String.format("Level %d", game.level));
+			} else {
+				messageView.showAnimatedMessage("Final Level");                         // S P
+				game.boss = new Enemy(windowSize.w/2 - 50,800,100);
+				game.boss.type = 7;
+				game.boss.velocity.y = -0.5;
+				game.boss.lives = 50;
+				game.enemies.add(game.boss);
+			}
 			playSound("sound/Upper01.mp3");                                         // [P]
 		} else if (game.frameCounter % 100 == 0) {
 			// There should be a better solution to remove the message.
 			messageView.removeMessage();
+		}
+		if (game.level == 4) {
+			if (game.boss.lives <= 0) {
+				messageView.showAnimatedMessage("YOU WON!");
+				gameState = GAMEWON;
+			}
 		}
 		if (game.frameCounter % 50 == 0) {
 			updateScore(1);
@@ -181,6 +197,11 @@ public class GameController extends Application {
         for (Enemy enemy : game.enemies) {
             enemy.update();
             collisionHandler(enemy);
+            if (enemy.type == 7) {                              // S P
+                if(enemy.rect.y <= 400) {
+                    enemy.velocity.y = 0;
+                }
+            }
             for (Point bullet : game.player.bullets) {
                 if (bullet.y > windowSize.h) {
                     removedBullets.add(bullet);
@@ -197,21 +218,26 @@ public class GameController extends Application {
             }
         }
         // Generates enemies
-        if (Math.random() < 0.05 * boost) {
+        if (Math.random() < 0.02 * boost) {
 			switch (game.level) {
-				case 1:  addEnemy(ThreadLocalRandom.current().nextInt(0, 3));
-				playSound("sound/burnfire.mp3");   // [P]
-				break;
-				case 2:  addEnemy(ThreadLocalRandom.current().nextInt(3, 5));
-				playSound("sound/space2.mp3");   // [P]
-				break;
-				case 3:  addEnemy(ThreadLocalRandom.current().nextInt(4, 6));
-				playSound("sound/burnfire.mp3");   // [P]
-                playSound("sound/space2.mp3");   // [P]
-				break;
-				default: addEnemy(ThreadLocalRandom.current().nextInt(3, 5)); break;
+				case 1:
+					addEnemy(ThreadLocalRandom.current().nextInt(0, 3));
+					playSound("sound/burnfire.mp3");   // [P]
+					break;
+				case 2: 
+					addEnemy(ThreadLocalRandom.current().nextInt(3, 5));
+					playSound("sound/space2.mp3");     // [P]
+					break;
+				case 3: 
+					addEnemy(ThreadLocalRandom.current().nextInt(5, 7));
+					playSound("sound/burnfire.mp3");   // [P]
+					playSound("sound/space2.mp3");     // [P]
+					break;
+                case 4:
+                    addEnemyChildren();
 			}
         }
+
         // Uses the removeAll method from ArrayList to remove dead/inactive enemies from the enemies list
         game.enemies.removeAll(removedEnemies);
         game.player.bullets.removeAll(removedBullets);
@@ -231,6 +257,8 @@ public class GameController extends Application {
 	/**
 	 * Creates a new enemy with a random size and position and adds it to the
 	 * games enemies list.
+	 * @param type value for the enemy type which is sent to the Enemy
+	 * constructor.
 	 */
     public void addEnemy(int type) {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.08, windowSize.w*0.13);
@@ -239,6 +267,18 @@ public class GameController extends Application {
         Enemy enemy = new Enemy(x, y, r, boost);
 		enemy.type = type;
         game.enemies.add(enemy);
+    }
+
+    public void addEnemyChildren() {
+        double r = 20;
+        Point position = game.boss.rect.center();
+        //Point position = new Point(100,100);
+        Enemy enemy = new Enemy(position.x, position.y, r, boost);
+        enemy.type = 8;
+        game.enemies.remove(game.boss);
+        game.enemies.add(enemy);
+        game.enemies.add(game.boss);
+
     }
 
     // Resets all the game conditions
@@ -251,6 +291,9 @@ public class GameController extends Application {
         game.score = 0;
         game.enemies.clear();
         game.player.bullets.clear();
+		game.frameCounter = 0;
+		game.level = 1;
+		game.enemies.clear();
         removedEnemies.clear();
         removedBullets.clear();
         messageView.removeMessage();
@@ -265,42 +308,28 @@ public class GameController extends Application {
 	 */
     public void addEventHandler(Scene scene) {
         scene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case LEFT:
-                    game.player.velocity.x = -6;
-                    break;
-                case RIGHT:
-                    game.player.velocity.x = 6;
-                    break;
-                case R:
-                    newGame();
-                    break;
-                case S:
-                    saveGame();
-                    break;
-                case L:
-                    if (gameState == PAUSED || gameState == GAMEOVER) {
-                        gameState = PAUSED;
-                        loadGame();
-                        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
-                        gameView.score.setText("SCORE: " + Integer.toString(game.score));        // [P]
-                        messageView.removeMessage();
-                        messageView.showAnimatedMessage("LOADED");
-                    }
-                    break;
-                case ESCAPE:                                                                 // [P]
-                    mediaPlayer.stop();            // [P]
-                    if (gameState == GAMEOVER) {                                             // [P]
-                        menuView.resumeButton.setVisible(false);                             // [P]
-                        menuView.saveButton.setVisible(false);
-                    }
-                    messageView.removeMessage();                                             // [P]
-                    gameState = gameState == PLAYING ? PAUSED : PLAYING;
-                    playMusic("sound/theme_menu.mp3");                                // [P]
-                    menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
-                    break;
-            }
-            if (event.getCode() == KeyCode.UP) {
+            if (event.getCode() == KeyCode.ESCAPE) {
+				mediaPlayer.stop();            // [P]
+				if (gameState == GAMEOVER || gameState == GAMEWON) {                                             // [P]
+					menuView.resumeButton.setVisible(false);                             // [P]
+					menuView.saveButton.setVisible(false);
+				} else {
+					gameState = gameState == PLAYING ? PAUSED : PLAYING;
+				}
+				messageView.removeMessage();                                             // [P]
+				playMusic("sound/theme_menu.mp3");                                // [P]
+				menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
+			}
+			if (gameState == GAMEOVER || gameState == PAUSED) {
+				return;
+			}
+            if (event.getCode() == KeyCode.LEFT) {
+				game.player.velocity.x = -6;
+			}
+            if (event.getCode() == KeyCode.RIGHT) {
+				game.player.velocity.x = 6;
+			}
+            if (event.getCode() == KeyCode.UP && game.level < 4) {
                 boost = 3;
                 playSound("sound/warpengine.mp3");  // [P]
                 for (Enemy enemy : game.enemies) {
@@ -373,9 +402,6 @@ public class GameController extends Application {
         game_stage.setTitle("SPACEGAME");
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));        // [P]
-
-
-
 
         // [S] [P] Associates clicked button to the right method - resumeGame
 		menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -513,7 +539,7 @@ public class GameController extends Application {
         loadGame();                                                                // [P]
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));   // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));          // [P]
-        messageView.showAnimatedMessage("LOADED");                             // [P]
+        messageView.showAnimatedMessage("LOADED");                                 // [P]
 
     }
 

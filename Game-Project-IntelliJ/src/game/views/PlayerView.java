@@ -30,7 +30,10 @@ public class PlayerView{
     }
 
 	public void loadImages() {
-		images = ImageLoader.load(Arrays.asList("png/playerShip1_blue.png"));
+		images = ImageLoader.load(Arrays.asList(
+			"png/playerShip1_blue.png",
+			"png/lasers/laserBlue08.png"
+		));
 		System.out.println(images);
 	}
 
@@ -47,7 +50,11 @@ public class PlayerView{
         );
 		gc.setFill(Color.YELLOW);
 		for (Point bullet : player.bullets) {
-			gc.fillOval(bullet.x, bullet.y, 10, 10);
+			// gc.fillOval(bullet.x, bullet.y, 10, 10);
+			gc.drawImage(
+				images.get(1),
+				bullet.x, bullet.y, 10, 10
+			);
 		}
     }
 }
