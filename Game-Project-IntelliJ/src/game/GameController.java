@@ -154,10 +154,14 @@ public class GameController extends Application {
         }
 		game.countFrames();
         //playSound("sound/enginehum.mp3");    // [P]    slows down the game !!!!!!!!!!!!!!
-		if (game.frameCounter % 3600 == 0) {
+		if (game.frameCounter % 1800 == 0) {
 			game.level++;
 			game.frameCounter = 0;
-			messageView.showAnimatedMessage(String.format("Level %d", game.level));
+			if (game.level < 4) {
+				messageView.showAnimatedMessage(String.format("Level %d", game.level));
+			} else {
+				messageView.showAnimatedMessage("Final Level");
+			}
 			playSound("sound/Upper01.mp3");                                         // [P]
 		} else if (game.frameCounter % 100 == 0) {
 			// There should be a better solution to remove the message.
@@ -197,19 +201,23 @@ public class GameController extends Application {
             }
         }
         // Generates enemies
-        if (Math.random() < 0.05 * boost) {
+        if (Math.random() < 0.02 * boost) {
 			switch (game.level) {
-				case 1:  addEnemy(ThreadLocalRandom.current().nextInt(0, 3));
-				playSound("sound/burnfire.mp3");   // [P]
-				break;
-				case 2:  addEnemy(ThreadLocalRandom.current().nextInt(3, 5));
-				playSound("sound/space2.mp3");   // [P]
-				break;
-				case 3:  addEnemy(ThreadLocalRandom.current().nextInt(5, 7));
-				playSound("sound/burnfire.mp3");   // [P]
-                playSound("sound/space2.mp3");   // [P]
-				break;
-				default: addEnemy(ThreadLocalRandom.current().nextInt(3, 5)); break;
+				case 1:
+					addEnemy(ThreadLocalRandom.current().nextInt(0, 3));
+					playSound("sound/burnfire.mp3");   // [P]
+					break;
+				case 2: 
+					addEnemy(ThreadLocalRandom.current().nextInt(3, 5));
+					playSound("sound/space2.mp3");     // [P]
+					break;
+				case 3: 
+					addEnemy(ThreadLocalRandom.current().nextInt(5, 7));
+					playSound("sound/burnfire.mp3");   // [P]
+					playSound("sound/space2.mp3");     // [P]
+					break;
+				default:
+					addEnemy(ThreadLocalRandom.current().nextInt(3, 5)); break;
 			}
         }
         // Uses the removeAll method from ArrayList to remove dead/inactive enemies from the enemies list
@@ -231,6 +239,8 @@ public class GameController extends Application {
 	/**
 	 * Creates a new enemy with a random size and position and adds it to the
 	 * games enemies list.
+	 * @param type value for the enemy type which is sent to the Enemy
+	 * constructor.
 	 */
     public void addEnemy(int type) {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.08, windowSize.w*0.13);
@@ -302,6 +312,9 @@ public class GameController extends Application {
                     menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
                     break;
             }
+			if (gameState == GAMEOVER || gameState == PAUSED) {
+				return;
+			}
             if (event.getCode() == KeyCode.UP) {
                 boost = 3;
                 playSound("sound/warpengine.mp3");  // [P]
