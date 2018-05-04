@@ -47,6 +47,7 @@ public class GameController extends Application {
     private final int PAUSED = 1;
     private final int PLAYING = 2;
     private final int GAMEOVER = 3;
+    private final int GAMEWON = 4;
 
     private static MediaPlayer mediaPlayer;   // [P]
 
@@ -154,7 +155,7 @@ public class GameController extends Application {
         }
 		game.countFrames();
         //playSound("sound/enginehum.mp3");    // [P]    slows down the game !!!!!!!!!!!!!!
-		if (game.frameCounter % 10 == 0 && game.level < 4) {
+		if (game.frameCounter % 1800 == 0 && game.level < 4) {
 			game.level++;
 			game.frameCounter = 0;
 			if (game.level < 4) {
@@ -163,6 +164,7 @@ public class GameController extends Application {
 				messageView.showAnimatedMessage("Final Level");                         // S P
 				game.boss = new Enemy(windowSize.w/2 - 50,800,100);
 				game.boss.type = 7;
+				game.boss.velocity.y = -0.5;
 				game.boss.lives = 50;
 				game.enemies.add(game.boss);
 			}
@@ -170,6 +172,12 @@ public class GameController extends Application {
 		} else if (game.frameCounter % 100 == 0) {
 			// There should be a better solution to remove the message.
 			messageView.removeMessage();
+		}
+		if (game.level == 4) {
+			if (game.boss.lives <= 0) {
+				messageView.showAnimatedMessage("YOU WON!");
+				gameState = GAMEWON;
+			}
 		}
 		if (game.frameCounter % 50 == 0) {
 			updateScore(1);
@@ -283,12 +291,13 @@ public class GameController extends Application {
         game.score = 0;
         game.enemies.clear();
         game.player.bullets.clear();
+		game.frameCounter = 0;
+		game.level = 1;
+		game.enemies.clear();
         removedEnemies.clear();
         removedBullets.clear();
         messageView.removeMessage();
         gameState = PLAYING;
-		game.frameCounter = 0;
-		game.level = 1;
         // [P] Sets Lives, Score counter and converts Integer to String
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));           // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));                  // [P]
@@ -299,45 +308,28 @@ public class GameController extends Application {
 	 */
     public void addEventHandler(Scene scene) {
         scene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case LEFT:
-                    game.player.velocity.x = -6;
-                    break;
-                case RIGHT:
-                    game.player.velocity.x = 6;
-                    break;
-                case R:
-                    newGame();
-                    break;
-                case S:
-                    saveGame();
-                    break;
-                case L:
-                    if (gameState == PAUSED || gameState == GAMEOVER) {
-                        gameState = PAUSED;
-                        loadGame();
-                        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
-                        gameView.score.setText("SCORE: " + Integer.toString(game.score));        // [P]
-                        messageView.removeMessage();
-                        messageView.showAnimatedMessage("LOADED");
-                    }
-                    break;
-                case ESCAPE:                                                                 // [P]
-                    mediaPlayer.stop();            // [P]
-                    if (gameState == GAMEOVER) {                                             // [P]
-                        menuView.resumeButton.setVisible(false);                             // [P]
-                        menuView.saveButton.setVisible(false);
-                    }
-                    messageView.removeMessage();                                             // [P]
-                    gameState = gameState == PLAYING ? PAUSED : PLAYING;
-                    playMusic("sound/theme_menu.mp3");                                // [P]
-                    menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
-                    break;
-            }
+            if (event.getCode() == KeyCode.ESCAPE) {
+				mediaPlayer.stop();            // [P]
+				if (gameState == GAMEOVER || gameState == GAMEWON) {                                             // [P]
+					menuView.resumeButton.setVisible(false);                             // [P]
+					menuView.saveButton.setVisible(false);
+				} else {
+					gameState = gameState == PLAYING ? PAUSED : PLAYING;
+				}
+				messageView.removeMessage();                                             // [P]
+				playMusic("sound/theme_menu.mp3");                                // [P]
+				menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
+			}
 			if (gameState == GAMEOVER || gameState == PAUSED) {
 				return;
 			}
-            if (event.getCode() == KeyCode.UP) {
+            if (event.getCode() == KeyCode.LEFT) {
+				game.player.velocity.x = -6;
+			}
+            if (event.getCode() == KeyCode.RIGHT) {
+				game.player.velocity.x = 6;
+			}
+            if (event.getCode() == KeyCode.UP && game.level < 4) {
                 boost = 3;
                 playSound("sound/warpengine.mp3");  // [P]
                 for (Enemy enemy : game.enemies) {

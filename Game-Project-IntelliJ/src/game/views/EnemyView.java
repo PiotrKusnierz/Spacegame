@@ -39,8 +39,9 @@ public class EnemyView {
 			"png/enemies/enemyGreen2.png",
 			"png/enemies/enemyRed1.png",
 			"png/enemies/enemyRed4.png",
-			"png/enemies/enemyGreen4.png"
-			"png/ufoRed.png"
+			"png/enemies/enemyGreen4.png",
+			"png/ufoRed.png",
+			"png/ufoGreen.png"
 		));
 	}
 
