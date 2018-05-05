@@ -49,7 +49,7 @@ public class GameController extends Application {
     private final int GAMEOVER = 3;
     private final int GAMEWON = 4;
 
-    private static MediaPlayer mediaPlayer;   // [P]
+    public static MediaPlayer mediaPlayer;   // [P]
 
     // Defines the screenSize variable based on the user's screen size
     public Size screenSize = new Size(
@@ -365,11 +365,11 @@ public class GameController extends Application {
 
     // [P] Starts the game on onMouseClicked event when "Start Game" options from the menu is chosen
     public void startGame(MouseEvent mouseEvent) throws Exception{                             // [P]
+        mediaPlayer.stop();                                                                    // [P]
         Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));  // [P]
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();     // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
 
-        mediaPlayer.stop();                                                                    // [P]
         playSound("sound/ambient_techno1.mp3");                                         // [P]
         //playSound("sound/StarCommander1.mp3");    // [P]    not working yet
 
@@ -513,7 +513,6 @@ public class GameController extends Application {
         messageView.showAnimatedMessage("NEW GAME");                         // [P]
         menuView.resumeButton.setVisible(true);                                  // [P]
         menuView.saveButton.setVisible(true);                                    // [P]
-        System.out.println(menuView);
     }
 
 
