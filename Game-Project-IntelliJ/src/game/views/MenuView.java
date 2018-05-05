@@ -12,24 +12,23 @@ import javafx.scene.text.Text;
 public class MenuView {
     public VBox pausedMenuBox;   // [P]
     public VBox mainMenuBox;     // [P]
-    public VBox controlsBox;     // [P]
-    public VBox helpBox;     // [P]
+    public VBox controlsMenuBox; // [P]
     public Text resumeButton;    // [P]
     public Text menuButton;      // [P]
     public Text saveButton;      // [P]
     public Text loadButton;      // [P]
     public Text restartButton;   // [P]
     public Text continueButton;  // [P]
-    public Text helpButton;
+    public Text helpButton;      // [P]
     public VBox messageBox;      // [P]
     public Text yesButton;       // [P]
     public Text noButton;        // [P]
 
+
     public MenuView(Pane root) {
         pausedMenuBox = (VBox) root.lookup("#pausedMenuBox");    // [P]
         mainMenuBox = (VBox) root.lookup("#mainMenuBox");        // [P]
-        controlsBox = (VBox) root.lookup("#controlsMenuBox");    // [P]
-        helpBox = (VBox) root.lookup("#helpBox");    // [P]
+        controlsMenuBox = (VBox) root.lookup("#controlsMenuBox");// [P]
 
         resumeButton = (Text) root.lookup("#resumeButton");      // [P]
         menuButton = (Text) root.lookup("#menuButton");          // [P]
@@ -37,9 +36,12 @@ public class MenuView {
         loadButton = (Text) root.lookup("#loadButton");          // [P]
         restartButton = (Text) root.lookup("#restartButton");    // [P]
         continueButton = (Text) root.lookup("#continueButton");  // [P]
-        helpButton = (Text) root.lookup("#helpButton");
+        helpButton = (Text) root.lookup("#helpButton");          // [P]
         messageBox = (VBox) root.lookup("#messageBox");          // [P]
         yesButton = (Text) root.lookup("#yesButton");            // [P]
         noButton = (Text) root.lookup("#noButton");              // [P]
+
+
+
     }
 }

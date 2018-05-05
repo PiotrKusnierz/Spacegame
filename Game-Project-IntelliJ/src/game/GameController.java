@@ -569,14 +569,12 @@ public class GameController extends Application {
 
 
         // [P] Associates clicked button to the right method - help
-        menuView.helpButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
+        menuView.helpButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {    // [P]
             @Override                                                                                    // [P]
             public void handle(MouseEvent event) {                                                       // [P]
-                mediaPlayer.stop();                                                                    // [P]
-                playSound("sound/Flashpoint001a.mp3");                             // [P]
-                menuView.mainMenuBox.setVisible(false);
-                System.out.println(menuView.controlsBox);
-                //menuView.controlsBox.setVisible(true);
+                playSound("sound/Flashpoint001a.mp3");                                           // [P]
+                menuView.mainMenuBox.setVisible(false);                                                  // [P]
+                menuView.controlsMenuBox.setVisible(true);                                               // [P]
             }
         });
     }
