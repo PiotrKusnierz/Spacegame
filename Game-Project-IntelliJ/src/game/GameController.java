@@ -129,9 +129,9 @@ public class GameController extends Application {
 	 */
     public void collisionHandler(Enemy enemy) {
         if (game.player.rect.intersects(enemy.rect)) {
-            playSound("sound/boom7.mp3");      // [P]
+            playSound("sound/boom7.mp3");                                       // [P]
             enemy.lives--;
-            game.player.lives--; // [P]
+            game.player.lives--;                                                        // [P]
             gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));    // [P]
         }
     }
@@ -154,7 +154,6 @@ public class GameController extends Application {
             return;
         }
 		game.countFrames();
-        //playSound("sound/enginehum.mp3");    // [P]    slows down the game !!!!!!!!!!!!!!
 		if (game.frameCounter % 1800 == 0 && game.level < 4) {
 			game.level++;
 			game.frameCounter = 0;
@@ -176,7 +175,7 @@ public class GameController extends Application {
 		}
 		if (game.level == 4) {
 			if (game.boss.lives <= 0) {
-			    mediaPlayer.stop();                               // [P] NOT WORKING !!!!!!!!!!!!
+			    mediaPlayer.stop();                                 // [P] NOT WORKING (check) !!!!!!!!!!!!
 			    playSound("sound/Jingle_Win_00.mp3");       // [P]
 				messageView.showAnimatedMessage("YOU WON!");
 				gameState = GAMEWON;
@@ -193,7 +192,7 @@ public class GameController extends Application {
         game.player.clampPosition(0, windowSize.w);
         if (game.player.lives <= 0) {
             gameState = GAMEOVER;
-            playSound("sound/Jingle_Lose_00.mp3");   //????????????????????????????????????????????????
+            playSound("sound/Jingle_Lose_00.mp3");           //  [P]
             messageView.showPeristantAnimatedMessage("GAME OVER");
             return;
         }
@@ -320,7 +319,7 @@ public class GameController extends Application {
 					gameState = gameState == PLAYING ? PAUSED : PLAYING;
 				}
 				messageView.removeMessage();                                             // [P]
-				playMusic("sound/theme_menu.mp3");                                // [P]
+				playMusic("sound/theme_menu.mp3");                               // [P]
 				menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
 			}
 			if (gameState == GAMEOVER || gameState == PAUSED) {
@@ -334,7 +333,7 @@ public class GameController extends Application {
 			}
             if (event.getCode() == KeyCode.UP && game.level < 4) {
                 boost = 3;
-                playSound("sound/warpengine.mp3");        // [P]
+                playSound("sound/engine_takeoff.mp3");        // [P]
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
                 }
@@ -375,7 +374,6 @@ public class GameController extends Application {
         game_stage.setScene(new Scene(root, Color.BLACK));
 
         playSound("sound/ambient_techno1.mp3");                                         // [P]
-        //playSound("sound/StarCommander1.mp3");    // [P]    not working yet
 
         gameState = PLAYING;
         menuView = new MenuView(root);
@@ -394,7 +392,6 @@ public class GameController extends Application {
             public void handle(long now) {
                 update();
                 draw();
-                // playSound("sound/enginehum.mp3");    // [P]    makes sound not commplete!!!!!!!!!!!!!!
             }
         };
 
@@ -410,7 +407,7 @@ public class GameController extends Application {
 		menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-                mediaPlayer.stop();                                                                    // [P]
+                mediaPlayer.stop();                               // [P]
 				resumeGame(event);
 				playSound("sound/ambient_techno1.mp3");   // [P]
 			}
@@ -519,11 +516,9 @@ public class GameController extends Application {
         menuView.saveButton.setVisible(true);                                    // [P]
     }
 
-
     // [P] Closes game
     public void exitGame(MouseEvent mouseEvent) {                                 // [P]
         System.exit(0);                                                     // [P]
-
     }
 
     // [P] Resumes the game
@@ -540,7 +535,6 @@ public class GameController extends Application {
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));   // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));          // [P]
         messageView.showAnimatedMessage("LOADED");                             // [P]
-
     }
 
     @Override
