@@ -176,7 +176,8 @@ public class GameController extends Application {
 		}
 		if (game.level == 4) {
 			if (game.boss.lives <= 0) {
-			    playSound("sound/Jingle_Win_00.mp3");
+			    mediaPlayer.stop();                               // [P] NOT WORKING !!!!!!!!!!!!
+			    playSound("sound/Jingle_Win_00.mp3");       // [P]
 				messageView.showAnimatedMessage("YOU WON!");
 				gameState = GAMEWON;
 			}
@@ -280,8 +281,7 @@ public class GameController extends Application {
         game.enemies.remove(game.boss);                                    // S P
         game.enemies.add(enemy);                                           // S P
         game.enemies.add(game.boss);                                       // S P
-        playSound("sound/PowerBotsLoop.mp3");
-
+        playMusic("sound/Ambience_AlienPlanet_00.mp3");            // [P]
     }
 
     // Resets all the game conditions
