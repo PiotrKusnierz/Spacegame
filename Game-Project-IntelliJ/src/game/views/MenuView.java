@@ -43,8 +43,5 @@ public class MenuView {
         messageBox = (VBox) root.lookup("#messageBox");          // [P]
         yesButton = (Text) root.lookup("#yesButton");            // [P]
         noButton = (Text) root.lookup("#noButton");              // [P]
-
-
-
     }
 }

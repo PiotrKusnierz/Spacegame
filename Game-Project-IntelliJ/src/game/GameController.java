@@ -457,7 +457,7 @@ public class GameController extends Application {
             @Override
             public void handle(MouseEvent event) {
                 mediaPlayer.stop();                                           // [P]
-                playSound("sound/Flashpoint001b.mp3");               // [P]
+                playSound("sound/Flashpoint001b.mp3");                 // [P]
                 saveGame();
                 menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
                 gameState = PLAYING;
@@ -499,7 +499,7 @@ public class GameController extends Application {
         menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                    // [P]
             public void handle(MouseEvent event) {                                                       // [P]
-                mediaPlayer.stop();                                                                    // [P]
+                mediaPlayer.stop();                                                                      // [P]
                 playSound("sound/ambient_techno1.mp3");                                          // [P]
                 restartGame(event);                                                                      // [P]
             }
@@ -531,7 +531,7 @@ public class GameController extends Application {
 
     // [P] Continues the game from the moment when it was ended when last time playing
     public void continueGame(MouseEvent mouseEvent) throws Exception{              // [P]
-        mediaPlayer.stop();                                                                    // [P]
+        mediaPlayer.stop();                                                        // [P]
         startGame(mouseEvent);                                                     // [P]
         loadGame();                                                                // [P]
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));   // [P]
@@ -545,10 +545,8 @@ public class GameController extends Application {
         playMusic("sound/Mercury.mp3");                                               // [P]
         Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml")); // [P]
 
-
         menuView = new MenuView(root);
-       // System.out.println(menuView);
-        stage.setScene(new Scene(root, Color.YELLOW));
+        stage.setScene(new Scene(root, Color.BLACK));
         stage.show();
         stage.setTitle("SPACEGAME");
 
@@ -561,7 +559,6 @@ public class GameController extends Application {
             menuView.continueButton.setVisible(false);   // [P]
         }                                                // [P]
 
-
         // [P] Once button "HELP" is clicked - hides main menu and shows controls menu
         menuView.helpButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {    // [P]
             @Override                                                                                    // [P]
@@ -573,12 +570,12 @@ public class GameController extends Application {
         });
 
         // [P] Once button "GO BACK" is clicked - hides controls menu and shows main menu
-        menuView.goBackButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {    // [P]
+        menuView.goBackButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  // [P]
             @Override                                                                                    // [P]
             public void handle(MouseEvent event) {                                                       // [P]
                 playSound("sound/Flashpoint001a.mp3");                                           // [P]
-                menuView.controlsMenuBox.setVisible(false);                                               // [P]
-                menuView.mainMenuBox.setVisible(true);                                                  // [P]
+                menuView.controlsMenuBox.setVisible(false);                                              // [P]
+                menuView.mainMenuBox.setVisible(true);                                                   // [P]
             }
         });
     }
