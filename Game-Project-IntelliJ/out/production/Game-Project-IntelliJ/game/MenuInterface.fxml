@@ -150,6 +150,9 @@
                <VBox.margin>
                   <Insets left="100.0" top="30.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Text>
          </children>
       </VBox>

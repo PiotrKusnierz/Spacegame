@@ -20,6 +20,8 @@ public class MenuView {
     public Text restartButton;   // [P]
     public Text continueButton;  // [P]
     public Text helpButton;      // [P]
+    public Text goBackButton;    // [P]
+
     public VBox messageBox;      // [P]
     public Text yesButton;       // [P]
     public Text noButton;        // [P]
@@ -37,6 +39,7 @@ public class MenuView {
         restartButton = (Text) root.lookup("#restartButton");    // [P]
         continueButton = (Text) root.lookup("#continueButton");  // [P]
         helpButton = (Text) root.lookup("#helpButton");          // [P]
+        goBackButton = (Text) root.lookup("#goBackButton");      // [P]
         messageBox = (VBox) root.lookup("#messageBox");          // [P]
         yesButton = (Text) root.lookup("#yesButton");            // [P]
         noButton = (Text) root.lookup("#noButton");              // [P]

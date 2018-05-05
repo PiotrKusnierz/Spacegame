@@ -531,6 +531,7 @@ public class GameController extends Application {
 
     // [P] Continues the game from the moment when it was ended when last time playing
     public void continueGame(MouseEvent mouseEvent) throws Exception{              // [P]
+        mediaPlayer.stop();                                                                    // [P]
         startGame(mouseEvent);                                                     // [P]
         loadGame();                                                                // [P]
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));   // [P]
@@ -561,7 +562,7 @@ public class GameController extends Application {
         }                                                // [P]
 
 
-        // [P] Associates clicked button to the right method - help
+        // [P] Once button "HELP" is clicked - hides main menu and shows controls menu
         menuView.helpButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {    // [P]
             @Override                                                                                    // [P]
             public void handle(MouseEvent event) {                                                       // [P]
@@ -569,6 +570,16 @@ public class GameController extends Application {
                 menuView.mainMenuBox.setVisible(false);                                                  // [P]
                 menuView.controlsMenuBox.setVisible(true);                                               // [P]
             }
-        });    
+        });
+
+        // [P] Once button "GO BACK" is clicked - hides controls menu and shows main menu
+        menuView.goBackButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {    // [P]
+            @Override                                                                                    // [P]
+            public void handle(MouseEvent event) {                                                       // [P]
+                playSound("sound/Flashpoint001a.mp3");                                           // [P]
+                menuView.controlsMenuBox.setVisible(false);                                               // [P]
+                menuView.mainMenuBox.setVisible(true);                                                  // [P]
+            }
+        });
     }
 }
