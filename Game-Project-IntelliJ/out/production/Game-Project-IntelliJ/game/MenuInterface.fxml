@@ -42,7 +42,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Text>
-            <Text fx:id="helpButton" fill="WHITE" onMouseClicked="#goToHelp" strokeType="OUTSIDE" strokeWidth="0.0" text="HELP" translateX="30.0">
+            <Text fx:id="helpButton" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="HELP" translateX="30.0">
                <VBox.margin>
                   <Insets bottom="20.0" left="29.0" />
                </VBox.margin>

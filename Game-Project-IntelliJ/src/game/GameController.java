@@ -517,12 +517,6 @@ public class GameController extends Application {
     }
 
 
-    // [P] WIP
-    public void goToHelp(MouseEvent event) {                                  // [P]
-        playSound("sound/Flashpoint001a.mp3");                             // [P]
-        //System.out.println(menuView);
-    }
-
     // [P] Closes game
     public void exitGame(MouseEvent mouseEvent) {                                 // [P]
         System.exit(0);                                                     // [P]
@@ -567,7 +561,6 @@ public class GameController extends Application {
         }                                                // [P]
 
 
-
         // [P] Associates clicked button to the right method - help
         menuView.helpButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {    // [P]
             @Override                                                                                    // [P]
@@ -576,6 +569,6 @@ public class GameController extends Application {
                 menuView.mainMenuBox.setVisible(false);                                                  // [P]
                 menuView.controlsMenuBox.setVisible(true);                                               // [P]
             }
-        });
+        });    
     }
 }
