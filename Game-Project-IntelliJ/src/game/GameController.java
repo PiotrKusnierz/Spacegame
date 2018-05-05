@@ -161,6 +161,7 @@ public class GameController extends Application {
 			if (game.level < 4) {
 				messageView.showAnimatedMessage(String.format("Level %d", game.level));
 			} else {
+			    playSound("sound/Jingle_Achievement_00.mp3");                          // [P]
 				messageView.showAnimatedMessage("Final Level");                          // S P
 				game.boss = new Enemy(windowSize.w/2 - 50,800,100);                   // S P
 				game.boss.type = 7;                                                          // S P
@@ -231,11 +232,12 @@ public class GameController extends Application {
 					break;
 				case 3: 
 					addEnemy(ThreadLocalRandom.current().nextInt(5, 7));
-					playSound("sound/space2.mp3");     // [P]
+					playSound("sound/SpaceShip_Engine_Small_Loop_00.mp3");     // [P]
 					break;
                 case 4:                                      // S P
                     addEnemyChildren();                      // S P
                     playSound("sound/19.wav");     // [P]
+                    break;
 			}
         }
 
@@ -278,6 +280,7 @@ public class GameController extends Application {
         game.enemies.remove(game.boss);                                    // S P
         game.enemies.add(enemy);                                           // S P
         game.enemies.add(game.boss);                                       // S P
+        playSound("sound/PowerBotsLoop.mp3");
 
     }
 
