@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import game.tools.*;
 
 /**
- * Class for creating an Enemy object
+ * Class for creating an Enemy object.
  */
 public class Enemy implements Serializable {
     public Point velocity;
@@ -44,38 +44,38 @@ public class Enemy implements Serializable {
         this(x, y, r, r, 1, boost);
     }
 
-	/**
-	 * Enemy constructor which creates an Enemy object with the given position
-	 * and radius.
-	 * @param x double value of the enemy's x-position.
+    /**
+     * Enemy constructor which creates an Enemy object with the given position
+     * and radius.
+     * @param x double value of the enemy's x-position.
      * @param y double value of the enemy's y-position.
      * @param r double value of the enemy's radius.
-	 */
+     */
     public Enemy(double x, double y, double r) {
         this(x, y, r, r, 1, 1);
     }
 
-	/**
-	 * Makes the enemy move in a sinus curve.
-	 * @author Sebastian Jarsve
-	 */
+    /**
+     * Makes the enemy move in a sinus curve.
+     * @author Sebastian Jarsve
+     */
     public void moveSin() {
         this.velocity.x = Math.sin(this.step)*6;
     }
 
-	/**
-	 * Makes the enemy move in a clockwise circlular path.
-	 * @author Sebastian Jarsve
-	 */
+    /**
+     * Makes the enemy move in a clockwise circlular path.
+     * @author Sebastian Jarsve
+     */
     public void moveCircClockwise() {
         this.velocity.x = Math.sin(this.step)*6;
         this.rect.y -= -Math.cos(this.step)*6;
     }
 
-	/**
-	 * Makes the enemy move in a counter clockwise circlular path.
-	 * @author Sebastian Jarsve
-	 */
+    /**
+     * Makes the enemy move in a counter clockwise circlular path.
+     * @author Sebastian Jarsve
+     */
     public void moveCircCounterClockwise() {
         this.velocity.x = -Math.sin(this.step)*6;
         this.rect.y -= -Math.cos(this.step)*6;
@@ -83,7 +83,7 @@ public class Enemy implements Serializable {
 
     /**
      * Updates the enemy's position based on its velocity.
-	 * Also adds different movements according to its type.
+     * Also adds different movements according to its type.
      */
     public void update() {
         this.rect.x += this.velocity.x;

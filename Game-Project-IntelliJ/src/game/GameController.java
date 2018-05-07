@@ -27,7 +27,7 @@ import javafx.scene.Node;
 
 import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
-/**                                                               
+/**
  * This class controls the logic behind the game and calls the games draw
  * functions.
  */
@@ -154,7 +154,7 @@ public class GameController extends Application {
         if (gameState != PLAYING) {
             return;
         }
-		game.countFrames();
+		game.frameCounter++;
 		if (game.frameCounter % 1800 == 0 && game.level < 4) {
 			game.level++;
 			game.frameCounter = 0;
@@ -227,11 +227,11 @@ public class GameController extends Application {
 					addEnemy(ThreadLocalRandom.current().nextInt(0, 3));
 					playSound("sound/4.wav");   // [P]
 					break;
-				case 2: 
+				case 2:
 					addEnemy(ThreadLocalRandom.current().nextInt(3, 5));
 					playSound("sound/space2.mp3");     // [P]
 					break;
-				case 3: 
+				case 3:
 					addEnemy(ThreadLocalRandom.current().nextInt(5, 7));
 					playSound("sound/SpaceShip_Engine_Small_Loop_00.mp3");     // [P]
 					break;
