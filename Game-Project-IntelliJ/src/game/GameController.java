@@ -50,6 +50,7 @@ public class GameController extends Application {
     private final int GAMEWON = 4;
 
     public static MediaPlayer mediaPlayer;   // [P]
+    public static MediaPlayer musicPlayer;   // [P]
 
     // Defines the screenSize variable based on the user's screen size
     public Size screenSize = new Size(
@@ -73,10 +74,10 @@ public class GameController extends Application {
     // [P] Method plays and constantly repeats music.
     public void playMusic(String filename) {                                              // [P]
         Media music  = new Media(getClass().getResource(filename).toString());            // [P]
-        mediaPlayer = new MediaPlayer(music);                                             // [P]
-        mediaPlayer.setCycleCount(INDEFINITE);                                            // [P]
-        mediaPlayer.setVolume(0.6);                                                       // [P]
-        mediaPlayer.play();                                                               // [P]
+        musicPlayer = new MediaPlayer(music);                                             // [P]
+        musicPlayer.setCycleCount(INDEFINITE);                                            // [P]
+        musicPlayer.setVolume(0.6);                                                       // [P]
+        musicPlayer.play();                                                               // [P]
     }
 
 	/**
@@ -368,7 +369,8 @@ public class GameController extends Application {
 
     // [P] Starts the game on onMouseClicked event when "Start Game" options from the menu is chosen
     public void startGame(MouseEvent mouseEvent) throws Exception{                             // [P]
-        mediaPlayer.stop();                                                                    // [P]
+        musicPlayer.stop();                                                                    // [P]
+		System.out.println(mediaPlayer);
         Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));  // [P]
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();     // [P]
         game_stage.setScene(new Scene(root, Color.BLACK));
@@ -529,7 +531,7 @@ public class GameController extends Application {
 
     // [P] Continues the game from the moment when it was ended when last time playing
     public void continueGame(MouseEvent mouseEvent) throws Exception{              // [P]
-        mediaPlayer.stop();                                                        // [P]
+        musicPlayer.stop();                                                        // [P]
         startGame(mouseEvent);                                                     // [P]
         loadGame();                                                                // [P]
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));   // [P]
