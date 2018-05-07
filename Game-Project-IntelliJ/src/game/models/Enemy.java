@@ -94,7 +94,7 @@ public class Enemy implements Serializable {
             case 4: moveSin(); break;
             case 5: moveCircClockwise(); break;
             case 6: moveCircCounterClockwise(); break;
-            case 8: moveSin(); break;                                        // S P
+            case 8: moveSin(); break;
         }
     }
 }

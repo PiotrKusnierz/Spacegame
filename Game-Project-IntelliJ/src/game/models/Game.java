@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Class for holdig all important game variables (to make the game Serializable).
+ * Class for holding all important game variables (to make the game Serializable).
  */
 public class Game implements Serializable {
     public Player player;
