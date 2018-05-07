@@ -379,7 +379,7 @@ public class GameController extends Application {
 
         gameState = PLAYING;
         menuView = new MenuView(root);
-        gameView = new GameView(windowSize, root);
+        gameView = new GameView(root);
         messageView = new MessageView(root);
 
 		game = new Game();
