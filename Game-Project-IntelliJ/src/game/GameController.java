@@ -229,7 +229,6 @@ public class GameController extends Application {
 			switch (game.level) {
 				case 1:
 					addEnemy(ThreadLocalRandom.current().nextInt(0, 3));
-					playSound("sound/4.wav");   // [P]
 					break;
 				case 2:
 					addEnemy(ThreadLocalRandom.current().nextInt(3, 5));
@@ -237,7 +236,7 @@ public class GameController extends Application {
 					break;
 				case 3:
 					addEnemy(ThreadLocalRandom.current().nextInt(5, 7));
-					playSound("sound/SpaceShip_Engine_Small_Loop_00.mp3");     // [P]
+                    playSound("sound/space2.mp3");     // [P]
 					break;
                 case 4:                                      // S P
                     addEnemyChildren();                      // S P
