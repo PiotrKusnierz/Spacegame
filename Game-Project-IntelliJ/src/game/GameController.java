@@ -1,11 +1,9 @@
 package game;
 
 import java.io.*;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import static javafx.scene.media.MediaPlayer.INDEFINITE;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.scene.Scene;
@@ -23,9 +23,6 @@ import game.models.*;
 import game.views.*;
 import game.tools.*;
 
-import javafx.scene.Node;
-
-import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
 /**
  * This class controls the logic behind the game and calls the games draw
@@ -42,6 +39,8 @@ public class GameController extends Application {
     private List<Point> removedBullets;
 	private boolean isShooting = false;
     private double boost = 1;
+    public static MediaPlayer mediaPlayer;   // [P]
+    public static MediaPlayer musicPlayer;   // [P]
 
     private int gameState;
     private final int PAUSED = 1;
@@ -49,8 +48,6 @@ public class GameController extends Application {
     private final int GAMEOVER = 3;
     private final int GAMEWON = 4;
 
-    public static MediaPlayer mediaPlayer;   // [P]
-    public static MediaPlayer musicPlayer;   // [P]
 
     // Defines the screenSize variable based on the user's screen size
     public Size screenSize = new Size(
@@ -61,7 +58,7 @@ public class GameController extends Application {
     // Defines the window size we will use for the game
     // public Size windowSize = new Size(screenSize.h*0.75, screenSize.h*0.9);
     public Size windowSize = new Size(482.0, 581.0);
-    
+
     /**
      * Plays sound effects.
      * @param filename ????
@@ -373,6 +370,52 @@ public class GameController extends Application {
         });
     }
 
+    /**
+     * Restarts the game.
+     * @param event ????!!!!!!!!
+     * @author Piotr Kusnierz
+     */
+    private void restartGame(MouseEvent event) {
+        newGame();
+        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
+        messageView.showAnimatedMessage("NEW GAME");
+        menuView.resumeButton.setVisible(true);
+        menuView.saveButton.setVisible(true);
+    }
+
+    /**
+     * Exits game.
+     * @param mouseEvent ????!!!!!!!!
+     * @author Piotr Kusnierz
+     */
+    public void exitGame(MouseEvent mouseEvent) {
+        System.exit(0);
+    }
+
+    /**
+     * Resumes the game.
+     * @param mouseEvent ????!!!!!!!!
+     * @author Piotr Kusnierz
+     */
+    public void resumeGame(MouseEvent mouseEvent) {
+        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
+        gameState = PLAYING;
+    }
+
+    /**
+     * Continues the game from the moment when it was ended when last time playing.
+     * @param mouseEvent ????
+     * @author Piotr Kusnierz
+     */
+    public void continueGame(MouseEvent mouseEvent) throws Exception{
+        musicPlayer.stop();
+        startGame(mouseEvent);
+        loadGame();
+        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));
+        messageView.showAnimatedMessage("LOADED");
+    }
+
 
     // [P] Starts the game on onMouseClicked event when "Start Game" options from the menu is chosen
     public void startGame(MouseEvent mouseEvent) throws Exception{                             // [P]
@@ -412,7 +455,7 @@ public class GameController extends Application {
         gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
         gameView.score.setText("SCORE: " + Integer.toString(game.score));        // [P]
 
-        // [S] [P] Associates clicked button to the right method - resumeGame
+        // [S] [P] Once "Resume Game" is clicked calls for the resumeGame method.
 		menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -422,7 +465,8 @@ public class GameController extends Application {
 			}
 		});
 
-        // [P] If "Main Menu" button is pressed - asks question to the user if he really wants to leave the game
+        // [P] Once "Main Menu" is clicked, hides VBox containing paused menu and shows VBox which contains
+        //     question to the user, if he really wants to leave the game.
         menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
@@ -437,7 +481,8 @@ public class GameController extends Application {
             }
         });
 
-        // [P] If "No" button is pressed - sends user back to the paused menu
+        // [P] Once "No" button is pressed, hides VBox containing question to the user and shows VBox
+        //     containing paused menu.
         menuView.noButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {   // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
@@ -448,7 +493,7 @@ public class GameController extends Application {
             }
         });
 
-        // [P] If "Yes" button is pressed - saves game and sends user to the main menu
+        // [P] Once "Yes" button is pressed calls for the start method.
         menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
@@ -462,7 +507,8 @@ public class GameController extends Application {
             }
         });
 
-		// [S] [P] Associates clicked button to the right method - saveGame
+        // [S] [P] Once "Save Game" is clicked calls for the saveGame method, resumes the game and
+        //         shows animated message "SAVED".
         menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -475,7 +521,10 @@ public class GameController extends Application {
             }
         });
 
-        // [S] [P] Associates clicked button to the right method - loadGame
+        // [P] Once "Load Game" is clicked checks if the file with saves exists. If that is the case
+        //     calls for the loadGame method and resumes the game showing animated message "LOADED".
+        //     Otherwise prints out message to the user which says that file don't exists and also
+        //     shows animated message "ERROR".
         menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                 // [P]
             public void handle(MouseEvent event) {                                                    // [P]
@@ -505,7 +554,7 @@ public class GameController extends Application {
             }
         });
 
-        // [P] Associates clicked button to the right method - restartGame
+        // [P] Once "Restart Game" is clicked calls for the restartGame method.
         menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() { // [P]
             @Override                                                                                    // [P]
             public void handle(MouseEvent event) {                                                       // [P]
@@ -516,51 +565,7 @@ public class GameController extends Application {
         });
     }
 
-    /**
-     * Restarts the game.
-     * @param event ????!!!!!!!!
-     * @author Piotr Kusnierz
-     */
-    private void restartGame(MouseEvent event) {
-        newGame();
-        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
-        messageView.showAnimatedMessage("NEW GAME");
-        menuView.resumeButton.setVisible(true);
-        menuView.saveButton.setVisible(true);
-    }
 
-    /**
-     * Exits game.
-     * @param mouseEvent ????!!!!!!!!
-     * @author Piotr Kusnierz
-     */
-    public void exitGame(MouseEvent mouseEvent) {
-        System.exit(0);
-    }
-
-    /**
-     * Resumes the game.
-     * @param mouseEvent ????!!!!!!!!
-     * @author Piotr Kusnierz
-     */
-    public void resumeGame(MouseEvent mouseEvent) {
-        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
-		gameState = PLAYING;
-    }
-
-    /**
-     * Continues the game from the moment when it was ended when last time playing.
-     * @param mouseEvent ????
-     * @author Piotr Kusnierz
-     */
-    public void continueGame(MouseEvent mouseEvent) throws Exception{
-        musicPlayer.stop();
-        startGame(mouseEvent);
-        loadGame();
-        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
-        gameView.score.setText("SCORE: " + Integer.toString(game.score));
-        messageView.showAnimatedMessage("LOADED");
-    }
 
     @Override
     public void start(Stage stage) throws Exception{
@@ -572,8 +577,8 @@ public class GameController extends Application {
         stage.show();
         stage.setTitle("SPACEGAME");
 
-        // [P]  Checks if the game savings exists from before. If that is the case, than it enables
-        //      continuing the game from the previous state from the Main Menu.
+        // [P] Checks if the file with game saves exists from before. If that is the case, than it shows
+        //     "CONTINUE" button at the main menu. Otherwise hides it.
         File f = new File("./game.sav");        // [P]
         if(f.exists()) {                                 // [P]
             menuView.continueButton.setVisible(true);    // [P]
@@ -581,7 +586,8 @@ public class GameController extends Application {
             menuView.continueButton.setVisible(false);   // [P]
         }                                                // [P]
 
-        // [P] Once button "HELP" is clicked - hides main menu and shows controls menu
+        // [P] Once "HELP" is clicked, hides VBox containing main menu and shows VBox containing
+        //     information about the controls.
         menuView.helpButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {    // [P]
             @Override                                                                                    // [P]
             public void handle(MouseEvent event) {                                                       // [P]
@@ -591,7 +597,8 @@ public class GameController extends Application {
             }
         });
 
-        // [P] Once button "GO BACK" is clicked - hides controls menu and shows main menu
+        // [P] Once "GO BACK" is clicked, hides VBox containing information about the controls
+        //     and shows VBox containing main menu.
         menuView.goBackButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  // [P]
             @Override                                                                                    // [P]
             public void handle(MouseEvent event) {                                                       // [P]
