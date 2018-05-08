@@ -61,23 +61,30 @@ public class GameController extends Application {
     // Defines the window size we will use for the game
     // public Size windowSize = new Size(screenSize.h*0.75, screenSize.h*0.9);
     public Size windowSize = new Size(482.0, 581.0);
-
-    // [P] Method creates one object of type Media which downloads sound files, and one object of type
-    //     MediaPlayer which plays those sound files one time.
-    public void playSound(String filename) {                                              // [P]
-        Media sound  = new Media(getClass().getResource(filename).toString());            // [P]
-        mediaPlayer = new MediaPlayer(sound);                                             // [P]
-        mediaPlayer.setVolume(0.3);                                                       // [P]
-        mediaPlayer.play();                                                               // [P]
+    
+    /**
+     * Plays sound effects.
+     * @param filename ????
+     * @author Piotr Kusnierz
+     */
+    public void playSound(String filename) {
+        Media sound  = new Media(getClass().getResource(filename).toString());
+        mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.setVolume(0.3);
+        mediaPlayer.play();
     }
 
-    // [P] Method plays and constantly repeats music.
-    public void playMusic(String filename) {                                              // [P]
-        Media music  = new Media(getClass().getResource(filename).toString());            // [P]
-        musicPlayer = new MediaPlayer(music);                                             // [P]
-        musicPlayer.setCycleCount(INDEFINITE);                                            // [P]
-        musicPlayer.setVolume(0.6);                                                       // [P]
-        musicPlayer.play();                                                               // [P]
+    /**
+     * Plays and constantly repeats music.
+     * @param filename ????
+     * @author Piotr Kusnierz
+     */
+    public void playMusic(String filename) {
+        Media music  = new Media(getClass().getResource(filename).toString());
+        musicPlayer = new MediaPlayer(music);
+        musicPlayer.setCycleCount(INDEFINITE);
+        musicPlayer.setVolume(0.6);
+        musicPlayer.play();
     }
 
 	/**
@@ -509,34 +516,50 @@ public class GameController extends Application {
         });
     }
 
-    // [P] Restarts the game
-    private void restartGame(MouseEvent event) {                                 // [P]
-        newGame();                                                               // [P]
-        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());  // [P]
-        messageView.showAnimatedMessage("NEW GAME");                         // [P]
-        menuView.resumeButton.setVisible(true);                                  // [P]
-        menuView.saveButton.setVisible(true);                                    // [P]
+    /**
+     * Restarts the game.
+     * @param event ????!!!!!!!!
+     * @author Piotr Kusnierz
+     */
+    private void restartGame(MouseEvent event) {
+        newGame();
+        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
+        messageView.showAnimatedMessage("NEW GAME");
+        menuView.resumeButton.setVisible(true);
+        menuView.saveButton.setVisible(true);
     }
 
-    // [P] Closes game
-    public void exitGame(MouseEvent mouseEvent) {                                 // [P]
-        System.exit(0);                                                     // [P]
+    /**
+     * Exits game.
+     * @param mouseEvent ????!!!!!!!!
+     * @author Piotr Kusnierz
+     */
+    public void exitGame(MouseEvent mouseEvent) {
+        System.exit(0);
     }
 
-    // [P] Resumes the game
-    public void resumeGame(MouseEvent mouseEvent) {                             // [P]
-        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible()); // [P]
-		gameState = PLAYING;                                                    // [P]
+    /**
+     * Resumes the game.
+     * @param mouseEvent ????!!!!!!!!
+     * @author Piotr Kusnierz
+     */
+    public void resumeGame(MouseEvent mouseEvent) {
+        menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
+		gameState = PLAYING;
     }
 
-    // [P] Continues the game from the moment when it was ended when last time playing
-    public void continueGame(MouseEvent mouseEvent) throws Exception{              // [P]
-        musicPlayer.stop();                                                        // [P]
-        startGame(mouseEvent);                                                     // [P]
-        loadGame();                                                                // [P]
-        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));   // [P]
-        gameView.score.setText("SCORE: " + Integer.toString(game.score));          // [P]
-        messageView.showAnimatedMessage("LOADED");                             // [P]
+    /**
+     * Continues the game from the moment when it was ended when last time playing.
+     * @param mouseEvent ????
+     * @author Piotr Kusnierz
+     */
+    public void continueGame(MouseEvent mouseEvent) throws Exception{
+        musicPlayer.stop();
+        startGame(mouseEvent);
+        loadGame();
+        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));
+        messageView.showAnimatedMessage("LOADED");
     }
 
     @Override
