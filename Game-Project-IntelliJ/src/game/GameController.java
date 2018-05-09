@@ -408,10 +408,10 @@ public class GameController extends Application {
     }
 
     // [P] Starts the game on onMouseClicked event when "Start Game" options from the menu is chosen
-	/**
-	 *
-	 * @param mouseEvent
-	 */
+    /**
+     * This method loads the game interface from FXML, sets the initial game variables and start the game.
+     * @param mouseEvent
+     */
     public void startGame(MouseEvent mouseEvent) throws Exception{                             // [P]
         musicPlayer.stop();                                                                    // [P]
         Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));  // [P]
