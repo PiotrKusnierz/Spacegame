@@ -371,10 +371,9 @@ public class GameController extends Application {
 
     /**
      * Restarts the game.
-     * @param event ????!!!!!!!!
      * @author Piotr Kusnierz
      */
-    private void restartGame(MouseEvent event) {
+    private void restartGame() {
         newGame();
         menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
         messageView.showAnimatedMessage("NEW GAME");
@@ -403,7 +402,7 @@ public class GameController extends Application {
 
     /**
      * Continues the game from the moment when it was ended when last time playing.
-     * @param mouseEvent ????
+     * @param mouseEvent 
      * @author Piotr Kusnierz
      */
     public void continueGame(MouseEvent mouseEvent) throws Exception{
@@ -579,7 +578,7 @@ public class GameController extends Application {
             public void handle(MouseEvent event) {
                 mediaPlayer.stop();
                 playSound("sound/ambient_techno1.mp3");
-                restartGame(event);
+                restartGame();
             }
         });
     }
