@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 * Middle-man class between GameController and Player- and EnemyView
 */
 public class GameView {
-    private Canvas canvas;
+    public Canvas canvas;
     private GraphicsContext gc;
     public PlayerView playerView;
     public EnemyView enemyView;
