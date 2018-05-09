@@ -15,8 +15,8 @@ public class GameView {
     private GraphicsContext gc;
     public PlayerView playerView;
     public EnemyView enemyView;
-    public Text lives; // [P]
-    public Text score; // [P]
+    public Text lives;
+    public Text score;
 
     /**
      * GameView constructor.
@@ -24,8 +24,8 @@ public class GameView {
      */
     public GameView(Pane root) {
         canvas = (Canvas) root.lookup("#canvas");
-        lives = (Text) root.lookup("#lives");   // [P]
-        score = (Text) root.lookup("#score");   // [P]
+        lives = (Text) root.lookup("#lives");
+        score = (Text) root.lookup("#score");
         this.canvas.setScaleY(-1);
         this.gc = canvas.getGraphicsContext2D();
         this.playerView = new PlayerView(this.gc);
