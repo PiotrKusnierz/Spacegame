@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 /**
  * This is a static class used to load images. Either from a single String file
  * path, or fram a List of file paths.
- * @author Sebastian
+ * @author Sebastian Jarsve
  */
 public class ImageLoader {
     /**
@@ -31,8 +31,8 @@ public class ImageLoader {
 
     /**
      * Returns an List of Image objects.
-     * @param files List<String> with image file paths.
-     * @return List<Image>
+     * @param files List with image file paths.
+     * @return List
      */
     public static List<Image> load(List<String> files) {
         List<Image> images = new ArrayList<Image>();
