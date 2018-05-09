@@ -8,13 +8,11 @@ import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
-import javafx.event.EventHandler;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import static javafx.scene.media.MediaPlayer.INDEFINITE;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import javafx.stage.Screen;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -125,9 +123,16 @@ public class GameController extends Application {
         if (game.player.rect.intersects(enemy.rect)) {
             playSound("sound/boom7.mp3");
             enemy.lives--;
-            game.player.lives--;
-            gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+            updateLives(-1);
         }
+    }
+
+    /**
+     * Updates the score to the screen.
+     * @author Sebastian Jarsve
+     */
+    public void updateScore() {
+        gameView.score.setText("SCORE: " + Integer.toString(game.score));
     }
 
     /**
@@ -136,8 +141,26 @@ public class GameController extends Application {
      * @author Sebastian Jarsve
      */
     public void updateScore(int value) {
-    game.score += value;
-    gameView.score.setText("SCORE: " + Integer.toString(game.score));
+        game.score += value;
+        updateScore();
+    }
+
+    /**
+     * Updates the score to the screen.
+     * @author Sebastian Jarsve, Piotr Kusnierz
+     */
+    public void updateLives() {
+        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
+    }
+
+    /**
+     * Adds a value to the life and updates it on the screen.
+     * @param value what will be added to the life.
+     * @author Sebastian Jarsve, Piotr Kusnierz
+     */
+    public void updateLives(int value) {
+        game.player.lives += value;
+        updateLives();
     }
 
   /**
@@ -161,34 +184,34 @@ public class GameController extends Application {
         if (gameState != PLAYING) {
             return;
         }
-    game.frameCounter++;
-    if (game.frameCounter % 1800 == 0 && game.level < 4) {
-        game.level++;
-        game.frameCounter = 0;
-        if (game.level < 4) {
-            messageView.showAnimatedMessage(String.format("Level %d", game.level));
-        } else {
-            addBoss();
+        game.frameCounter++;
+        if (game.frameCounter % 1800 == 0 && game.level < 4) {
+            game.level++;
+            game.frameCounter = 0;
+            if (game.level < 4) {
+                messageView.showAnimatedMessage(String.format("Level %d", game.level));
+            } else {
+                addBoss();
+            }
+            playSound("sound/Upper01.mp3");
+        } else if (game.frameCounter % 100 == 0) {
+            messageView.removeMessage();
         }
-        playSound("sound/Upper01.mp3");
-    } else if (game.frameCounter % 100 == 0) {
-        messageView.removeMessage();
-    }
-    if (game.level == 4) {
-        if (game.boss.lives <= 0) {
-            mediaPlayer.stop();
-            playSound("sound/Jingle_Win_00.mp3");
-            messageView.showAnimatedMessage("YOU WON!");
-            gameState = GAMEWON;
+        if (game.level == 4) {
+            if (game.boss.lives <= 0) {
+                mediaPlayer.stop();
+                playSound("sound/Jingle_Win_00.mp3");
+                messageView.showAnimatedMessage("YOU WON!");
+                gameState = GAMEWON;
+            }
         }
-    }
-    if (game.frameCounter % 50 == 0) {
-        updateScore(1);
-    }
-    if (game.frameCounter % 10 == 0 && this.isShooting) {
-        game.player.shoot();
-        playSound("sound/laserfire01.mp3");
-    }
+        if (game.frameCounter % 50 == 0) {
+            updateScore(1);
+        }
+        if (game.frameCounter % 10 == 0 && this.isShooting) {
+            game.player.shoot();
+            playSound("sound/laserfire01.mp3");
+        }
         game.player.update();
         game.player.clampPosition(0, windowSize.w);
         if (game.player.lives <= 0) {
@@ -240,7 +263,6 @@ public class GameController extends Application {
             }
         }
 
-        // Uses the removeAll method from ArrayList to remove dead/inactive enemies from the enemies list
         game.enemies.removeAll(removedEnemies);
         game.player.bullets.removeAll(removedBullets);
         removedEnemies.clear();
@@ -271,18 +293,21 @@ public class GameController extends Application {
         game.enemies.add(enemy);
     }
 
-    public void addEnemyChildren() {                                       // S P
-        double r = 20;                                                     // S P
-        Point position = game.boss.rect.center();                          // S P
-        Enemy enemy = new Enemy(position.x, position.y, r, boost);         // S P
-        enemy.type = 8;                                                    // S P
-        game.enemies.remove(game.boss);                                    // S P
-        game.enemies.add(enemy);                                           // S P
-        game.enemies.add(game.boss);                                       // S P
-        playMusic("sound/Ambience_AlienPlanet_00.mp3");            // [P]
+    /**
+     * Spawns small enemies from the boss, and draws them underneath it.
+     * @author Sebastian Jarsve, Piotr Kusnierz
+     */
+    public void addEnemyChildren() {
+        double r = 20;
+        Point position = game.boss.rect.center();
+        Enemy enemy = new Enemy(position.x, position.y, r, boost);
+        enemy.type = 8;
+        game.enemies.remove(game.boss);
+        game.enemies.add(enemy);
+        game.enemies.add(game.boss);
+        playMusic("sound/Ambience_AlienPlanet_00.mp3");
     }
 
-    // Resets all the game conditions
     /**
      * Resets all the game conditions to get ready for a new game.
      */
@@ -299,9 +324,8 @@ public class GameController extends Application {
         removedBullets.clear();
         messageView.removeMessage();
         gameState = PLAYING;
-        // [P] Sets Lives, Score counter and converts Integer to String
-        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));           // [P]
-        gameView.score.setText("SCORE: " + Integer.toString(game.score));                  // [P]
+        updateLives();
+        updateScore();
     }
 
     /**
@@ -402,23 +426,23 @@ public class GameController extends Application {
         musicPlayer.stop();
         startGame(mouseEvent);
         loadGame();
-        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
-        gameView.score.setText("SCORE: " + Integer.toString(game.score));
+        updateLives();
+        updateScore();
         messageView.showAnimatedMessage("LOADED");
     }
 
-    // [P] Starts the game on onMouseClicked event when "Start Game" options from the menu is chosen
     /**
-     * This method loads the game interface from FXML, sets the initial game variables and start the game.
+     * This method loads the game interface from FXML, handles menu button
+     * actions, sets the initial game variables and starts the game.
      * @param mouseEvent
      */
-    public void startGame(MouseEvent mouseEvent) throws Exception{                             // [P]
-        musicPlayer.stop();                                                                    // [P]
-        Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));  // [P]
-        Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();     // [P]
+    public void startGame(MouseEvent mouseEvent) throws Exception{
+        musicPlayer.stop();
+        Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
+        Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         game_stage.setScene(new Scene(root, Color.BLACK));
 
-        playSound("sound/ambient_techno1.mp3");                                         // [P]
+        playSound("sound/ambient_techno1.mp3");
 
         gameState = PLAYING;
         menuView = new MenuView(root);
@@ -446,38 +470,33 @@ public class GameController extends Application {
 
         game_stage.show();
         game_stage.setTitle("SPACEGAME");
-        gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives)); // [P]
-        gameView.score.setText("SCORE: " + Integer.toString(game.score));        // [P]
+        updateLives();
+        updateLives();
+        updateScore();
 
         /**
          * Once "Resume Game" is clicked calls for the resumeGame method.
          * @author Sebastian Jarsve, Piotr Kusnierz
          */
-        menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
+        menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             mediaPlayer.stop();
             resumeGame();
             playSound("sound/ambient_techno1.mp3");
-        }
-    });
+        });
 
         /**
          * Once "Main Menu" is clicked, hides VBox containing paused menu and shows VBox which contains
          * question to the user, if he really wants to leave the game.
          * @author Piotr Kusnierz
          */
-        menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                playSound("sound/Flashpoint001b.mp3");
-                playMusic("sound/theme_menu.mp3");
-                menuView.pausedMenuBox.setVisible(false);
-                menuView.messageBox.setVisible(true);
-                if (gameState == GAMEOVER) {
-                    messageView.removeMessage();
-                }
-            }
+        menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+              playSound("sound/Flashpoint001b.mp3");
+              playMusic("sound/theme_menu.mp3");
+              menuView.pausedMenuBox.setVisible(false);
+              menuView.messageBox.setVisible(true);
+              if (gameState == GAMEOVER) {
+                  messageView.removeMessage();
+              }
         });
 
         /**
@@ -485,30 +504,24 @@ public class GameController extends Application {
          * containing paused menu.
          * @author Piotr Kusnierz
          */
-        menuView.noButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                playSound("sound/Flashpoint001b.mp3");
-                playMusic("sound/theme_menu.mp3");
-                menuView.pausedMenuBox.setVisible(true);
-                menuView.messageBox.setVisible(false);
-            }
+        menuView.noButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            playSound("sound/Flashpoint001b.mp3");
+            playMusic("sound/theme_menu.mp3");
+            menuView.pausedMenuBox.setVisible(true);
+            menuView.messageBox.setVisible(false);
         });
 
         /**
          * Once "Yes" button is pressed calls for the start method.
          * @author Piotr Kusnierz
          */
-        menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                mediaPlayer.stop();
-                playSound("sound/Flashpoint001b.mp3");
-                try {
-                    start(game_stage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            mediaPlayer.stop();
+            playSound("sound/Flashpoint001b.mp3");
+            try {
+                start(game_stage);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
@@ -517,16 +530,13 @@ public class GameController extends Application {
          * shows animated message "SAVED".
          * @author Sebastian Jarsve, Piotr Kusnierz
          */
-        menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                mediaPlayer.stop();
-                playSound("sound/Flashpoint001b.mp3");
-                saveGame();
-                menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
-                gameState = PLAYING;
-                messageView.showAnimatedMessage("SAVED");
-            }
+        menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            mediaPlayer.stop();
+            playSound("sound/Flashpoint001b.mp3");
+            saveGame();
+            menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
+            gameState = PLAYING;
+            messageView.showAnimatedMessage("SAVED");
         });
 
         /**
@@ -536,31 +546,28 @@ public class GameController extends Application {
          * shows animated message "ERROR".
          * @author Piotr Kusnierz
          */
-        menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                mediaPlayer.stop();
-                playSound("sound/Flashpoint001b.mp3");
-                File f = new File("./game.sav");
-                if(f.exists()) {
-                    loadGame();
-                    gameView.lives.setText("LIVES: " + Integer.toString(game.player.lives));
-                    gameView.score.setText("SCORE: " + Integer.toString(game.score));
-                    menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
-                    messageView.removeMessage();
-                    gameState = PLAYING;
-                    messageView.showAnimatedMessage("LOADED");
-                    menuView.resumeButton.setVisible(true);
-                    menuView.saveButton.setVisible(true);
+        menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            mediaPlayer.stop();
+            playSound("sound/Flashpoint001b.mp3");
+            File f = new File("./game.sav");
+            if(f.exists()) {
+                loadGame();
+                updateLives();
+                updateScore();
+                menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
+                messageView.removeMessage();
+                gameState = PLAYING;
+                messageView.showAnimatedMessage("LOADED");
+                menuView.resumeButton.setVisible(true);
+                menuView.saveButton.setVisible(true);
+            } else {
+                if (gameState == GAMEOVER) {
+                    gameState = GAMEOVER;
+                    System.out.println("File with saves don't exist!");
                 } else {
-                    if (gameState == GAMEOVER) {
-                        gameState = GAMEOVER;
-                        System.out.println("File with saves don't exist!");
-                    } else {
-                        messageView.showAnimatedMessage("ERROR");
-                        resumeGame();
-                        System.out.println("File with saves don't exist!!");
-                    }
+                    messageView.showAnimatedMessage("ERROR");
+                    resumeGame();
+                    System.out.println("File with saves don't exist!!");
                 }
             }
         });
@@ -569,30 +576,29 @@ public class GameController extends Application {
          * Once "Restart Game" is clicked calls for the restartGame method.
          * @author Piotr Kusnierz
          */
-        menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                mediaPlayer.stop();
-                playSound("sound/ambient_techno1.mp3");
-                restartGame();
-            }
+        menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            mediaPlayer.stop();
+            playSound("sound/ambient_techno1.mp3");
+            restartGame();
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void start(Stage stage) throws Exception{
-        playMusic("sound/Mercury.mp3");                                               // [P]
-        Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml")); // [P]
+        playMusic("sound/Mercury.mp3");
+        Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml"));
         menuView = new MenuView(root);
         stage.setScene(new Scene(root, Color.BLACK));
         stage.show();
         stage.setTitle("SPACEGAME");
 
-        /**
-         * Checks if the file with game saves exists from before. If that is the case, than it shows
-         * "CONTINUE" button at the main menu. Otherwise hides it.
-         * @author Piotr Kusnierz
-         */
+
+        //  Checks if the file with game saves exists from before. If that is the case, than it shows
+        //  "CONTINUE" button at the main menu. Otherwise hides it.
+        //  @author Piotr Kusnierz
         File f = new File("./game.sav");
         if(f.exists()) {
             menuView.continueButton.setVisible(true);
@@ -605,13 +611,10 @@ public class GameController extends Application {
          * information about the controls.
          * @author Piotr Kusnierz
          */
-        menuView.helpButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
+        menuView.helpButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
                 playSound("sound/Flashpoint001a.mp3");
                 menuView.mainMenuBox.setVisible(false);
                 menuView.controlsMenuBox.setVisible(true);
-            }
         });
 
         /**
@@ -619,13 +622,10 @@ public class GameController extends Application {
          * and shows VBox containing main menu.
          * @author Piotr Kusnierz
          */
-        menuView.goBackButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
+        menuView.goBackButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
                 playSound("sound/Flashpoint001a.mp3");
                 menuView.controlsMenuBox.setVisible(false);
                 menuView.mainMenuBox.setVisible(true);
-            }
         });
     }
 }
