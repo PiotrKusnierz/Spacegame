@@ -31,8 +31,8 @@ public class ImageLoader {
 
     /**
      * Returns an List of Image objects.
-     * @param files List<String> with image file paths.
-     * @return List<Image>
+     * @param files List with image file paths.
+     * @return List
      */
     public static List<Image> load(List<String> files) {
         List<Image> images = new ArrayList<Image>();

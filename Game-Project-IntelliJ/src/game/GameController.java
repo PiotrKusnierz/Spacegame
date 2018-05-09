@@ -330,6 +330,7 @@ public class GameController extends Application {
 
     /**
      * Adds a keyboard input event handler to the scene.
+     * @param scene The scene to add the event handler.
      */
     public void addEventHandler(Scene scene) {
         scene.setOnKeyPressed(event -> {
@@ -419,8 +420,9 @@ public class GameController extends Application {
 
     /**
      * Continues the game from the moment when it was ended when last time playing.
-     * @param mouseEvent
+     * @param mouseEvent Gets the mouseEvent and send it to the startGame method.
      * @author Piotr Kusnierz
+     * @throws Exception throws an Exception (if any) to handle it elsewhere.
      */
     public void continueGame(MouseEvent mouseEvent) throws Exception{
         musicPlayer.stop();
@@ -434,7 +436,8 @@ public class GameController extends Application {
     /**
      * This method loads the game interface from FXML, handles menu button
      * actions, sets the initial game variables and starts the game.
-     * @param mouseEvent
+     * @param mouseEvent Used to find the Application Stage.
+     * @throws Exception throws an Exception (if any) to handle it elsewhere.
      */
     public void startGame(MouseEvent mouseEvent) throws Exception{
         musicPlayer.stop();
