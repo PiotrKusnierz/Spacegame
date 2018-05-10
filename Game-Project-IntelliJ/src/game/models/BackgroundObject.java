@@ -9,6 +9,7 @@ public class BackgroundObject implements Serializable {
     public Point velocity;
     public Rect rect;
     public double boost = 1;
+    public int type;
 
     /**
      * Enemy constructor which creates an Enemy object with the given position

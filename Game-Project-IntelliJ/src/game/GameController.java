@@ -255,7 +255,11 @@ public class GameController extends Application {
         }
 
         if (Math.random() < 0.035 * boost) {
-            addbackObj();
+            addbackObj(0);
+        }
+
+        if (Math.random() < 0.0005 * boost) {
+            addbackObj(1);
         }
 
         if (Math.random() < 0.02 * boost) {
@@ -297,10 +301,10 @@ public class GameController extends Application {
      */
     public void draw() {
         gameView.clearCanvas();
-        gameView.playerView.draw(game.player);
-
         // NEW |||||||||||||||||||
         gameView.backObjView.draw(game.backgroundDecor);
+        gameView.playerView.draw(game.player);
+
         gameView.enemyView.draw(game.enemies);
     }
 
@@ -320,14 +324,19 @@ public class GameController extends Application {
     }
 
     // NEW ||||||||||||||||||||||||||||||||
-    public void addbackObj () {
+    public void addbackObj (int type) {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.01, windowSize.w*0.03);
+        if (type == 1) {
+            r = windowSize.w*0.3;
+        }
+
         //double h = ThreadLocalRandom.current().nextDouble(windowSize.w*0.05, windowSize.w*0.08);
         //double w= windowSize.w*0.025;
         //double h= windowSize.w*0.025;
         double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
         double y = windowSize.h+r;
         BackgroundObject backObj = new BackgroundObject(x, y, r, r, boost);
+        backObj.type = type;
         game.backgroundDecor.add(backObj);
     }
 
