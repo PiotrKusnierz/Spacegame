@@ -1,5 +1,6 @@
 package game.tools;
 
+import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.FileInputStream;
@@ -18,7 +19,8 @@ public class ImageLoader {
      */
     public static Image load(String file) {
         try {
-            file = ImageLoader.class.getResource("../images/"+file).getPath();
+            // file = ImageLoader.class.getResource("../images/"+file).getPath();
+            file = new File("game/images/"+file).getAbsolutePath();
             // file = "/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/images/"+file;
             FileInputStream fis = new FileInputStream(file);
             Image image = new Image(fis);
