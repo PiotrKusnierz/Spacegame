@@ -33,6 +33,7 @@ public class GameController extends Application {
     private MessageView messageView;
     private Game game;
     private List<Enemy> removedEnemies;
+    private List<BackgroundObject> removedBackObjects;
     private List<Point> removedBullets;
     private boolean isShooting = false;
     private double boost = 1;
@@ -220,6 +221,15 @@ public class GameController extends Application {
             messageView.showPeristantAnimatedMessage("GAME OVER");
             return;
         }
+
+        // NEW |||||||||||||||||||||||||||||||||||||||||||||||
+        for (BackgroundObject backObj : game.backgroundDecor) {
+            backObj.update();
+            if (backObj.rect.top() < 0) {
+                removedBackObjects.add(backObj);
+            }
+        }
+
         for (Enemy enemy : game.enemies) {
             enemy.update();
             collisionHandler(enemy);
@@ -243,6 +253,11 @@ public class GameController extends Application {
                 removedEnemies.add(enemy);
             }
         }
+
+        if (Math.random() < 0.05 * boost) {
+            addbackObj();
+        }
+
         if (Math.random() < 0.02 * boost) {
             switch (game.level) {
                 case 1:
@@ -263,8 +278,15 @@ public class GameController extends Application {
             }
         }
 
+        // NEW ||||||||||||||||
+        game.backgroundDecor.removeAll(removedBackObjects);
+
         game.enemies.removeAll(removedEnemies);
         game.player.bullets.removeAll(removedBullets);
+
+        //NEW |||||||||||||||
+        removedBackObjects.clear();
+
         removedEnemies.clear();
         removedBullets.clear();
     }
@@ -275,6 +297,9 @@ public class GameController extends Application {
     public void draw() {
         gameView.clearCanvas();
         gameView.playerView.draw(game.player);
+
+        // NEW |||||||||||||||||||
+        gameView.backObjView.draw(game.backgroundDecor);
         gameView.enemyView.draw(game.enemies);
     }
 
@@ -291,6 +316,15 @@ public class GameController extends Application {
         Enemy enemy = new Enemy(x, y, r, boost);
         enemy.type = type;
         game.enemies.add(enemy);
+    }
+
+    // NEW ||||||||||||||||||||||||||||||||
+    public void addbackObj () {
+        double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.08, windowSize.w*0.13);
+        double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
+        double y = windowSize.h+r;
+        BackgroundObject backObj = new BackgroundObject(x, y, r);
+        game.backgroundDecor.add(backObj);
     }
 
     /**
@@ -320,6 +354,10 @@ public class GameController extends Application {
         game.frameCounter = 0;
         game.level = 1;
         game.enemies.clear();
+
+        // NEW ||||||||||||||
+        removedBackObjects.clear();
+
         removedEnemies.clear();
         removedBullets.clear();
         messageView.removeMessage();
@@ -452,6 +490,9 @@ public class GameController extends Application {
 
         game = new Game();
         game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.12, windowSize.w*0.12);
+
+        // NEW |||||||||||||||||||||||||||||||||||||||||||
+        game.backgroundDecor = new ArrayList<BackgroundObject>();
 
         game.enemies = new ArrayList<Enemy>();
         removedEnemies = new ArrayList<Enemy>();

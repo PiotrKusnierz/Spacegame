@@ -14,6 +14,10 @@ public class GameView {
     public Canvas canvas;
     private GraphicsContext gc;
     public PlayerView playerView;
+
+    // NEW ||||||||||||||||||||||||||||||
+    public BackgroundObjectView backObjView;
+
     public EnemyView enemyView;
     public Text lives; // [P]
     public Text score; // [P]
@@ -29,6 +33,10 @@ public class GameView {
         this.canvas.setScaleY(-1);
         this.gc = canvas.getGraphicsContext2D();
         this.playerView = new PlayerView(this.gc);
+
+        // NEW |||||||||||||||||||
+        this.backObjView = new BackgroundObjectView(this.gc);
+
         this.enemyView = new EnemyView(this.gc);
     }
 
