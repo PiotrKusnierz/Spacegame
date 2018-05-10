@@ -254,7 +254,7 @@ public class GameController extends Application {
             }
         }
 
-        if (Math.random() < 0.05 * boost) {
+        if (Math.random() < 0.035 * boost) {
             addbackObj();
         }
 
@@ -280,6 +280,7 @@ public class GameController extends Application {
 
         // NEW ||||||||||||||||
         game.backgroundDecor.removeAll(removedBackObjects);
+
 
         game.enemies.removeAll(removedEnemies);
         game.player.bullets.removeAll(removedBullets);
@@ -320,10 +321,13 @@ public class GameController extends Application {
 
     // NEW ||||||||||||||||||||||||||||||||
     public void addbackObj () {
-        double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.08, windowSize.w*0.13);
+        double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.01, windowSize.w*0.03);
+        //double h = ThreadLocalRandom.current().nextDouble(windowSize.w*0.05, windowSize.w*0.08);
+        //double w= windowSize.w*0.025;
+        //double h= windowSize.w*0.025;
         double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
         double y = windowSize.h+r;
-        BackgroundObject backObj = new BackgroundObject(x, y, r);
+        BackgroundObject backObj = new BackgroundObject(x, y, r, r, boost);
         game.backgroundDecor.add(backObj);
     }
 
@@ -398,6 +402,10 @@ public class GameController extends Application {
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
                 }
+                // NEW |||||||||||||
+                for (BackgroundObject backObj : game.backgroundDecor) {
+                    backObj.boost = boost;
+                }
             }
             if (event.getCode() == KeyCode.SPACE) {
                 if (!this.isShooting) {
@@ -417,6 +425,9 @@ public class GameController extends Application {
                 boost = 1;
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
+                }
+                for (BackgroundObject backObj : game.backgroundDecor) {
+                    backObj.boost = boost;
                 }
                 mediaPlayer.stop();
             }
@@ -495,6 +506,9 @@ public class GameController extends Application {
         game.backgroundDecor = new ArrayList<BackgroundObject>();
 
         game.enemies = new ArrayList<Enemy>();
+
+        // NEW |||||||||||||||
+        removedBackObjects = new ArrayList<BackgroundObject>();
         removedEnemies = new ArrayList<Enemy>();
         removedBullets = new ArrayList<Point>();
 

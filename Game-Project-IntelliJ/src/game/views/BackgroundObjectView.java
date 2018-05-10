@@ -23,7 +23,9 @@ public class BackgroundObjectView {
 
     public void loadImages() {
         this.images = ImageLoader.load(Arrays.asList(
-                "png/lasers/laserBlue16.png"
+                "png/lasers/laserBlue08.png",
+                "png/lasers/laserBlue16.png",
+                "png/lasers/laserBlue06.png"
         ));
     }
 
@@ -33,7 +35,7 @@ public class BackgroundObjectView {
      */
     public void draw(List<BackgroundObject> backObjects) {
         for (BackgroundObject backObj : backObjects) {
-            gc.drawImage(images.get(1),
+            gc.drawImage(images.get(0),
                     backObj.rect.x, backObj.rect.y,
                     backObj.rect.w, backObj.rect.h
             );

@@ -21,12 +21,13 @@ public class BackgroundObject implements Serializable {
      */
     public BackgroundObject (double x, double y, double w, double h, double boost) {
         this.rect = new Rect(x, y, w, h);
-        this.velocity = new Point(0, -ThreadLocalRandom.current().nextInt(3, 6));
+        //this.velocity = new Point(0, -ThreadLocalRandom.current().nextInt(3, 6));
+        this.velocity = new Point(0, -0.5);
         this.boost = boost;
     }
 
-    public BackgroundObject (double x, double y, double r) {
-        this(x, y, r, r, 1);
+    public BackgroundObject (double x, double y, double w, double h) {
+        this(x, y, w, h, 1);
     }
 
     public void update() {
@@ -88,7 +89,7 @@ public class BackgroundObject implements Serializable {
     /**
      * Creates a new enemy with a random size and position and adds it to the
      * games enemies list.
-     * @param type value for the enemy type which is sent to the Enemy
+     *  for the enemy type which is sent to the Enemy
      * constructor.
      */
     /*
