@@ -1,6 +1,7 @@
 package game;
 
 import java.io.*;
+import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -52,7 +53,7 @@ public class GameController extends Application {
      * @author Piotr Kusnierz
      */
     public void playSound(String filename) {
-        Media sound  = new Media(getClass().getResource(filename).toString());
+        Media sound  = new Media("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/"+filename);
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setVolume(0.3);
         mediaPlayer.play();
@@ -65,6 +66,7 @@ public class GameController extends Application {
      */
     public void playMusic(String filename) {
         Media music  = new Media(getClass().getResource(filename).toString());
+        // Media music  = new Media("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/"+filename);
         musicPlayer = new MediaPlayer(music);
         musicPlayer.setCycleCount(INDEFINITE);
         musicPlayer.setVolume(0.6);
@@ -343,7 +345,6 @@ public class GameController extends Application {
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
                 }
                 messageView.removeMessage();
-                playMusic("sound/theme_menu.mp3");
                 menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
             }
             if (gameState == GAMEOVER || gameState == PAUSED) {
@@ -356,8 +357,10 @@ public class GameController extends Application {
                 game.player.velocity.x = 6;
             }
             if (event.getCode() == KeyCode.UP && game.level < 4) {
+				if (boost != 3) {
+					playSound("sound/engine_takeoff.mp3");
+				}
                 boost = 3;
-                playSound("sound/engine_takeoff.mp3");
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
                 }
@@ -442,6 +445,7 @@ public class GameController extends Application {
     public void startGame(MouseEvent mouseEvent) throws Exception{
         musicPlayer.stop();
         Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
+        // Pane root = FXMLLoader.load(new URL("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/GameInterface.fxml"));
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         game_stage.setScene(new Scene(root, Color.BLACK));
 
@@ -494,7 +498,6 @@ public class GameController extends Application {
          */
         menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
               playSound("sound/Flashpoint001b.mp3");
-              playMusic("sound/theme_menu.mp3");
               menuView.pausedMenuBox.setVisible(false);
               menuView.messageBox.setVisible(true);
               if (gameState == GAMEOVER) {
@@ -509,7 +512,6 @@ public class GameController extends Application {
          */
         menuView.noButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             playSound("sound/Flashpoint001b.mp3");
-            playMusic("sound/theme_menu.mp3");
             menuView.pausedMenuBox.setVisible(true);
             menuView.messageBox.setVisible(false);
         });
@@ -593,6 +595,7 @@ public class GameController extends Application {
     public void start(Stage stage) throws Exception{
         playMusic("sound/Mercury.mp3");
         Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml"));
+        // Pane root = FXMLLoader.load(new URL("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/MenuInterface.fxml"));
         menuView = new MenuView(root);
         stage.setScene(new Scene(root, Color.BLACK));
         stage.show();

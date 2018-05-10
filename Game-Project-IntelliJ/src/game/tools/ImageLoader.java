@@ -19,6 +19,7 @@ public class ImageLoader {
     public static Image load(String file) {
         try {
             file = ImageLoader.class.getResource("../images/"+file).getPath();
+            // file = "/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/images/"+file;
             FileInputStream fis = new FileInputStream(file);
             Image image = new Image(fis);
             fis.close();
