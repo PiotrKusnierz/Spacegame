@@ -1,10 +1,8 @@
 package game.views;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.scene.canvas.GraphicsContext;
 import game.models.Enemy;
 import game.tools.ImageLoader;

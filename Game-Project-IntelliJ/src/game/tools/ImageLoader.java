@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
  * @author Sebastian Jarsve
  */
 public class ImageLoader {
+
     /**
      * Loads an image and returns it as a Image object.
      * @param file string value of the image file location.

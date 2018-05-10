@@ -1,11 +1,6 @@
 package game.tools;
 
 import java.io.Serializable;
-/**
- * Point constructor which stores its position.
- * @param x double value of the point's x-position.
- * @param y double value of the point's y-position.
- */
 
 /**
  * Class used for storing position or velocity of an object.
@@ -13,6 +8,11 @@ import java.io.Serializable;
 public class Point implements Serializable {
     public double x, y;
 
+    /**
+     * Point constructor which stores its position.
+     * @param x double value of the point's x-position.
+     * @param y double value of the point's y-position.
+     */
     public Point(double x, double y) {
         this.x = x;
         this.y = y;

@@ -1,6 +1,7 @@
 package game.tools;
 
 import java.io.Serializable;
+
 /**
 * Simple representation of a rectangle, with position and size.
 */
