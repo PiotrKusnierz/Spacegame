@@ -343,7 +343,6 @@ public class GameController extends Application {
                     gameState = gameState == PLAYING ? PAUSED : PLAYING;
                 }
                 messageView.removeMessage();
-                playMusic("sound/theme_menu.mp3");
                 menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
             }
             if (gameState == GAMEOVER || gameState == PAUSED) {
@@ -494,7 +493,6 @@ public class GameController extends Application {
          */
         menuView.menuButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
               playSound("sound/Flashpoint001b.mp3");
-              playMusic("sound/theme_menu.mp3");
               menuView.pausedMenuBox.setVisible(false);
               menuView.messageBox.setVisible(true);
               if (gameState == GAMEOVER) {
@@ -509,7 +507,6 @@ public class GameController extends Application {
          */
         menuView.noButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             playSound("sound/Flashpoint001b.mp3");
-            playMusic("sound/theme_menu.mp3");
             menuView.pausedMenuBox.setVisible(true);
             menuView.messageBox.setVisible(false);
         });
