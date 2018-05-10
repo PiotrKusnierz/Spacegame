@@ -25,7 +25,7 @@ public class BackgroundObjectView {
         this.images = ImageLoader.load(Arrays.asList(
                 "png/lasers/laserBlue08.png",
                 "png/planets/planet12.png",
-                "png/planets/planet18.png"
+                "png/planets/planet20.png"
         ));
     }
 
