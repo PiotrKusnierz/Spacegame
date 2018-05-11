@@ -26,9 +26,13 @@ public class MessageView {
      * @param persistant Sets the message to be persistant or not with a boolean value.
      */
     private void animatedMessage(String msg, boolean persistant) {
+		if (root.getChildren().contains(view)) {
+			root.getChildren().remove(view);
+			view.getChildren().clear();
+		}
         root.getChildren().add(view);
 
-        for (int i = 0; i < msg.toCharArray().length; i++) {
+        for (int i = 0; i < msg.length(); i++) {
             char letter = msg.charAt(i);
 
             Text text = new Text(String.valueOf(letter));
@@ -43,6 +47,12 @@ public class MessageView {
             if (!persistant) {
                 ft.setCycleCount(2);
                 ft.setAutoReverse(true);
+				if (i == msg.length()-1) {
+					ft.setOnFinished(event -> {
+						root.getChildren().remove(view);
+						view.getChildren().clear();
+					});
+				}
             }
             ft.setDelay(Duration.seconds(i * 0.05));
             ft.play();
