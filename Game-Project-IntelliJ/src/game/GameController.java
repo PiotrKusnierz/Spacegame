@@ -528,8 +528,8 @@ public class GameController extends Application {
     public void startGame(MouseEvent mouseEvent) throws Exception{
         musicPlayer.stop();
         Pane root = FXMLLoader.load(GameController.class.getResource("GameInterface.fxml"));
-        Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        game_stage.setScene(new Scene(root, Color.BLACK));
+        Stage gameStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        gameStage.setScene(new Scene(root, Color.BLACK));
 
         playSound("sound/ambient_techno1.mp3");
 
@@ -558,11 +558,11 @@ public class GameController extends Application {
             }
         };
 
-        addEventHandler(game_stage.getScene());
+        addEventHandler(gameStage.getScene());
         gameLoop.start();
 
-        game_stage.show();
-        game_stage.setTitle("SPACEGAME");
+        gameStage.show();
+        gameStage.setTitle("SPACEGAME");
         updateLives();
         updateLives();
         updateScore();
@@ -608,7 +608,7 @@ public class GameController extends Application {
         menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             playSound("sound/Flashpoint001b.mp3");
             try {
-                start(game_stage);
+                start(gameStage);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -637,7 +637,7 @@ public class GameController extends Application {
         menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             playSound("sound/Flashpoint001b.mp3");
             File f = new File("./game.sav");
-            if(f.exists()) {
+            if (f.exists()) {
                 loadGame();
                 updateLives();
                 updateScore();
@@ -673,7 +673,7 @@ public class GameController extends Application {
      * {@inheritDoc}
      */
     @Override
-    public void start(Stage stage) throws Exception{
+    public void start(Stage stage) throws Exception {
         playMusic("sound/Mercury.mp3");
         Pane root = FXMLLoader.load(GameController.class.getResource("MenuInterface.fxml"));
         menuView = new MenuView(root);
@@ -685,7 +685,7 @@ public class GameController extends Application {
         //  "CONTINUE" button at the main menu. Otherwise hides it.
         //  @author Piotr Kusnierz
         File f = new File("./game.sav");
-        if(f.exists()) {
+        if (f.exists()) {
             menuView.continueButton.setVisible(true);
         } else {
             menuView.continueButton.setVisible(false);
