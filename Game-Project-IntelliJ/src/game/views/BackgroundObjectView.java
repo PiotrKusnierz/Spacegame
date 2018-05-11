@@ -8,6 +8,12 @@ import javafx.scene.image.Image;
 import javafx.scene.canvas.GraphicsContext;
 import game.ImageLoader;
 
+/**
+ * Class that determines how the background objects are displayed in the game window.
+ * The class does not modify the background objects in any way,
+ * only the way they are displayed.
+ * @author Inge Brochmann
+ */
 public class BackgroundObjectView {
     private GraphicsContext gc;
     private List<Image> images;

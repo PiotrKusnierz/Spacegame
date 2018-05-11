@@ -7,16 +7,13 @@ import javafx.scene.text.Text;
 
 /**
 * Class for creating the canvas (aka "drawing board") of the game.
-* Middle-man class between GameController and Player- and EnemyView
+* Middle-man class between GameController and Player- and EnemyView as well as BackgroundObjectView
 */
 public class GameView {
     public Canvas canvas;
     private GraphicsContext gc;
     public PlayerView playerView;
-
-    // NEW ||||||||||||||||||||||||||||||
     public BackgroundObjectView backObjView;
-
     public EnemyView enemyView;
     public Text lives;
     public Text score;

@@ -219,7 +219,6 @@ public class GameController extends Application {
             return;
         }
 
-        // NEW |||||||||||||||||||||||||||||||||||||||||||||||
         for (BackgroundObject backObj : game.backgroundPlanet) {
             backObj.update();
             if (backObj.rect.top() < 0) {
@@ -286,15 +285,11 @@ public class GameController extends Application {
             }
         }
 
-        // NEW ||||||||||||||||
         game.backgroundPlanet.removeAll(removedBackObjects);
         game.backgroundStar.removeAll(removedBackObjects);
-
         game.enemies.removeAll(removedEnemies);
         game.player.bullets.removeAll(removedBullets);
-        //NEW |||||||||||||||
         removedBackObjects.clear();
-
         removedEnemies.clear();
         removedBullets.clear();
     }
@@ -304,11 +299,10 @@ public class GameController extends Application {
      */
     public void draw() {
         gameView.clearCanvas();
-        // NEW |||||||||||||||||||
+
         gameView.backObjView.draw(game.backgroundStar);
         gameView.backObjView.draw(game.backgroundPlanet);
         gameView.playerView.draw(game.player);
-
         gameView.enemyView.draw(game.enemies);
     }
 
@@ -327,7 +321,12 @@ public class GameController extends Application {
         game.enemies.add(enemy);
     }
 
-    // NEW ||||||||||||||||||||||||||||||||
+    /**
+     * Creates a new background object with random size, position and velocity
+     * based on type, and adds it to the relevant background object list.
+     * @param type type of background object, 0 being a star, and 1 - 8 being different planets.
+     * @author Inge Brochmann
+     */
     public void addBackObj (int type) {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.005, windowSize.w*0.02);
         if (type != 0) {
@@ -348,6 +347,10 @@ public class GameController extends Application {
         }
     }
 
+    /**
+     * Creates initial background objects of type 0 (star) for starting a new game.
+     * @author Inge Brochmann
+     */
     public void addInitialBackObj(){
         for (int i = 0; i < 20; i++){
             double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.005, windowSize.w*0.02);
@@ -386,17 +389,13 @@ public class GameController extends Application {
         game.frameCounter = 0;
         game.level = 1;
         game.enemies.clear();
-
-        // NEW ||||||||||||||
         removedBackObjects.clear();
-
         removedEnemies.clear();
         removedBullets.clear();
         messageView.removeMessage();
         gameState = PLAYING;
         updateLives();
         updateScore();
-        // NEW |||||||||||
         addInitialBackObj();
     }
 
@@ -433,7 +432,6 @@ public class GameController extends Application {
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
                 }
-                // NEW |||||||||||||
                 for (BackgroundObject backObj : game.backgroundPlanet) {
                     backObj.boost = boost;
                 }
@@ -450,7 +448,7 @@ public class GameController extends Application {
             }
         });
 
-        // To make sure the game.player does not continue moving after the key is released
+        // To make sure that on key pressed-events defaults back to default when the corresponding key is released.
         scene.setOnKeyReleased(event -> {
             if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT) {
                 game.player.velocity.x = 0;
@@ -539,15 +537,11 @@ public class GameController extends Application {
 
         game = new Game();
         game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.12, windowSize.w*0.12);
-
-        // NEW |||||||||||||||||||||||||||||||||||||||||||
         game.backgroundPlanet = new ArrayList<BackgroundObject>();
         game.backgroundStar = new ArrayList<BackgroundObject>();
         addInitialBackObj();
-
         game.enemies = new ArrayList<Enemy>();
 
-        // NEW |||||||||||||||
         removedBackObjects = new ArrayList<BackgroundObject>();
         removedEnemies = new ArrayList<Enemy>();
         removedBullets = new ArrayList<Point>();
@@ -682,7 +676,6 @@ public class GameController extends Application {
         stage.setScene(new Scene(root, Color.BLACK));
         stage.show();
         stage.setTitle("SPACEGAME");
-
 
         //  Checks if the file with game saves exists from before. If that is the case, than it shows
         //  "CONTINUE" button at the main menu. Otherwise hides it.
