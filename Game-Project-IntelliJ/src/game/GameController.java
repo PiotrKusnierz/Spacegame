@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.effect.MotionBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
@@ -440,6 +441,13 @@ public class GameController extends Application {
                 for (BackgroundObject backObj : game.backgroundStar) {
                     backObj.boost = boost;
                 }
+                // NEW |||||||||||||||||||||||||||
+                /*gameView.canvas.setEffect(MotionBlur);
+                MotionBlur */
+                        /*addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                    resumeGame();
+                    playSound("sound/ambient_techno1.mp3");
+                });*/
             }
             if (event.getCode() == KeyCode.SPACE) {
                 if (!this.isShooting) {
