@@ -427,7 +427,7 @@ public class GameController extends Application {
             }
             if (event.getCode() == KeyCode.UP && game.level < 4) {
 				if (boost != 3) {
-					playSound("sound/engine_takeoff.mp3");
+					playSound("sound/warp.wav");
 				}
                 boost = 3;
                 for (Enemy enemy : game.enemies) {
