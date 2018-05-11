@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.canvas.GraphicsContext;
 import game.models.Enemy;
-import game.tools.ImageLoader;
+import game.ImageLoader;
 
 /**
  * Class that determines how the enemy objects are displayed in the game window.

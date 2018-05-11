@@ -1,4 +1,4 @@
-package game.tools;
+package game;
 
 import java.io.File;
 import java.util.List;
@@ -19,12 +19,7 @@ public class ImageLoader {
      */
     public static Image load(String file) {
         try {
-            // file = ImageLoader.class.getResource("../images/"+file).getPath();
-            file = new File("game/images/"+file).getAbsolutePath();
-            // file = "/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/images/"+file;
-            FileInputStream fis = new FileInputStream(file);
-            Image image = new Image(fis);
-            fis.close();
+			Image image = new Image(ImageLoader.class.getResourceAsStream("images/"+file));
             return image;
         } catch(Exception e) {
             e.printStackTrace();

@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import static javafx.scene.media.MediaPlayer.INDEFINITE;
@@ -23,6 +24,32 @@ import game.models.*;
 import game.views.*;
 import game.tools.*;
 
+// import java.io.*;
+//
+// import java.util.List;
+// import java.util.ArrayList;
+// import java.util.concurrent.ThreadLocalRandom;
+//
+// import javafx.application.Application;
+// import javafx.animation.AnimationTimer;
+// import javafx.fxml.FXMLLoader;
+// import javafx.scene.input.MouseEvent;
+// import javafx.event.EventHandler;
+// import javafx.scene.media.Media;
+// import javafx.scene.media.MediaPlayer;
+// import javafx.stage.Stage;
+// import javafx.stage.Screen;
+// import javafx.scene.Scene;
+// import javafx.scene.layout.Pane;
+// import javafx.scene.paint.Color;
+// import javafx.scene.input.KeyCode;
+// import game.models.*;
+// import game.views.*;
+// import game.tools.*;
+//
+// import javafx.scene.Node;
+//
+// import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
 /**
  * This class controls the logic behind the game and calls the games draw
@@ -54,10 +81,13 @@ public class GameController extends Application {
      * @author Piotr Kusnierz
      */
     public void playSound(String filename) {
-        Media sound  = new Media("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/"+filename);
-        mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.setVolume(0.3);
-        mediaPlayer.play();
+		// Media sound = new Media(GameController.class.getResource(filename).toString());
+        // Media sound  = new Media("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/"+filename);
+		// Media sound = new Media(getClass().getResource(filename).toString());
+        // mediaPlayer = new MediaPlayer(sound);
+        // mediaPlayer.setVolume(0.3);
+        // mediaPlayer.play();
+		new AudioClip(GameController.class.getResource(filename).toString()).play();
     }
 
     /**
@@ -66,8 +96,9 @@ public class GameController extends Application {
      * @author Piotr Kusnierz
      */
     public void playMusic(String filename) {
+		Media music = new Media(GameController.class.getResource(filename).toString());
         // Media music  = new Media(getClass().getResource(filename).toString());
-        Media music  = new Media(new File("game/"+filename).toURI().toString());
+        // Media music  = new Media(new File("game/"+filename).toURI().toString());
         // Media music  = new Media("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/"+filename);
         musicPlayer = new MediaPlayer(music);
         musicPlayer.setCycleCount(INDEFINITE);
@@ -203,7 +234,7 @@ public class GameController extends Application {
         }
         if (game.level == 4) {
             if (game.boss.lives <= 0) {
-                mediaPlayer.stop();
+                // mediaPlayer.stop();
                 playSound("sound/Jingle_Win_00.mp3");
                 messageView.showAnimatedMessage("YOU WON!");
                 gameState = GAMEWON;
@@ -339,7 +370,7 @@ public class GameController extends Application {
     public void addEventHandler(Scene scene) {
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-                mediaPlayer.stop();
+                // mediaPlayer.stop();
                 if (gameState == GAMEOVER || gameState == GAMEWON) {
                     menuView.resumeButton.setVisible(false);
                     menuView.saveButton.setVisible(false);
@@ -386,7 +417,7 @@ public class GameController extends Application {
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
                 }
-                mediaPlayer.stop();
+                // mediaPlayer.stop();
             }
             if (event.getCode() == KeyCode.SPACE) {
                 this.isShooting = false;
@@ -446,9 +477,9 @@ public class GameController extends Application {
      */
     public void startGame(MouseEvent mouseEvent) throws Exception{
         musicPlayer.stop();
-		// System.out.println(new File("game/GameInterface.fxml").getAbsolutePath());
+        Pane root = FXMLLoader.load(GameController.class.getResource("GameInterface.fxml"));
         // Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
-        Pane root = FXMLLoader.load(new File("game/GameInterface.fxml").toURI().toURL());
+        // Pane root = FXMLLoader.load(new File("game/GameInterface.fxml").toURI().toURL());
         // Pane root = FXMLLoader.load(new URL("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/GameInterface.fxml"));
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         game_stage.setScene(new Scene(root, Color.BLACK));
@@ -490,7 +521,7 @@ public class GameController extends Application {
          * @author Sebastian Jarsve, Piotr Kusnierz
          */
         menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            mediaPlayer.stop();
+            // mediaPlayer.stop();
             resumeGame();
             playSound("sound/ambient_techno1.mp3");
         });
@@ -525,7 +556,7 @@ public class GameController extends Application {
          * @author Piotr Kusnierz
          */
         menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            mediaPlayer.stop();
+            // mediaPlayer.stop();
             playSound("sound/Flashpoint001b.mp3");
             try {
                 start(game_stage);
@@ -540,7 +571,7 @@ public class GameController extends Application {
          * @author Sebastian Jarsve, Piotr Kusnierz
          */
         menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            mediaPlayer.stop();
+            // mediaPlayer.stop();
             playSound("sound/Flashpoint001b.mp3");
             saveGame();
             menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
@@ -556,7 +587,7 @@ public class GameController extends Application {
          * @author Piotr Kusnierz
          */
         menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            mediaPlayer.stop();
+            // mediaPlayer.stop();
             playSound("sound/Flashpoint001b.mp3");
             File f = new File("./game.sav");
             if(f.exists()) {
@@ -586,7 +617,7 @@ public class GameController extends Application {
          * @author Piotr Kusnierz
          */
         menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            mediaPlayer.stop();
+            // mediaPlayer.stop();
             playSound("sound/ambient_techno1.mp3");
             restartGame();
         });
@@ -598,9 +629,7 @@ public class GameController extends Application {
     @Override
     public void start(Stage stage) throws Exception{
         playMusic("sound/Mercury.mp3");
-        // Pane root = FXMLLoader.load(this.getClass().getResource("MenuInterface.fxml"));
-        Pane root = FXMLLoader.load(new File("game/MenuInterface.fxml").toURI().toURL());
-        // Pane root = FXMLLoader.load(new URL("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/MenuInterface.fxml"));
+        Pane root = FXMLLoader.load(GameController.class.getResource("MenuInterface.fxml"));
         menuView = new MenuView(root);
         stage.setScene(new Scene(root, Color.BLACK));
         stage.show();

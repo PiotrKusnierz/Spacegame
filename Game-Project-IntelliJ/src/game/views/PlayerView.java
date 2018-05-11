@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.canvas.GraphicsContext;
 import game.models.Player;
 import game.tools.Point;
-import game.tools.ImageLoader;
+import game.ImageLoader;
 
 /**
 * Class that determines how the player object is displayed in the game window.
