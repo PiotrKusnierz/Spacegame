@@ -9,6 +9,9 @@ import java.util.List;
 public class Game implements Serializable {
     public Player player;
     public List<Enemy> enemies;
+    // NEW ||||||||||||||
+    public List<BackgroundObject> backgroundPlanet;
+    public List<BackgroundObject> backgroundStar;
     public Enemy boss;
     public int score = 0;
     public int frameCounter = 0;

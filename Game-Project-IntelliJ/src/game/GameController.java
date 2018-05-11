@@ -34,6 +34,7 @@ public class GameController extends Application {
     private MessageView messageView;
     private Game game;
     private List<Enemy> removedEnemies;
+    private List<BackgroundObject> removedBackObjects;
     private List<Point> removedBullets;
     private boolean isShooting = false;
     private double boost = 1;
@@ -217,6 +218,22 @@ public class GameController extends Application {
             messageView.showPeristantAnimatedMessage("GAME OVER");
             return;
         }
+
+        // NEW |||||||||||||||||||||||||||||||||||||||||||||||
+        for (BackgroundObject backObj : game.backgroundPlanet) {
+            backObj.update();
+            if (backObj.rect.top() < 0) {
+                removedBackObjects.add(backObj);
+            }
+        }
+
+        for (BackgroundObject backObj : game.backgroundStar) {
+            backObj.update();
+            if (backObj.rect.top() < 0) {
+                removedBackObjects.add(backObj);
+            }
+        }
+
         for (Enemy enemy : game.enemies) {
             enemy.update();
             collisionHandler(enemy);
@@ -240,6 +257,15 @@ public class GameController extends Application {
                 removedEnemies.add(enemy);
             }
         }
+
+        if (ThreadLocalRandom.current().nextInt(0, 10000) < (6 * boost)) {
+            addbackObj(ThreadLocalRandom.current().nextInt(1, 8));
+        }
+
+        if (Math.random() < 0.035 * boost) {
+            addbackObj(0);
+        }
+
         if (Math.random() < 0.02 * boost) {
             switch (game.level) {
                 case 1:
@@ -260,8 +286,15 @@ public class GameController extends Application {
             }
         }
 
+        // NEW ||||||||||||||||
+        game.backgroundPlanet.removeAll(removedBackObjects);
+        game.backgroundStar.removeAll(removedBackObjects);
+
         game.enemies.removeAll(removedEnemies);
         game.player.bullets.removeAll(removedBullets);
+        //NEW |||||||||||||||
+        removedBackObjects.clear();
+
         removedEnemies.clear();
         removedBullets.clear();
     }
@@ -271,7 +304,11 @@ public class GameController extends Application {
      */
     public void draw() {
         gameView.clearCanvas();
+        // NEW |||||||||||||||||||
+        gameView.backObjView.draw(game.backgroundStar);
+        gameView.backObjView.draw(game.backgroundPlanet);
         gameView.playerView.draw(game.player);
+
         gameView.enemyView.draw(game.enemies);
     }
 
@@ -288,6 +325,38 @@ public class GameController extends Application {
         Enemy enemy = new Enemy(x, y, r, boost);
         enemy.type = type;
         game.enemies.add(enemy);
+    }
+
+    // NEW ||||||||||||||||||||||||||||||||
+    public void addbackObj (int type) {
+        double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.005, windowSize.w*0.02);
+        if (type != 0) {
+            if (Math.random() < 0.15) {
+                r = windowSize.w*1.2;
+            } else {
+                r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.15, windowSize.w*0.45);
+            }
+        }
+        double x = ThreadLocalRandom.current().nextDouble(0-2*r/3, windowSize.w-(r/3));
+        double y = windowSize.h+r;
+        BackgroundObject backObj = new BackgroundObject(x, y, r, r, boost);
+        backObj.type = type;
+        if (type == 0){
+            game.backgroundStar.add(backObj);
+        } else {
+            game.backgroundPlanet.add(backObj);
+        }
+    }
+
+    public void addInitialBackObj(){
+        for (int i = 0; i < 20; i++){
+            double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.005, windowSize.w*0.02);
+            double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
+            double y = ThreadLocalRandom.current().nextDouble(0,windowSize.h-r);
+            BackgroundObject backObj = new BackgroundObject(x, y, r, r);
+            backObj.type = 0;
+            game.backgroundStar.add(backObj);
+        }
     }
 
     /**
@@ -317,12 +386,18 @@ public class GameController extends Application {
         game.frameCounter = 0;
         game.level = 1;
         game.enemies.clear();
+
+        // NEW ||||||||||||||
+        removedBackObjects.clear();
+
         removedEnemies.clear();
         removedBullets.clear();
         messageView.removeMessage();
         gameState = PLAYING;
         updateLives();
         updateScore();
+        // NEW |||||||||||
+        addInitialBackObj();
     }
 
     /**
@@ -358,6 +433,13 @@ public class GameController extends Application {
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
                 }
+                // NEW |||||||||||||
+                for (BackgroundObject backObj : game.backgroundPlanet) {
+                    backObj.boost = boost;
+                }
+                for (BackgroundObject backObj : game.backgroundStar) {
+                    backObj.boost = boost;
+                }
             }
             if (event.getCode() == KeyCode.SPACE) {
                 if (!this.isShooting) {
@@ -377,6 +459,12 @@ public class GameController extends Application {
                 boost = 1;
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
+                }
+                for (BackgroundObject backObj : game.backgroundPlanet) {
+                    backObj.boost = boost;
+                }
+                for (BackgroundObject backObj : game.backgroundStar) {
+                    backObj.boost = boost;
                 }
             }
             if (event.getCode() == KeyCode.SPACE) {
@@ -452,7 +540,15 @@ public class GameController extends Application {
         game = new Game();
         game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.12, windowSize.w*0.12);
 
+        // NEW |||||||||||||||||||||||||||||||||||||||||||
+        game.backgroundPlanet = new ArrayList<BackgroundObject>();
+        game.backgroundStar = new ArrayList<BackgroundObject>();
+        addInitialBackObj();
+
         game.enemies = new ArrayList<Enemy>();
+
+        // NEW |||||||||||||||
+        removedBackObjects = new ArrayList<BackgroundObject>();
         removedEnemies = new ArrayList<Enemy>();
         removedBullets = new ArrayList<Point>();
 

@@ -36,7 +36,7 @@ public class PlayerView{
     private void loadImages() {
         this.images = ImageLoader.load(Arrays.asList(
             "png/playerShip1_blue.png",
-            "png/lasers/laserBlue08.png"
+            "png/lasers/laserRed06.png"
         ));
     }
 
@@ -53,7 +53,7 @@ public class PlayerView{
         for (Point bullet : player.bullets) {
             gc.drawImage(
             images.get(1),
-            bullet.x, bullet.y, 10, 10
+            bullet.x, bullet.y, 8, 20
             );
         }
     }
