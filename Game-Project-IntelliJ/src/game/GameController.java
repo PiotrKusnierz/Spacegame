@@ -193,9 +193,7 @@ public class GameController extends Application {
                 addBoss();
             }
             playSound("sound/Upper01.mp3");
-        } else if (game.frameCounter % 100 == 0) {
-            messageView.removeMessage();
-        }
+        } 
         if (game.level == 4) {
             if (game.boss.lives <= 0) {
                 // mediaPlayer.stop();
