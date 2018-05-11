@@ -11,7 +11,7 @@
 
 <Pane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
    <children>
-      <Canvas id="canvas" height="581.0" layoutX="-8.0" layoutY="-4.0" width="482.0" />
+      <Canvas id="canvas" height="581.0" width="482.0" />
       <Text id="lives" fill="WHITE" layoutX="341.0" layoutY="533.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIVES">
          <font>
             <Font name="Arial" size="30.0" />
