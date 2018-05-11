@@ -18,11 +18,18 @@ public class BackgroundObjectView {
     private GraphicsContext gc;
     private List<Image> images;
 
+    /**
+     * Constructor that determines how the background object is displayed on screen.
+     * @param gc GraphicsContext (canvas) to draw on.
+     */
     public BackgroundObjectView (GraphicsContext gc) {
         this.gc = gc;
         loadImages();
     }
 
+    /**
+     * Loads images into a List object.
+     */
     public void loadImages() {
         this.images = ImageLoader.load(Arrays.asList(
                 "png/effects/star2.png",
@@ -36,6 +43,10 @@ public class BackgroundObjectView {
         ));
     }
 
+    /**
+     * Draws the background objects on the the canvas.
+     * @param backObjects The list of background objects to be drawn on the canvas.
+     */
     public void draw(List<BackgroundObject> backObjects) {
         for (BackgroundObject backObj : backObjects) {
             gc.drawImage(images.get(backObj.type),
