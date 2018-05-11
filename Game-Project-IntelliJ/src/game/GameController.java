@@ -1,8 +1,6 @@
 package game;
 
 import java.io.*;
-import java.net.URL;
-import java.net.URI;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -39,7 +37,6 @@ public class GameController extends Application {
     private List<Point> removedBullets;
     private boolean isShooting = false;
     private double boost = 1;
-    public static MediaPlayer mediaPlayer;
     public static MediaPlayer musicPlayer;
     public Size windowSize;
 
@@ -335,7 +332,6 @@ public class GameController extends Application {
     public void addEventHandler(Scene scene) {
         scene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-                // mediaPlayer.stop();
                 if (gameState == GAMEOVER || gameState == GAMEWON) {
                     menuView.resumeButton.setVisible(false);
                     menuView.saveButton.setVisible(false);
@@ -382,7 +378,6 @@ public class GameController extends Application {
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
                 }
-                // mediaPlayer.stop();
             }
             if (event.getCode() == KeyCode.SPACE) {
                 this.isShooting = false;
@@ -483,7 +478,6 @@ public class GameController extends Application {
          * @author Sebastian Jarsve, Piotr Kusnierz
          */
         menuView.resumeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            // mediaPlayer.stop();
             resumeGame();
             playSound("sound/ambient_techno1.mp3");
         });
@@ -518,7 +512,6 @@ public class GameController extends Application {
          * @author Piotr Kusnierz
          */
         menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            // mediaPlayer.stop();
             playSound("sound/Flashpoint001b.mp3");
             try {
                 start(game_stage);
@@ -533,7 +526,6 @@ public class GameController extends Application {
          * @author Sebastian Jarsve, Piotr Kusnierz
          */
         menuView.saveButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            // mediaPlayer.stop();
             playSound("sound/Flashpoint001b.mp3");
             saveGame();
             menuView.pausedMenuBox.setVisible(!menuView.pausedMenuBox.isVisible());
@@ -549,7 +541,6 @@ public class GameController extends Application {
          * @author Piotr Kusnierz
          */
         menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            // mediaPlayer.stop();
             playSound("sound/Flashpoint001b.mp3");
             File f = new File("./game.sav");
             if(f.exists()) {
@@ -579,7 +570,6 @@ public class GameController extends Application {
          * @author Piotr Kusnierz
          */
         menuView.restartButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            // mediaPlayer.stop();
             playSound("sound/ambient_techno1.mp3");
             restartGame();
         });

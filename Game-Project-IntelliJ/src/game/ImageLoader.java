@@ -1,9 +1,7 @@
 package game;
 
-import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
-import java.io.FileInputStream;
 import javafx.scene.image.Image;
 
 /**

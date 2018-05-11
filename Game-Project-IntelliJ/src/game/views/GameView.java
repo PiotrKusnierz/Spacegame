@@ -2,7 +2,6 @@ package game.views;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import game.tools.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
