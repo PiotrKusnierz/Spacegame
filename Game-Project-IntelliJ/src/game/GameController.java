@@ -187,6 +187,7 @@ public class GameController extends Application {
             game.level++;
             game.frameCounter = 0;
             if (game.level < 4) {
+                messageView.removeMessage();
                 messageView.showAnimatedMessage(String.format("Level %d", game.level));
             } else {
                 addBoss();
@@ -201,7 +202,7 @@ public class GameController extends Application {
                 gameState = GAMEWON;
             }
         }
-        if (game.frameCounter % 50 == 0) {
+        if (game.frameCounter % 50 == 0 && game.level != 4) {
             updateScore(1);
         }
         if (game.frameCounter % 10 == 0 && this.isShooting) {
@@ -246,7 +247,10 @@ public class GameController extends Application {
                 if (enemy.rect.contains(bullet)) {
                     enemy.lives--;
                     removedBullets.add(bullet);
-                    updateScore(10);
+                    // To avoid gaining infinite points at the boss by killing its minions
+                    if (enemy.type != 8) {
+                        updateScore(10);
+                    }
                     playSound("sound/8bit_bomb_explosion.mp3");
                 }
             }
@@ -325,7 +329,7 @@ public class GameController extends Application {
      * @param type type of background object, 0 being a star, and 1 - 8 being different planets.
      * @author Inge Brochmann
      */
-    public void addBackObj (int type) {
+    public void addBackObj(int type) {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.005, windowSize.w*0.02);
         if (type != 0) {
             if (Math.random() < 0.15) {
@@ -349,8 +353,8 @@ public class GameController extends Application {
      * Creates initial background objects of type 0 (star) for starting a new game.
      * @author Inge Brochmann
      */
-    public void addInitialBackObj(){
-        for (int i = 0; i < 20; i++){
+    public void addInitialBackObj() {
+        for (int i = 0; i < 20; i++) {
             double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.005, windowSize.w*0.02);
             double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
             double y = ThreadLocalRandom.current().nextDouble(0,windowSize.h-r);
