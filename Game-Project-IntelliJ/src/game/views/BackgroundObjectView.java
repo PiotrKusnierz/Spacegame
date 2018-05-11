@@ -2,7 +2,6 @@ package game.views;
 
 import java.util.List;
 import java.util.Arrays;
-
 import game.models.BackgroundObject;
 import javafx.scene.image.Image;
 import javafx.scene.canvas.GraphicsContext;
