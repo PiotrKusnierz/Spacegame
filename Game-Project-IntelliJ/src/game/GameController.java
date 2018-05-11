@@ -34,6 +34,7 @@ public class GameController extends Application {
     private MessageView messageView;
     private Game game;
     private List<Enemy> removedEnemies;
+    private List<BackgroundObject> removedBackObjects;
     private List<Point> removedBullets;
     private boolean isShooting = false;
     private double boost = 1;
@@ -186,14 +187,13 @@ public class GameController extends Application {
             game.level++;
             game.frameCounter = 0;
             if (game.level < 4) {
+                messageView.removeMessage();
                 messageView.showAnimatedMessage(String.format("Level %d", game.level));
             } else {
                 addBoss();
             }
             playSound("sound/Upper01.mp3");
-        } else if (game.frameCounter % 100 == 0) {
-            messageView.removeMessage();
-        }
+        } 
         if (game.level == 4) {
             if (game.boss.lives <= 0) {
                 // mediaPlayer.stop();
@@ -202,7 +202,7 @@ public class GameController extends Application {
                 gameState = GAMEWON;
             }
         }
-        if (game.frameCounter % 50 == 0) {
+        if (game.frameCounter % 50 == 0 && game.level != 4) {
             updateScore(1);
         }
         if (game.frameCounter % 10 == 0 && this.isShooting) {
@@ -217,6 +217,21 @@ public class GameController extends Application {
             messageView.showPeristantAnimatedMessage("GAME OVER");
             return;
         }
+
+        for (BackgroundObject backObj : game.backgroundPlanet) {
+            backObj.update();
+            if (backObj.rect.top() < 0) {
+                removedBackObjects.add(backObj);
+            }
+        }
+
+        for (BackgroundObject backObj : game.backgroundStar) {
+            backObj.update();
+            if (backObj.rect.top() < 0) {
+                removedBackObjects.add(backObj);
+            }
+        }
+
         for (Enemy enemy : game.enemies) {
             enemy.update();
             collisionHandler(enemy);
@@ -232,7 +247,10 @@ public class GameController extends Application {
                 if (enemy.rect.contains(bullet)) {
                     enemy.lives--;
                     removedBullets.add(bullet);
-                    updateScore(10);
+                    // To avoid gaining infinite points at the boss by killing its minions
+                    if (enemy.type != 8) {
+                        updateScore(10);
+                    }
                     playSound("sound/8bit_bomb_explosion.mp3");
                 }
             }
@@ -240,6 +258,15 @@ public class GameController extends Application {
                 removedEnemies.add(enemy);
             }
         }
+
+        if (ThreadLocalRandom.current().nextInt(0, 10000) < (6 * boost)) {
+            addBackObj(ThreadLocalRandom.current().nextInt(1, 8));
+        }
+
+        if (Math.random() < 0.035 * boost) {
+            addBackObj(0);
+        }
+
         if (Math.random() < 0.02 * boost) {
             switch (game.level) {
                 case 1:
@@ -260,8 +287,11 @@ public class GameController extends Application {
             }
         }
 
+        game.backgroundPlanet.removeAll(removedBackObjects);
+        game.backgroundStar.removeAll(removedBackObjects);
         game.enemies.removeAll(removedEnemies);
         game.player.bullets.removeAll(removedBullets);
+        removedBackObjects.clear();
         removedEnemies.clear();
         removedBullets.clear();
     }
@@ -271,6 +301,9 @@ public class GameController extends Application {
      */
     public void draw() {
         gameView.clearCanvas();
+
+        gameView.backObjView.draw(game.backgroundStar);
+        gameView.backObjView.draw(game.backgroundPlanet);
         gameView.playerView.draw(game.player);
         gameView.enemyView.draw(game.enemies);
     }
@@ -288,6 +321,47 @@ public class GameController extends Application {
         Enemy enemy = new Enemy(x, y, r, boost);
         enemy.type = type;
         game.enemies.add(enemy);
+    }
+
+    /**
+     * Creates a new background object with random size, position and velocity
+     * based on type, and adds it to the relevant background object list.
+     * @param type type of background object, 0 being a star, and 1 - 8 being different planets.
+     * @author Inge Brochmann
+     */
+    public void addBackObj(int type) {
+        double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.005, windowSize.w*0.02);
+        if (type != 0) {
+            if (Math.random() < 0.15) {
+                r = windowSize.w*1.2;
+            } else {
+                r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.15, windowSize.w*0.45);
+            }
+        }
+        double x = ThreadLocalRandom.current().nextDouble(0-2*r/3, windowSize.w-(r/3));
+        double y = windowSize.h+r;
+        BackgroundObject backObj = new BackgroundObject(x, y, r, r, boost);
+        backObj.type = type;
+        if (type == 0){
+            game.backgroundStar.add(backObj);
+        } else {
+            game.backgroundPlanet.add(backObj);
+        }
+    }
+
+    /**
+     * Creates initial background objects of type 0 (star) for starting a new game.
+     * @author Inge Brochmann
+     */
+    public void addInitialBackObj() {
+        for (int i = 0; i < 20; i++) {
+            double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.005, windowSize.w*0.02);
+            double x = ThreadLocalRandom.current().nextDouble(0, windowSize.w-r);
+            double y = ThreadLocalRandom.current().nextDouble(0,windowSize.h-r);
+            BackgroundObject backObj = new BackgroundObject(x, y, r, r);
+            backObj.type = 0;
+            game.backgroundStar.add(backObj);
+        }
     }
 
     /**
@@ -317,12 +391,14 @@ public class GameController extends Application {
         game.frameCounter = 0;
         game.level = 1;
         game.enemies.clear();
+        removedBackObjects.clear();
         removedEnemies.clear();
         removedBullets.clear();
         messageView.removeMessage();
         gameState = PLAYING;
         updateLives();
         updateScore();
+        addInitialBackObj();
     }
 
     /**
@@ -352,11 +428,17 @@ public class GameController extends Application {
             }
             if (event.getCode() == KeyCode.UP && game.level < 4) {
 				if (boost != 3) {
-					playSound("sound/engine_takeoff.mp3");
+					playSound("sound/warp.wav");
 				}
                 boost = 3;
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
+                }
+                for (BackgroundObject backObj : game.backgroundPlanet) {
+                    backObj.boost = boost;
+                }
+                for (BackgroundObject backObj : game.backgroundStar) {
+                    backObj.boost = boost;
                 }
             }
             if (event.getCode() == KeyCode.SPACE) {
@@ -368,7 +450,7 @@ public class GameController extends Application {
             }
         });
 
-        // To make sure the game.player does not continue moving after the key is released
+        // To make sure that on key pressed-events defaults back to default when the corresponding key is released.
         scene.setOnKeyReleased(event -> {
             if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT) {
                 game.player.velocity.x = 0;
@@ -377,6 +459,12 @@ public class GameController extends Application {
                 boost = 1;
                 for (Enemy enemy : game.enemies) {
                     enemy.boost = boost;
+                }
+                for (BackgroundObject backObj : game.backgroundPlanet) {
+                    backObj.boost = boost;
+                }
+                for (BackgroundObject backObj : game.backgroundStar) {
+                    backObj.boost = boost;
                 }
             }
             if (event.getCode() == KeyCode.SPACE) {
@@ -438,8 +526,8 @@ public class GameController extends Application {
     public void startGame(MouseEvent mouseEvent) throws Exception{
         musicPlayer.stop();
         Pane root = FXMLLoader.load(GameController.class.getResource("GameInterface.fxml"));
-        Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        game_stage.setScene(new Scene(root, Color.BLACK));
+        Stage gameStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        gameStage.setScene(new Scene(root, Color.BLACK));
 
         playSound("sound/ambient_techno1.mp3");
 
@@ -451,8 +539,12 @@ public class GameController extends Application {
 
         game = new Game();
         game.player = new Player(windowSize.w/2, windowSize.h*0.2, windowSize.w*0.12, windowSize.w*0.12);
-
+        game.backgroundPlanet = new ArrayList<BackgroundObject>();
+        game.backgroundStar = new ArrayList<BackgroundObject>();
+        addInitialBackObj();
         game.enemies = new ArrayList<Enemy>();
+
+        removedBackObjects = new ArrayList<BackgroundObject>();
         removedEnemies = new ArrayList<Enemy>();
         removedBullets = new ArrayList<Point>();
 
@@ -464,11 +556,11 @@ public class GameController extends Application {
             }
         };
 
-        addEventHandler(game_stage.getScene());
+        addEventHandler(gameStage.getScene());
         gameLoop.start();
 
-        game_stage.show();
-        game_stage.setTitle("SPACEGAME");
+        gameStage.show();
+        gameStage.setTitle("SPACEGAME");
         updateLives();
         updateLives();
         updateScore();
@@ -514,7 +606,7 @@ public class GameController extends Application {
         menuView.yesButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             playSound("sound/Flashpoint001b.mp3");
             try {
-                start(game_stage);
+                start(gameStage);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -543,7 +635,7 @@ public class GameController extends Application {
         menuView.loadButton.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             playSound("sound/Flashpoint001b.mp3");
             File f = new File("./game.sav");
-            if(f.exists()) {
+            if (f.exists()) {
                 loadGame();
                 updateLives();
                 updateScore();
@@ -579,7 +671,7 @@ public class GameController extends Application {
      * {@inheritDoc}
      */
     @Override
-    public void start(Stage stage) throws Exception{
+    public void start(Stage stage) throws Exception {
         playMusic("sound/Mercury.mp3");
         Pane root = FXMLLoader.load(GameController.class.getResource("MenuInterface.fxml"));
         menuView = new MenuView(root);
@@ -587,12 +679,11 @@ public class GameController extends Application {
         stage.show();
         stage.setTitle("SPACEGAME");
 
-
         //  Checks if the file with game saves exists from before. If that is the case, than it shows
         //  "CONTINUE" button at the main menu. Otherwise hides it.
         //  @author Piotr Kusnierz
         File f = new File("./game.sav");
-        if(f.exists()) {
+        if (f.exists()) {
             menuView.continueButton.setVisible(true);
         } else {
             menuView.continueButton.setVisible(false);

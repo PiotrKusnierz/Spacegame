@@ -5,7 +5,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
- * Class holds variables which belongs to the menues.
+ * Class holds variables which belongs to the menus.
  * @author Piotr Kusnierz
  */
 public class MenuView {
@@ -27,7 +27,6 @@ public class MenuView {
     /**
      * Constructor sets the elements from FXML to the variables.
      * @param root main node of the game.
-	 * @author Piotr Kusnierz
      */
     public MenuView(Pane root) {
         pausedMenuBox = (VBox) root.lookup("#pausedMenuBox");

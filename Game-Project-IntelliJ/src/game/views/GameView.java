@@ -7,12 +7,13 @@ import javafx.scene.text.Text;
 
 /**
 * Class for creating the canvas (aka "drawing board") of the game.
-* Middle-man class between GameController and Player- and EnemyView
+* Middle-man class between GameController and Player- and EnemyView as well as BackgroundObjectView
 */
 public class GameView {
     public Canvas canvas;
     private GraphicsContext gc;
     public PlayerView playerView;
+    public BackgroundObjectView backObjView;
     public EnemyView enemyView;
     public Text lives;
     public Text score;
@@ -28,6 +29,10 @@ public class GameView {
         this.canvas.setScaleY(-1);
         this.gc = canvas.getGraphicsContext2D();
         this.playerView = new PlayerView(this.gc);
+
+        // NEW |||||||||||||||||||
+        this.backObjView = new BackgroundObjectView(this.gc);
+
         this.enemyView = new EnemyView(this.gc);
     }
 
