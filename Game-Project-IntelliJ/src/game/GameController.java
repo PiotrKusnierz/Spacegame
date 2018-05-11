@@ -24,32 +24,6 @@ import game.models.*;
 import game.views.*;
 import game.tools.*;
 
-// import java.io.*;
-//
-// import java.util.List;
-// import java.util.ArrayList;
-// import java.util.concurrent.ThreadLocalRandom;
-//
-// import javafx.application.Application;
-// import javafx.animation.AnimationTimer;
-// import javafx.fxml.FXMLLoader;
-// import javafx.scene.input.MouseEvent;
-// import javafx.event.EventHandler;
-// import javafx.scene.media.Media;
-// import javafx.scene.media.MediaPlayer;
-// import javafx.stage.Stage;
-// import javafx.stage.Screen;
-// import javafx.scene.Scene;
-// import javafx.scene.layout.Pane;
-// import javafx.scene.paint.Color;
-// import javafx.scene.input.KeyCode;
-// import game.models.*;
-// import game.views.*;
-// import game.tools.*;
-//
-// import javafx.scene.Node;
-//
-// import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
 /**
  * This class controls the logic behind the game and calls the games draw
@@ -81,12 +55,6 @@ public class GameController extends Application {
      * @author Piotr Kusnierz
      */
     public void playSound(String filename) {
-		// Media sound = new Media(GameController.class.getResource(filename).toString());
-        // Media sound  = new Media("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/"+filename);
-		// Media sound = new Media(getClass().getResource(filename).toString());
-        // mediaPlayer = new MediaPlayer(sound);
-        // mediaPlayer.setVolume(0.3);
-        // mediaPlayer.play();
 		new AudioClip(GameController.class.getResource(filename).toString()).play();
     }
 
@@ -97,9 +65,6 @@ public class GameController extends Application {
      */
     public void playMusic(String filename) {
 		Media music = new Media(GameController.class.getResource(filename).toString());
-        // Media music  = new Media(getClass().getResource(filename).toString());
-        // Media music  = new Media(new File("game/"+filename).toURI().toString());
-        // Media music  = new Media("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/"+filename);
         musicPlayer = new MediaPlayer(music);
         musicPlayer.setCycleCount(INDEFINITE);
         musicPlayer.setVolume(0.6);
@@ -478,9 +443,6 @@ public class GameController extends Application {
     public void startGame(MouseEvent mouseEvent) throws Exception{
         musicPlayer.stop();
         Pane root = FXMLLoader.load(GameController.class.getResource("GameInterface.fxml"));
-        // Pane root = FXMLLoader.load(this.getClass().getResource("GameInterface.fxml"));
-        // Pane root = FXMLLoader.load(new File("game/GameInterface.fxml").toURI().toURL());
-        // Pane root = FXMLLoader.load(new URL("file:/home/seb/code/java/semester-project/Game-Project-IntelliJ/src/game/GameInterface.fxml"));
         Stage game_stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
         game_stage.setScene(new Scene(root, Color.BLACK));
 
