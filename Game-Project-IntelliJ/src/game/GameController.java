@@ -204,7 +204,7 @@ public class GameController extends Application {
                 gameState = GAMEWON;
             }
         }
-        if (game.frameCounter % 50 == 0) {
+        if (game.frameCounter % 50 == 0 && game.level != 4) {
             updateScore(1);
         }
         if (game.frameCounter % 10 == 0 && this.isShooting) {
