@@ -119,7 +119,7 @@
                      <HBox.margin>
                         <Insets right="122.0" />
                      </HBox.margin></Text>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Shot">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Shoot">
                      <font>
                         <Font size="23.0" />
                      </font></Text>
