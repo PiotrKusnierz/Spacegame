@@ -259,11 +259,11 @@ public class GameController extends Application {
         }
 
         if (ThreadLocalRandom.current().nextInt(0, 10000) < (6 * boost)) {
-            addbackObj(ThreadLocalRandom.current().nextInt(1, 8));
+            addBackObj(ThreadLocalRandom.current().nextInt(1, 8));
         }
 
         if (Math.random() < 0.035 * boost) {
-            addbackObj(0);
+            addBackObj(0);
         }
 
         if (Math.random() < 0.02 * boost) {
@@ -328,7 +328,7 @@ public class GameController extends Application {
     }
 
     // NEW ||||||||||||||||||||||||||||||||
-    public void addbackObj (int type) {
+    public void addBackObj (int type) {
         double r = ThreadLocalRandom.current().nextDouble(windowSize.w*0.005, windowSize.w*0.02);
         if (type != 0) {
             if (Math.random() < 0.15) {
