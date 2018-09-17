@@ -8,5 +8,5 @@ Sebastian Jarsve, Inge Brochmann, Piotr Kusnierz
 
 ![main screen](https://github.com/PiotrKusnierz/java-semester-project/blob/master/2.png)
 ![main screen](https://github.com/PiotrKusnierz/java-semester-project/blob/master/3.png)  
-![main screen](https://github.com/PiotrKusnierz/java-semester-project/blob/master/4.png)
-![main screen](https://github.com/PiotrKusnierz/java-semester-project/blob/master/6.png)
+![main screen](https://github.com/PiotrKusnierz/java-semester-project/blob/master/4.PNG)
+![main screen](https://github.com/PiotrKusnierz/java-semester-project/blob/master/6.PNG)
